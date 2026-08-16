@@ -70,9 +70,10 @@ app.post("/login", async (req, res) => {
             if (result) {
                 let token = jwt.sign(
                     { email: user.email, userid: user._id },
-                    CHABI
+                    CHABI,
+                    { expiresIn: "7d" }
                 );
-                res.cookie("token", token);
+                res.cookie("token", token, { httpOnly: true });
                 return res.status(200).json({ success: true, redirect: "/home" });
             } else {
                 return res.status(401).json({ 
@@ -118,9 +119,10 @@ app.post("/register", async (req, res) => {
                     });
                     let token = jwt.sign(
                         { username: newUser.username, userid: newUser._id },
-                        CHABI     // shhh ki jagah CHABI use karein
+                        CHABI,
+                        { expiresIn: "7d" }
                     );
-                    res.cookie("token", token);
+                    res.cookie("token", token, { httpOnly: true });
                     return res.status(201).json({ success: true, redirect: "/home" });
                 } catch (dbError) {
                     if (dbError.code === 11000) {
@@ -138,10 +140,6 @@ app.post("/register", async (req, res) => {
 
 app.get("/create-user", function (req, res) {
     res.render("create-user")
-})
-
-app.get("/home", function (req, res) {
-    res.render("index")
 })
 
 app.get("/bohr", isLoggedIn, function (req, res) {
@@ -565,6 +563,10 @@ app.get("/terms", function (req, res) {
 app.get("/cookie", function(req, res){
     res.render('cookie')
 })
+
+app.use((req, res) => {
+    res.status(404).send("Page not found");
+});
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, ()=> {
