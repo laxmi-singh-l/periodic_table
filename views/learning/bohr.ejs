@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bohr-Bury Electronic Configuration | Premium Guide</title>
+    <style>
+        /* CSS Variables for Neon Dark Theme & Glassmorphism */
+        :root {
+            --bg-main: #050914;
+            --glass-bg: rgba(13, 22, 38, 0.55);
+            --glass-border: rgba(0, 243, 255, 0.15);
+            --neon-cyan: #00f3ff;
+            --neon-blue: #0066ff;
+            --neon-pink: #ff007f;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #00ff66;
+            --danger: #ff3366;
+            --font-main: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        /* Global Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+
+        /* Scroll Progress Bar */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Sticky Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 9, 20, 0.85);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%;
+            transition: all 0.3s ease;
+        }
+        .nav-logo { font-size: 1.5rem; font-weight: 800; color: var(--text-light); text-shadow: 0 0 8px var(--neon-cyan); }
+        .nav-logo span { color: var(--neon-cyan); }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { 
+            color: var(--text-light); text-decoration: none; font-weight: 500;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .nav-links a:hover { color: var(--neon-cyan); text-shadow: 0 0 8px var(--neon-cyan); }
+        
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--neon-cyan); }
+
+        /* Search Box */
+        .search-container { position: relative; }
+        .search-container input {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: white; padding: 8px 15px; border-radius: 20px; outline: none;
+            transition: 0.3s; width: 200px;
+        }
+        .search-container input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
+        .shortcut-hint { position: absolute; right: 10px; top: 8px; font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 5% 60px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .hero h1 { 
+            font-size: 3.5rem; margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--neon-cyan));
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin-bottom: 30px; }
+
+        /* Glassmorphism Cards (Sections) */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 5%; }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px; margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            opacity: 0; transform: translateY(40px); /* For Reveal Animation */
+        }
+        .glass-card.visible { opacity: 1; transform: translateY(0); }
+        .glass-card:hover { border-color: rgba(0, 243, 255, 0.4); box-shadow: 0 10px 40px rgba(0, 243, 255, 0.1); }
+        
+        .section-title { 
+            font-size: 2rem; color: var(--neon-cyan); margin-bottom: 20px; 
+            border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        /* Typography & Content Formatting */
+        p { margin-bottom: 15px; }
+        strong { color: var(--neon-cyan); }
+        ul { margin-left: 20px; margin-bottom: 15px; list-style-type: none; }
+        ul li { margin-bottom: 10px; position: relative; padding-left: 25px; }
+        ul li::before { content: '⚛️'; position: absolute; left: 0; top: 2px; font-size: 0.9rem; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--glass-border); }
+        th { background: rgba(0, 243, 255, 0.1); color: var(--neon-cyan); font-weight: 600; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+
+        /* Timeline */
+        .timeline { border-left: 2px solid var(--neon-cyan); margin-left: 20px; padding-left: 20px; position: relative; }
+        .timeline-event { margin-bottom: 25px; position: relative; }
+        .timeline-event::before {
+            content: ''; position: absolute; left: -27px; top: 5px; width: 12px; height: 12px;
+            background: var(--bg-main); border: 2px solid var(--neon-cyan); border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Generator UI */
+        .generator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+        .input-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+        input[type="number"] {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--neon-blue);
+            color: white; padding: 12px; border-radius: 8px; font-size: 1.1rem; outline: none;
+        }
+        input[type="number"]:focus { box-shadow: 0 0 15px rgba(0, 102, 255, 0.4); }
+        
+        .btn {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-cyan));
+            color: #000; font-weight: bold; border: none; padding: 12px 24px;
+            border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
+            display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 243, 255, 0.6); }
+        
+        .result-box {
+            background: rgba(0,0,0,0.3); border-radius: 10px; padding: 20px;
+            border-left: 4px solid var(--neon-cyan); margin-top: 20px; font-size: 1.1rem;
+        }
+
+        /* SVG Animation & Canvas */
+        #svg-container { width: 100%; max-width: 400px; margin: 0 auto; display: block; aspect-ratio: 1/1; }
+        .electron { fill: var(--neon-pink); filter: drop-shadow(0 0 5px var(--neon-pink)); }
+        .shell { fill: none; stroke: rgba(0, 243, 255, 0.2); stroke-width: 1.5; }
+        .nucleus { fill: var(--neon-cyan); filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+        
+        @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Interactive Flashcards */
+        .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .flashcard {
+            perspective: 1000px; height: 150px; cursor: pointer;
+        }
+        .flashcard-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d;
+        }
+        .flashcard:hover .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            border-radius: 15px; border: 1px solid var(--glass-border); padding: 15px;
+        }
+        .flashcard-front { background: rgba(0, 102, 255, 0.1); }
+        .flashcard-back { background: rgba(0, 243, 255, 0.1); transform: rotateY(180deg); color: var(--neon-cyan); }
+
+        /* MCQ Quiz */
+        .quiz-question { margin-bottom: 25px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 10px; border: 1px solid transparent; transition: 0.3s; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .quiz-option {
+            display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05);
+            padding: 12px; border-radius: 8px; cursor: pointer; border: 1px solid var(--glass-border); transition: 0.2s;
+        }
+        .quiz-option:hover { background: rgba(0, 243, 255, 0.1); }
+        .quiz-option input[type="radio"] { cursor: pointer; transform: scale(1.2); accent-color: var(--neon-cyan); }
+        
+        .correct-ans { border-color: var(--success) !important; background: rgba(0, 255, 102, 0.1) !important; box-shadow: 0 0 10px rgba(0,255,102,0.2); }
+        .wrong-ans { border-color: var(--danger) !important; background: rgba(255, 51, 102, 0.1) !important; }
+        
+        #scorecard { display: none; text-align: center; padding: 30px; background: rgba(0,0,0,0.4); border-radius: 15px; border: 2px solid var(--neon-cyan); margin-top: 30px; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; border: 5px solid var(--neon-cyan); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 20px; color: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 20px var(--neon-cyan);}
+
+        /* Floating Action Buttons */
+        .fab-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 1000; }
+        .fab {
+            width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg);
+            backdrop-filter: blur(5px); border: 1px solid var(--glass-border);
+            color: var(--neon-cyan); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .fab:hover { background: var(--neon-cyan); color: #000; transform: translateY(-5px); box-shadow: 0 0 15px var(--neon-cyan); }
+        .fab-tooltip {
+            position: absolute; right: 60px; background: #000; color: #fff; padding: 5px 10px;
+            border-radius: 5px; font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        .fab:hover .fab-tooltip { opacity: 1; }
+
+        /* Notes Box */
+        .note-box { background: rgba(255, 204, 0, 0.1); border-left: 4px solid #ffcc00; padding: 15px; border-radius: 0 10px 10px 0; margin: 20px 0; }
+        .danger-box { background: rgba(255, 51, 102, 0.1); border-left: 4px solid var(--danger); padding: 15px; border-radius: 0 10px 10px 0; margin: 20px 0; }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .generator-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%; background: rgba(5, 9, 20, 0.95);
+                flex-direction: column; padding: 20px; text-align: center; gap: 15px;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); transition: clip-path 0.4s ease-in-out;
+            }
+            .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+            .menu-toggle { display: block; }
+            .search-container input { width: 150px; }
+            .hero { padding-top: 100px; }
+            .fab-container { bottom: 20px; right: 20px; }
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; color: black; background-image: none; }
+            .glass-card { background: transparent; border: 1px solid #ccc; box-shadow: none; color: black; margin-bottom: 20px; page-break-inside: avoid; opacity: 1; transform: none; }
+            nav, .fab-container, .hero p, #generator-section, #quiz-section { display: none !important; }
+            .section-title { color: black; border-bottom: 2px solid black; }
+            .hero h1 { color: black; text-shadow: none; -webkit-text-fill-color: black; }
+            table th { background: #eee; color: black; }
+            td, th { border-color: #aaa; }
+            * { text-shadow: none !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">Bohr<span>Bury</span></div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search topics..." autocomplete="off">
+            <span class="shortcut-hint">Alt+S</span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#theory">Theory</a></li>
+            <li><a href="#rules">Rules & 2n²</a></li>
+            <li><a href="#generator">Generator</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#quiz">MCQ Quiz</a></li>
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Master Electronic Configuration</h1>
+        <a href="#generator" class="btn">Launch Generator ⚙️</a>
+    </header>
+
+    <div class="container" id="main-content">
+        
+        <!-- Introduction & History -->
+        <section class="glass-card section-card" id="theory">
+            <h2 class="section-title">📖 1. Introduction & History</h2>
+            <p>Atoms are the fundamental building blocks of matter. Inside an atom, positively charged protons and neutral neutrons reside in the central <strong>nucleus</strong>, while negatively charged <strong>electrons</strong> revolve around the nucleus in fixed circular paths called <strong>shells</strong> or orbits.</p>
+            
+            <div class="timeline">
+                <div class="timeline-event">
+                    <strong>1913 - Bohr's Model:</strong> Niels Bohr proposed that electrons revolve in discrete orbits with fixed energy levels.
+                </div>
+                <div class="timeline-event">
+                    <strong>1921 - Bohr-Bury Scheme:</strong> Niels Bohr and Charles Bury independently formulated the rules for the distribution of electrons in these different shells. This became known as the Bohr-Bury Scheme.
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <strong>📝 Note for UP Board:</strong> The arrangement of electrons in various shells of an atom of the element is known as its <em>Electronic Configuration</em>.
+            </div>
+        </section>
+
+        <!-- Rules of Bohr-Bury -->
+        <section class="glass-card section-card" id="rules">
+            <h2 class="section-title">⚖️ 2. The Bohr-Bury Rules</h2>
+            <p>To write the electronic configuration, you must follow these golden rules:</p>
+            <ul>
+                <li><strong>Rule 1 (The 2n² Rule):</strong> The maximum number of electrons present in a shell is given by the formula <strong>2n²</strong>, where 'n' is the orbit number (energy level index) starting from the nucleus.</li>
+                <li><strong>Rule 2 (Outermost Shell Limit):</strong> The maximum number of electrons that can be accommodated in the outermost orbit is <strong>8</strong> (Octet rule), even if it has the capacity to hold more.</li>
+                <li><strong>Rule 3 (Penultimate Shell Limit):</strong> The second outermost (penultimate) shell cannot have more than <strong>18</strong> electrons.</li>
+                <li><strong>Rule 4 (Step-wise Filling):</strong> Electrons are not accommodated in a given shell unless the inner shells are filled. That is, shells are filled in a step-wise manner.</li>
+            </ul>
+
+            <h3 style="color: var(--neon-cyan); margin: 20px 0 10px;">Maximum Electron Capacity Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shell Name</th>
+                        <th>Orbit Number (n)</th>
+                        <th>Formula (2n²)</th>
+                        <th>Maximum Electrons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>K Shell</td><td>1</td><td>2 × (1)²</td><td>2</td></tr>
+                    <tr><td>L Shell</td><td>2</td><td>2 × (2)²</td><td>8</td></tr>
+                    <tr><td>M Shell</td><td>3</td><td>2 × (3)²</td><td>18</td></tr>
+                    <tr><td>N Shell</td><td>4</td><td>2 × (4)²</td><td>32</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Valence Shells -->
+        <section class="glass-card section-card" id="valence">
+            <h2 class="section-title">🔋 3. Valence Shell & Electrons</h2>
+            <p>The outermost shell of an atom is called its <strong>valence shell</strong>, and the electrons present in it are called <strong>valence electrons</strong>.</p>
+            <p><strong>Importance:</strong> Valence electrons determine the chemical properties and valency of the element. Elements with completely filled valence shells (like Noble Gases with 8 electrons) are chemically stable and unreactive.</p>
+            <div class="danger-box">
+                <strong>⚠️ Common Mistake:</strong> Do not confuse <em>valency</em> with <em>valence electrons</em>. Valence electrons are the total electrons in the outer shell. Valency is the combining capacity (electrons gained, lost, or shared to complete an octet).<br>
+                <em>Example:</em> Chlorine has 7 valence electrons, but its valency is 1 (it needs 1 electron to complete 8).
+            </div>
+        </section>
+
+        <!-- Bohr-Bury vs SPDF -->
+        <section class="glass-card section-card" id="comparison">
+            <h2 class="section-title">🔄 4. Bohr-Bury vs Aufbau (SPDF)</h2>
+            <p>While Bohr-Bury is perfect for basic understanding up to Calcium (Atomic No. 20), higher classes use the SPDF (Aufbau) principle.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Bohr-Bury Scheme</th>
+                        <th>SPDF (Aufbau) Configuration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Focus</strong></td><td>Main Energy Shells (K, L, M, N)</td><td>Subshells and Orbitals (s, p, d, f)</td></tr>
+                    <tr><td><strong>Rules</strong></td><td>Based on 2n² and Octet rules</td><td>Based on increasing energy levels (n+l rule)</td></tr>
+                    <tr><td><strong>Example: Potassium (19)</strong></td><td>2, 8, 8, 1</td><td>1s², 2s², 2p⁶, 3s², 3p⁶, 4s¹</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Interactive Generator -->
+        <section class="glass-card section-card" id="generator">
+            <h2 class="section-title">⚙️ 5. Interactive Configuration Generator</h2>
+            <p>Enter any atomic number from 1 to 118 to instantly generate its Bohr-Bury electronic configuration and watch the atom build itself dynamically!</p>
+            
+            <div class="generator-grid">
+                <div>
+                    <div class="input-group">
+                        <label for="atomicNum">Enter Atomic Number (Z):</label>
+                        <input type="number" id="atomicNum" min="1" max="118" value="11" placeholder="e.g., 11 for Sodium">
+                    </div>
+                    <button class="btn" onclick="generateConfig()">Generate Configuration 🚀</button>
+                    
+                    <div class="result-box" id="result-box" style="display:none;">
+                        <!-- Results dynamically injected here -->
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <h3 style="color:var(--text-muted); margin-bottom: 10px;">Animated Bohr Diagram</h3>
+                    <svg id="svg-container" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
+                        <!-- SVG dynamically injected here -->
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solved Examples (Flashcards) -->
+        <section class="glass-card section-card" id="examples">
+            <h2 class="section-title">🎯 6. Quick Revision Flashcards (1 to 30)</h2>
+            <p>Hover over or click the cards to flip them and reveal the electronic configuration! Perfect for exam revision.</p>
+            <div class="flashcard-grid" id="flashcard-grid">
+                <!-- Flashcards injected via JS -->
+            </div>
+        </section>
+
+        <!-- MCQ Quiz Section -->
+        <section class="glass-card section-card" id="quiz">
+            <h2 class="section-title">📝 7. Final Exam Test (MCQ)</h2>
+            <p>Test your knowledge! Select the correct option for each question and click "Check Solutions" at the bottom.</p>
+            
+            <div id="quiz-container">
+                <!-- Quiz dynamically injected -->
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn" onclick="evaluateQuiz()">Check Solutions ✔️</button>
+                <button class="btn" style="background: linear-gradient(45deg, #ff3366, #ff9933); margin-left: 10px; display:none;" id="btn-restart" onclick="restartQuiz()">Restart Quiz 🔄</button>
+            </div>
+
+            <div id="scorecard">
+                <div class="score-circle" id="score-circle">0/10</div>
+                <h3 id="score-msg" style="color: var(--neon-cyan); margin-bottom: 10px;"></h3>
+                <p>Correct: <span id="score-correct" style="color: var(--success)">0</span> | Wrong: <span id="score-wrong" style="color: var(--danger)">0</span></p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <div class="fab" onclick="window.scrollTo(0,0)" title="Back to Top">
+            <span class="fab-tooltip">Back to Top</span>
+            ↑
+        </div>
+        <div class="fab" onclick="window.print()" title="Print Notes">
+            <span class="fab-tooltip">Print PDF</span>
+            🖨️
+        </div>
+        <div class="fab" onclick="copyNotes()" title="Copy Text">
+            <span class="fab-tooltip">Copy Text</span>
+            📋
+        </div>
+        <div class="fab" onclick="downloadTxt()" title="Download TXT">
+            <span class="fab-tooltip">Download TXT</span>
+            💾
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- 1. UI & Navigation Logic ---
+        
+        // Scroll Progress
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+            
+            // Section Reveal Animation
+            let cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                let cardTop = card.getBoundingClientRect().top;
+                if(cardTop < window.innerHeight - 50) {
+                    card.classList.add('visible');
+                }
+            });
+        };
+        // Trigger initial reveal
+        window.dispatchEvent(new Event('scroll'));
+
+        // Mobile Menu
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            let filter = e.target.value.toLowerCase();
+            let cards = document.querySelectorAll('.section-card');
+            cards.forEach(card => {
+                let text = card.innerText.toLowerCase();
+                card.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if(e.altKey && e.key.toLowerCase() === 's') {
+                e.preventDefault(); document.getElementById('searchInput').focus();
+            }
+            if(e.key === 'Escape') {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchInput').dispatchEvent(new Event('input'));
+                document.getElementById('searchInput').blur();
+            }
+        });
+
+        // Copy Notes
+        function copyNotes() {
+            let text = document.getElementById('main-content').innerText;
+            navigator.clipboard.writeText("Bohr-Bury Notes\n\n" + text).then(() => {
+                alert("Notes copied to clipboard!");
+            });
+        }
+
+        // Download TXT
+        function downloadTxt() {
+            let text = document.getElementById('main-content').innerText;
+            const blob = new Blob(["Bohr-Bury Complete Notes\n\n" + text], {type: "text/plain"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "Bohr-Bury_Notes.txt";
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // --- 2. Core Chemistry Logic & Generator ---
+
+        // Robust function to get configuration up to 118 based on standard rules + Aufbau mapping
+        function getElectronicConfiguration(Z) {
+            // Hardcode standard exceptions for school-level accuracy
+            const exceptions = {
+                24: [2,8,13,1], 29: [2,8,18,1], 41: [2,8,18,12,1],
+                42: [2,8,18,13,1], 44: [2,8,18,15,1], 45: [2,8,18,16,1],
+                46: [2,8,18,18], 47: [2,8,18,18,1], 78: [2,8,18,32,17,1],
+                79: [2,8,18,32,18,1]
+            };
+            if(exceptions[Z]) return exceptions[Z];
+
+            // Map Aufbau sequence to shells
+            const orbitals = [
+                {n:1, max:2}, {n:2, max:2}, {n:2, max:6}, {n:3, max:2}, {n:3, max:6},
+                {n:4, max:2}, {n:3, max:10}, {n:4, max:6}, {n:5, max:2}, {n:4, max:10},
+                {n:5, max:6}, {n:6, max:2}, {n:4, max:14}, {n:5, max:10}, {n:6, max:6},
+                {n:7, max:2}, {n:5, max:14}, {n:6, max:10}, {n:7, max:6}
+            ];
+            
+            let remaining = Z;
+            let shells = [];
+            for(let orb of orbitals) {
+                if(remaining <= 0) break;
+                let fill = Math.min(remaining, orb.max);
+                if(!shells[orb.n - 1]) shells[orb.n - 1] = 0;
+                shells[orb.n - 1] += fill;
+                remaining -= fill;
+            }
+            return shells;
+        }
+
+        const elementsData = [
+            "", "Hydrogen (H)", "Helium (He)", "Lithium (Li)", "Beryllium (Be)", "Boron (B)", "Carbon (C)",
+            "Nitrogen (N)", "Oxygen (O)", "Fluorine (F)", "Neon (Ne)", "Sodium (Na)", "Magnesium (Mg)",
+            "Aluminum (Al)", "Silicon (Si)", "Phosphorus (P)", "Sulfur (S)", "Chlorine (Cl)", "Argon (Ar)",
+            "Potassium (K)", "Calcium (Ca)", "Scandium (Sc)", "Titanium (Ti)", "Vanadium (V)", "Chromium (Cr)",
+            "Manganese (Mn)", "Iron (Fe)", "Cobalt (Co)", "Nickel (Ni)", "Copper (Cu)", "Zinc (Zn)"
+        ];
+
+        function generateConfig() {
+            let Z = parseInt(document.getElementById('atomicNum').value);
+            if(isNaN(Z) || Z < 1 || Z > 118) {
+                alert("Please enter a valid Atomic Number between 1 and 118.");
+                return;
+            }
+
+            let config = getElectronicConfiguration(Z);
+            let shellNames = ['K', 'L', 'M', 'N', 'O', 'P', 'Q'];
+            
+            let htmlStr = `<strong>Element:</strong> Atomic No. ${Z} <br><br>`;
+            htmlStr += `<strong>Configuration:</strong> <span style="color:var(--neon-cyan); font-size:1.3rem;">${config.join(', ')}</span><br><br>`;
+            htmlStr += `<table style="font-size:0.9rem; margin-top:10px;"><tr>`;
+            config.forEach((c, i) => { htmlStr += `<th>${shellNames[i]} Shell</th>`; });
+            htmlStr += `</tr><tr>`;
+            config.forEach(c => { htmlStr += `<td>${c} e⁻</td>`; });
+            htmlStr += `</tr></table><br>`;
+            htmlStr += `<strong>Total Shells Occupied:</strong> ${config.length}<br>`;
+            htmlStr += `<strong>Valence Shell:</strong> ${shellNames[config.length-1]} Shell<br>`;
+            htmlStr += `<strong>Valence Electrons:</strong> ${config[config.length-1]}<br>`;
+
+            document.getElementById('result-box').innerHTML = htmlStr;
+            document.getElementById('result-box').style.display = 'block';
+
+            drawAtomSVG(config);
+        }
+
+        // Draw Dynamic SVG Diagram
+        function drawAtomSVG(config) {
+            let svg = document.getElementById('svg-container');
+            svg.innerHTML = ''; // Clear existing
+            
+            let cx = 250, cy = 250;
+            
+            // Draw Nucleus
+            let nucleus = `<circle cx="${cx}" cy="${cy}" r="15" class="nucleus" />`;
+            let text = `<text x="${cx}" y="${cy+4}" fill="#000" font-size="12" font-weight="bold" text-anchor="middle">N</text>`;
+            svg.innerHTML += nucleus + text;
+
+            // Draw Shells and Electrons
+            config.forEach((electrons, index) => {
+                let radius = 40 + (index * 30); // spacing between shells
+                
+                // Group for rotation animation
+                let g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                // Center transform origin for animation
+                g.style.transformOrigin = `${cx}px ${cy}px`;
+                g.style.animation = `orbit ${10 + index*5}s linear infinite`;
+
+                // Draw Shell Path
+                let circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", cx); circle.setAttribute("cy", cy);
+                circle.setAttribute("r", radius);
+                circle.setAttribute("class", "shell");
+                g.appendChild(circle);
+
+                // Draw Electrons
+                let angleStep = (2 * Math.PI) / electrons;
+                for(let e=0; e<electrons; e++) {
+                    let angle = e * angleStep;
+                    let ex = cx + radius * Math.cos(angle);
+                    let ey = cy + radius * Math.sin(angle);
+                    
+                    let elCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    elCircle.setAttribute("cx", ex); elCircle.setAttribute("cy", ey);
+                    elCircle.setAttribute("r", "4");
+                    elCircle.setAttribute("class", "electron");
+                    g.appendChild(elCircle);
+                }
+                svg.appendChild(g);
+            });
+        }
+
+        // Populate Flashcards (1 to 30)
+        function initFlashcards() {
+            let grid = document.getElementById('flashcard-grid');
+            let html = '';
+            for(let i=1; i<=30; i++) {
+                let config = getElectronicConfiguration(i).join(', ');
+                let name = elementsData[i] || `Element ${i}`;
+                html += `
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h3 style="font-size:1.2rem;">Z = ${i}</h3>
+                            <p>${name}</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <h3 style="font-size:1.5rem;">${config}</h3>
+                            <p>Valence: ${getElectronicConfiguration(i).slice(-1)[0]}</p>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            grid.innerHTML = html;
+        }
+
+        // --- 3. MCQ Quiz Logic ---
+        
+        const quizData = [
+            { q: "What is the formula for the maximum number of electrons in a shell?", options: ["n²", "2n²", "2n", "4n²"], ans: 1 },
+            { q: "What is the maximum number of electrons that the M shell (n=3) can hold?", options: ["8", "18", "32", "2"], ans: 1 },
+            { q: "According to Bohr-Bury, the outermost shell cannot have more than how many electrons?", options: ["2", "18", "8", "32"], ans: 2 },
+            { q: "What is the electronic configuration of Sodium (Atomic No. 11)?", options: ["2, 8, 1", "2, 9", "2, 8", "2, 8, 2"], ans: 0 },
+            { q: "Which shell is closest to the nucleus?", options: ["L", "M", "N", "K"], ans: 3 },
+            { q: "How many valence electrons does Chlorine (Atomic No. 17, Config: 2,8,7) have?", options: ["1", "7", "8", "17"], ans: 1 },
+            { q: "An element has configuration 2, 4. Which element is this?", options: ["Oxygen", "Nitrogen", "Carbon", "Boron"], ans: 2 },
+            { q: "The penultimate (second outermost) shell cannot have more than ___ electrons.", options: ["8", "18", "32", "2"], ans: 1 },
+            { q: "Electronic configuration of Calcium (Atomic No. 20) is:", options: ["2, 8, 10", "2, 8, 8, 2", "2, 18", "2, 8, 9, 1"], ans: 1 },
+            { q: "Elements with 8 electrons in their outermost shell are generally:", options: ["Highly reactive", "Chemically stable (Inert)", "Metals", "Radioactive"], ans: 1 }
+        ];
+
+        function initQuiz() {
+            let container = document.getElementById('quiz-container');
+            let html = '';
+            quizData.forEach((q, qIndex) => {
+                html += `<div class="quiz-question" id="qdiv_${qIndex}">
+                    <h4>Q${qIndex+1}: ${q.q}</h4>
+                    <div class="quiz-options">`;
+                q.options.forEach((opt, optIndex) => {
+                    html += `
+                    <label class="quiz-option" id="optLabel_${qIndex}_${optIndex}">
+                        <input type="radio" name="q_${qIndex}" value="${optIndex}">
+                        ${String.fromCharCode(65 + optIndex)}) ${opt}
+                    </label>`;
+                });
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function evaluateQuiz() {
+            let score = 0;
+            quizData.forEach((q, qIndex) => {
+                let selected = document.querySelector(`input[name="q_${qIndex}"]:checked`);
+                let qDiv = document.getElementById(`qdiv_${qIndex}`);
+                
+                // Reset styling first
+                q.options.forEach((_, optIndex) => {
+                    document.getElementById(`optLabel_${qIndex}_${optIndex}`).classList.remove('correct-ans', 'wrong-ans');
+                });
+
+                if(selected) {
+                    let val = parseInt(selected.value);
+                    if(val === q.ans) {
+                        score++;
+                        document.getElementById(`optLabel_${qIndex}_${val}`).classList.add('correct-ans');
+                        qDiv.style.borderColor = "var(--success)";
+                    } else {
+                        document.getElementById(`optLabel_${qIndex}_${val}`).classList.add('wrong-ans');
+                        document.getElementById(`optLabel_${qIndex}_${q.ans}`).classList.add('correct-ans');
+                        qDiv.style.borderColor = "var(--danger)";
+                    }
+                } else {
+                    // If not answered, show correct answer anyway
+                    document.getElementById(`optLabel_${qIndex}_${q.ans}`).classList.add('correct-ans');
+                    qDiv.style.borderColor = "var(--danger)";
+                }
+                
+                // Disable inputs after checking
+                let inputs = document.querySelectorAll(`input[name="q_${qIndex}"]`);
+                inputs.forEach(input => input.disabled = true);
+            });
+
+            // Update Scorecard
+            document.getElementById('scorecard').style.display = 'block';
+            document.getElementById('score-circle').innerText = `${score}/10`;
+            document.getElementById('score-correct').innerText = score;
+            document.getElementById('score-wrong').innerText = 10 - score;
+            document.getElementById('btn-restart').style.display = 'inline-block';
+            
+            let msgBox = document.getElementById('score-msg');
+            if(score === 10) msgBox.innerText = "🏆 Perfect Score! Excellent work!";
+            else if(score >= 7) msgBox.innerText = "🌟 Great Job! Keep it up!";
+            else msgBox.innerText = "📚 Keep Practicing! You'll get it next time.";
+            
+            // Scroll to scorecard
+            document.getElementById('scorecard').scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+
+        function restartQuiz() {
+            initQuiz();
+            document.getElementById('scorecard').style.display = 'none';
+            document.getElementById('btn-restart').style.display = 'none';
+            document.getElementById('quiz').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Initialize App
+        window.onload = function() {
+            generateConfig(); // Generate default (Na)
+            initFlashcards();
+            initQuiz();
+        };
+
+    </script>
+</body>
+</html>

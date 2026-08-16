@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test your knowledge of Periodic Table Trends (Periodicity) with 30 MCQs. Atomic Radius, Ionization Energy, Electronegativity, Electron Gain Enthalpy, Metallic & Non-metallic Character. आवर्त सारणी के रुझान प्रश्नोत्तरी – परमाणु त्रिज्या, आयनन ऊर्जा, विद्युत ऋणात्मकता, इलेक्ट्रॉन ग्रहण एन्थैल्पी, धात्विक व अधात्विक गुण पर आधारित 30 वस्तुनिष्ठ प्रश्न।">
+    <meta name="keywords" content="Periodic Table Trends Quiz, Periodicity MCQs, Atomic Radius, Ionization Energy, Electronegativity, Electron Gain Enthalpy, Metallic Character, Z_eff, आवर्त सारणी प्रश्नोत्तरी, आवर्त सारणी के रुझान, रसायन विज्ञान प्रश्न, ASR, Chemistry Quiz">
+    <meta name="author" content="ASR">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0a0f">
+    <link rel="canonical" href="https://example.com/periodic-trends-quiz">
+    <link rel="alternate" hreflang="en" href="https://example.com/periodic-trends-quiz">
+    <link rel="alternate" hreflang="hi" href="https://example.com/hi/periodic-trends-quiz">
+    <meta property="og:title" content="Periodic Trends Quiz – 30 MCQs">
+    <meta property="og:description" content="Master periodic trends with 30 interactive MCQs. Covers Atomic Radius, Ionization Energy, Electronegativity & more. आवर्त सारणी के रुझान प्रश्नोत्तरी।">
+    <title>Periodic Trends Quiz (30 MCQs) – Periodic Table Trends | Dark Neon</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #06060f;
+            --bg-card: #111122;
+            --bg-card-hover: #161630;
+            --border-subtle: #1e1e3a;
+            --border-neon-cyan: #00e5ff;
+            --glow-cyan: rgba(0, 229, 255, 0.45);
+            --accent-cyan: #00e5ff;
+            --accent-magenta: #ff2d95;
+            --accent-lime: #b8ff3d;
+            --accent-gold: #ffb347;
+            --text-primary: #e8e8f0;
+            --text-secondary: #a8a8c0;
+            --text-muted: #7a7a96;
+            --radius-card: 16px;
+            --radius-inner: 10px;
+            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.7;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.04) 0%, transparent 65%),
+                radial-gradient(ellipse at 85% 15%, rgba(255, 45, 149, 0.03) 0%, transparent 55%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ──────────── HEADER with backlink ──────────── */
+        header {
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .backlink {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(255, 179, 71, 0.35);
+            border-radius: 24px;
+            background: rgba(255, 179, 71, 0.05);
+            transition: all var(--transition-smooth);
+            white-space: nowrap;
+        }
+        .backlink:hover {
+            color: #000;
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 22px rgba(255, 179, 71, 0.5);
+            transform: translateY(-1px);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+        .logo .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #000;
+            font-weight: 900;
+            box-shadow: 0 0 18px var(--glow-cyan);
+        }
+        .header-nav {
+            display: flex;
+            gap: 1.6rem;
+            list-style: none;
+        }
+        .header-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color var(--transition-smooth);
+            position: relative;
+        }
+        .header-nav a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 12px var(--glow-cyan);
+        }
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--accent-cyan);
+            transition: width var(--transition-smooth);
+            box-shadow: 0 0 8px var(--glow-cyan);
+        }
+        .header-nav a:hover::after { width: 100%; }
+
+        /* ──────────── MAIN QUIZ CONTAINER ──────────── */
+        main {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* ─── QUIZ HEADER ─── */
+        .quiz-title {
+            text-align: center;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: #fff;
+            text-shadow: 0 0 40px var(--glow-cyan), 0 0 80px rgba(0, 229, 255, 0.2);
+            margin-bottom: 0.5rem;
+        }
+        .quiz-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* ─── PROGRESS DOTS ─── */
+        .progress {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2a2c3a;
+            transition: all 0.3s;
+        }
+        .progress-dot.answered { background: var(--accent-cyan); box-shadow: 0 0 10px var(--glow-cyan); }
+        .progress-dot.skipped { background: #ffaa00; box-shadow: 0 0 8px #ffaa00; }
+        .progress-dot.wrong { background: #ff4444; }
+        .progress-dot.correct { background: #44ff44; }
+
+        /* ─── QUESTION CARD ─── */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            margin-bottom: 1.5rem;
+            transition: opacity 0.3s;
+        }
+        .question-number {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .question-text {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* ─── OPTIONS ─── */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .option {
+            background: rgba(17,17,34,0.9);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 0.9rem 1.2rem;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+            position: relative;
+        }
+        .option:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 18px rgba(0,229,255,0.3);
+            color: #fff;
+            transform: translateY(-2px);
+            background: var(--bg-card-hover);
+        }
+        .option.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0,229,255,0.08);
+            color: #fff;
+            box-shadow: 0 0 25px rgba(0,229,255,0.4);
+        }
+        .option.correct-highlight {
+            border-color: #44ff44 !important;
+            background: rgba(68,255,68,0.1);
+            color: #44ff44;
+        }
+        .option.wrong-highlight {
+            border-color: #ff4444 !important;
+            background: rgba(255,68,68,0.1);
+            color: #ff4444;
+        }
+        .option input[type="radio"] { display: none; }
+        .radio-custom {
+            width: 20px; height: 20px; border-radius: 50%;
+            border: 2px solid var(--text-secondary);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .option.selected .radio-custom {
+            border-color: var(--accent-cyan);
+        }
+        .option.selected .radio-custom::after {
+            content: '';
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--glow-cyan);
+        }
+
+        /* ─── BUTTONS ─── */
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+        .btn-submit {
+            background: var(--accent-cyan);
+            color: #000;
+            border-color: var(--accent-cyan);
+        }
+        .btn-submit:hover { box-shadow: 0 0 20px rgba(0,229,255,0.6); transform: translateY(-2px); }
+        .btn-skip {
+            background: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border-subtle);
+        }
+        .btn-skip:hover { border-color: var(--accent-gold); color: var(--accent-gold); box-shadow: 0 0 12px rgba(255,179,71,0.4); }
+        .btn:disabled { opacity: 0.5; pointer-events: none; }
+
+        /* ─── RESULT CARD ─── */
+        .result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0,0,0,0.6);
+        }
+        .result-card h3 {
+            font-size: 2rem;
+            color: var(--accent-lime);
+            text-shadow: 0 0 20px rgba(184,255,61,0.6);
+            margin-bottom: 1.5rem;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; }
+        .stat-label { font-size: 0.9rem; color: var(--text-secondary); }
+        .correct-stat { color: #44ff44; }
+        .incorrect-stat { color: #ff4444; }
+        .skipped-stat { color: #ffaa00; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(10,10,20,0.5);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0.8rem 1.2rem;
+            }
+            .header-nav {
+                gap: 1rem;
+            }
+            main {
+                padding: 1.5rem 1rem;
+            }
+            .question-card {
+                padding: 1.2rem;
+            }
+            .option {
+                padding: 0.7rem 1rem;
+                font-size: 0.9rem;
+            }
+            .buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- BACKLINK – change href to your desired link -->
+        <a href="/quiz" class="backlink" rel="noreferrer" aria-label="Go back to main site">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            Back to Home
+        </a>
+        <div class="logo">
+            <span class="icon" aria-hidden="true">⚛</span>
+            <span>Periodic<span style="color:#00e5ff;">Trends</span></span>
+        </div>
+        <nav aria-label="Quick links">
+            <ul class="header-nav">
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#result">Results</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article id="quiz" aria-labelledby="quiz-heading">
+            <h1 class="quiz-title">Periodic Trends QUIZ</h1>
+            <p class="quiz-subtitle">30 MCQs – Test your knowledge of Periodicity & Z<sub>eff</sub></p>
+
+            <!-- Progress indicators -->
+            <div class="progress" id="progress-dots" aria-label="Quiz progress"></div>
+
+            <!-- Question Card -->
+            <div class="question-card" id="question-card">
+                <div class="question-number" id="q-number"></div>
+                <div class="question-text" id="q-text"></div>
+                <div class="options" id="options-container" role="radiogroup" aria-label="Answer options"></div>
+                <div class="buttons">
+                    <button class="btn btn-submit" id="submit-btn">Submit & Next</button>
+                    <button class="btn btn-skip" id="skip-btn">Skip</button>
+                </div>
+            </div>
+
+            <!-- Result Card (hidden initially) -->
+            <div class="result-card" id="result-card" style="display:none;" aria-live="polite">
+                <h3>🎯 Quiz Complete!</h3>
+                <div class="stats">
+                    <div class="stat-item"><div class="stat-value correct-stat" id="correct-count">0</div><div class="stat-label">Correct</div></div>
+                    <div class="stat-item"><div class="stat-value incorrect-stat" id="incorrect-count">0</div><div class="stat-label">Incorrect</div></div>
+                    <div class="stat-item"><div class="stat-value skipped-stat" id="skipped-count">0</div><div class="stat-label">Skipped</div></div>
+                </div>
+                <button class="btn btn-submit" onclick="location.reload()">Retry Quiz</button>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 ASR – Interactive Periodic Trends Quiz. All content for educational purposes.</p>
+    </footer>
+
+    <script>
+        (function() {
+            // 30 MCQ questions covering all major trends
+            const questions = [
+                { q: "What happens to atomic radius as you move down a group?", opts: ["Decreases", "Increases", "Stays same", "First increases then decreases"], correct: 1 },
+                { q: "Ionization energy generally ______ across a period from left to right.", opts: ["Decreases", "Increases", "Remains constant", "Becomes zero"], correct: 1 },
+                { q: "Which element has the highest electronegativity?", opts: ["Oxygen", "Chlorine", "Fluorine", "Nitrogen"], correct: 2 },
+                { q: "Which atom has the largest atomic radius?", opts: ["Lithium", "Sodium", "Potassium", "Francium"], correct: 3 },
+                { q: "Electron gain enthalpy of chlorine compared to fluorine is:", opts: ["More negative", "Less negative", "Equal", "Cannot be compared"], correct: 0 },
+                { q: "Metallic character increases in which direction?", opts: ["Up a group and to the right", "Down a group and to the left", "Up a group and to the left", "Down a group and to the right"], correct: 1 },
+                { q: "Effective nuclear charge (Z<sub>eff</sub>) across a period:", opts: ["Decreases", "Increases", "Remains constant", "No trend"], correct: 1 },
+                { q: "Which element has the highest ionization energy?", opts: ["Helium", "Neon", "Argon", "Krypton"], correct: 0 },
+                { q: "The most non‑metallic elements are found in which region of the periodic table?", opts: ["Bottom left", "Top right", "Bottom right", "Top left"], correct: 1 },
+                { q: "Electron affinity generally becomes more negative across a period. True or False?", opts: ["True", "False"], correct: 0 },
+                { q: "Which element has the lowest ionization energy?", opts: ["Lithium", "Sodium", "Potassium", "Cesium"], correct: 3 },
+                { q: "Why does atomic radius decrease across a period?", opts: ["Nuclear charge decreases", "Shielding increases", "Effective nuclear charge increases", "New shells are added"], correct: 2 },
+                { q: "Electronegativity of noble gases is:", opts: ["High", "Low but defined", "Undefined / negligible", "Equal to halogens"], correct: 2 },
+                { q: "Which of the following has the smallest atomic radius?", opts: ["Lithium", "Fluorine", "Neon", "Sodium"], correct: 1 },
+                { q: "Among F, Cl, Br, I, which has the most negative electron gain enthalpy?", opts: ["F", "Cl", "Br", "I"], correct: 1 },
+                { q: "Diagonal relationship is shown by which pair(s)?", opts: ["Li‑Mg", "Be‑Al", "B‑Si", "All of these"], correct: 3 },
+                { q: "Z<sub>eff</sub> is calculated as:", opts: ["Z + σ", "Z − σ", "σ − Z", "Z × σ"], correct: 1 },
+                { q: "Why does atomic radius increase down a group?", opts: ["Nuclear charge decreases", "Number of shells increases", "Shielding decreases", "Electronegativity increases"], correct: 1 },
+                { q: "Non‑metallic character across a period:", opts: ["Decreases", "Increases", "Remains same", "No clear trend"], correct: 1 },
+                { q: "Why is ionization energy of Nitrogen greater than Oxygen?", opts: ["N has smaller size", "N has half‑filled p orbital stability", "O has greater nuclear charge", "N is more electronegative"], correct: 1 },
+                { q: "Which has the largest atomic radius? K, Na, Li, Rb", opts: ["Li", "Na", "K", "Rb"], correct: 3 },
+                { q: "Which group has the most negative electron gain enthalpy?", opts: ["Alkali metals", "Halogens", "Noble gases", "Alkaline earth metals"], correct: 1 },
+                { q: "Electronegativity down a group:", opts: ["Increases", "Decreases", "Stays constant", "First increases then decreases"], correct: 1 },
+                { q: "Metallic character is closely related to:", opts: ["High IE and high EN", "Low IE and low EN", "High IE and low EN", "Low IE and high EN"], correct: 1 },
+                { q: "Which statement is correct?", opts: ["Atomic radius decreases down a group", "Ionization energy increases down a group", "Electron affinity becomes more negative down a group", "None of the above"], correct: 3 },
+                { q: "Which element has the lowest electronegativity?", opts: ["Cesium", "Francium", "Lithium", "Sodium"], correct: 1 },
+                { q: "Ionization energy down a group:", opts: ["Increases", "Decreases", "Remains constant", "Becomes zero"], correct: 1 },
+                { q: "Which order of atomic radius is correct?", opts: ["F < Cl < Br < I", "I < Br < Cl < F", "Cl < F < Br < I", "Br < I < F < Cl"], correct: 0 },
+                { q: "The element with maximum metallic character is:", opts: ["Francium", "Cesium", "Lithium", "Sodium"], correct: 0 },
+                { q: "Which property generally increases towards the top‑right of the periodic table?", opts: ["Atomic radius", "Metallic character", "Electronegativity", "Electron affinity (less negative)"], correct: 2 }
+            ];
+
+            const totalQ = questions.length;
+            let currentIndex = 0;
+            let answers = new Array(totalQ).fill(-1);
+            let feedbackActive = false;
+
+            const questionCard = document.getElementById('question-card');
+            const qNumber = document.getElementById('q-number');
+            const qText = document.getElementById('q-text');
+            const optionsContainer = document.getElementById('options-container');
+            const submitBtn = document.getElementById('submit-btn');
+            const skipBtn = document.getElementById('skip-btn');
+            const progressContainer = document.getElementById('progress-dots');
+            const resultCard = document.getElementById('result-card');
+
+            // Build progress dots
+            for (let i = 0; i < totalQ; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                dot.dataset.index = i;
+                progressContainer.appendChild(dot);
+            }
+
+            function updateProgress() {
+                const dots = document.querySelectorAll('.progress-dot');
+                dots.forEach((dot, idx) => {
+                    dot.className = 'progress-dot';
+                    if (answers[idx] !== -1) {
+                        dot.classList.add('answered');
+                        dot.classList.add(answers[idx] === questions[idx].correct ? 'correct' : 'wrong');
+                    }
+                });
+                if (currentIndex < totalQ) {
+                    dots[currentIndex].style.boxShadow = '0 0 15px var(--accent-cyan)';
+                }
+            }
+
+            function displayQuestion(index) {
+                if (index >= totalQ) {
+                    showResults();
+                    return;
+                }
+                feedbackActive = false;
+                const q = questions[index];
+                qNumber.textContent = `Question ${index + 1} of ${totalQ}`;
+                qText.innerHTML = q.q;
+                optionsContainer.innerHTML = '';
+                q.opts.forEach((opt, i) => {
+                    const label = document.createElement('label');
+                    label.className = 'option';
+                    if (answers[index] === i) label.classList.add('selected');
+                    label.innerHTML = `
+                        <input type="radio" name="quiz-option" value="${i}" ${answers[index] === i ? 'checked' : ''}>
+                        <span class="radio-custom"></span>
+                        <span>${opt}</span>
+                    `;
+                    label.addEventListener('click', () => selectOption(label, i));
+                    optionsContainer.appendChild(label);
+                });
+                document.querySelectorAll('.option').forEach(o => {
+                    o.classList.remove('correct-highlight', 'wrong-highlight');
+                });
+                submitBtn.disabled = false;
+                skipBtn.disabled = false;
+                updateProgress();
+            }
+
+            function selectOption(label, value) {
+                if (feedbackActive) return;
+                document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                label.classList.add('selected');
+                const radio = label.querySelector('input');
+                radio.checked = true;
+                answers[currentIndex] = value;
+            }
+
+            function submitAnswer() {
+                if (feedbackActive) return;
+                if (answers[currentIndex] === -1) {
+                    alert('Please select an option or click Skip.');
+                    return;
+                }
+                feedbackActive = true;
+                const correctIdx = questions[currentIndex].correct;
+                const selectedIdx = answers[currentIndex];
+                const options = document.querySelectorAll('.option');
+                options.forEach((opt, i) => {
+                    if (i === correctIdx) opt.classList.add('correct-highlight');
+                    if (i === selectedIdx && selectedIdx !== correctIdx) opt.classList.add('wrong-highlight');
+                });
+                submitBtn.disabled = true;
+                skipBtn.disabled = true;
+                updateProgress();
+                setTimeout(() => {
+                    currentIndex++;
+                    displayQuestion(currentIndex);
+                }, 1500);
+            }
+
+            function skipQuestion() {
+                if (feedbackActive) return;
+                answers[currentIndex] = -1;
+                currentIndex++;
+                displayQuestion(currentIndex);
+            }
+
+            function showResults() {
+                questionCard.style.display = 'none';
+                resultCard.style.display = 'block';
+                let correct = 0, incorrect = 0, skipped = 0;
+                answers.forEach((ans, idx) => {
+                    if (ans === -1) skipped++;
+                    else if (ans === questions[idx].correct) correct++;
+                    else incorrect++;
+                });
+                document.getElementById('correct-count').textContent = correct;
+                document.getElementById('incorrect-count').textContent = incorrect;
+                document.getElementById('skipped-count').textContent = skipped;
+                const dots = document.querySelectorAll('.progress-dot');
+                dots.forEach((dot, idx) => {
+                    if (answers[idx] === -1) dot.classList.add('skipped');
+                });
+            }
+
+            submitBtn.addEventListener('click', submitAnswer);
+            skipBtn.addEventListener('click', skipQuestion);
+
+            displayQuestion(0);
+        })();
+    </script>
+</body>
+</html>

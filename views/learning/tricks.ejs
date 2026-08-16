@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Gel Premium Periodic Table</title>
+    <style>
+        /* Deep Dark Theme & Gel Glass Variables */
+        :root {
+            --bg-color: #03050a; 
+            --text-main: #d1d5db;
+            --text-heading: #ffffff;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0844;
+            --accent-gold: #fdfc47;
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            scroll-behavior: smooth;
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Animated Deep Dark Background */
+        body {
+            background: linear-gradient(-45deg, #050510, #130a1a, #05101a, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientBG 25s ease infinite;
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Molecule Canvas */
+        #molecule-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.7; 
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- GEL GLASSMORPHISM CLASS --- */
+        .glass-gel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 1px solid rgba(255, 255, 255, 0.15); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 2px 10px rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+        }
+
+        /* Hero Section */
+        header#hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        header#hero h1 {
+            font-size: 3.2rem;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        header#hero h1 span {
+            background: linear-gradient(to right, var(--accent-cyan), var(--accent-gold));
+            -webkit-background-clip: text;
+            background-clip: text;          /* ✅ standard property added */
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+        }
+
+        header#hero p {
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Premium Gel Buttons */
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-heading);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 2.2rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover, .btn.active {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(255, 8, 68, 0.3));
+            border-color: var(--accent-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
+            margin-bottom: 3rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Learning Cards */
+        section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-pink));
+        }
+
+        .card h3 {
+            color: var(--text-heading);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .trick-highlight {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.2rem 1.8rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0.5rem 0;
+            font-size: 1.25rem;
+            color: #fff;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .elem-symbol {
+            color: var(--accent-gold);
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(253, 252, 71, 0.3);
+        }
+
+        .meaning {
+            font-style: italic;
+            color: #9ca3af;
+            display: block;
+            margin-top: 1rem;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- DETAILED MAPPING BOXES --- */
+        .element-mapping {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 1rem;
+        }
+
+        .map-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            transition: all var(--transition);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.02);
+        }
+
+        .map-box:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .map-trick {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .map-symbol {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        .map-name {
+            font-size: 0.95rem;
+            color: #fff;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* ---------- NEW: BACK LINK (Gel style, top-left corner, glow hover) ---------- */
+        .back-link-gel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            color: #d1d5db;
+            text-decoration: none;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 242, 254, 0.2);
+            white-space: nowrap;
+        }
+        .back-link-gel:hover {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(255, 8, 68, 0.2));
+            border-color: rgba(0, 242, 254, 0.5);
+            color: #ffffff;
+            box-shadow: 0 0 22px rgba(0, 242, 254, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        .back-link-gel svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            header#hero { padding: 3rem 1.5rem; }
+            header#hero h1 { font-size: 2.3rem; }
+            .element-mapping { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .back-link-gel {
+                top: 12px;
+                left: 12px;
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            .back-link-gel svg { width: 14px; height: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ✅ BACK LINK TO LEARNING PAGE (top left corner) -->
+    <a href="/learning" class="back-link-gel" title="Back to Learning Dashboard" aria-label="Go back to Learning page">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back
+    </a>
+
+    <!-- Transparent Shiny Molecule Canvas -->
+    <canvas id="molecule-canvas"></canvas>
+
+    <main>
+        <!-- Gel Hero Section -->
+        <header id="hero" class="glass-gel">
+            <h1>Periodic Table <span>Mastery</span></h1>
+            <p>Experience deep dark premium gel design. Master the elements with Hinglish tricks effortlessly.</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-container">
+            <div class="tabs glass-gel">
+                <button class="btn active" onclick="openTab('s-block', this)">S-Block</button>
+                <button class="btn" onclick="openTab('p-block', this)">P-Block</button>
+                <button class="btn" onclick="openTab('d-block', this)">D-Block</button>
+                <button class="btn" onclick="openTab('f-block', this)">F-Block</button>
+            </div>
+        </nav>
+
+        <!-- S-Block Content -->
+        <section id="s-block" class="active">
+            <article class="card glass-gel">
+                <h3>Group 1 (Alkali Metals)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">H</span>a<span class="elem-symbol">Li</span> <span class="elem-symbol">Na</span> <span class="elem-symbol">K</span>i <span class="elem-symbol">Rb</span> se <span class="elem-symbol">Cs</span> <span class="elem-symbol">Fr</span>iyad
+                </div>
+                <span class="meaning">Meaning: Halina ki Rab se fariyad (Halina is praying to God).</span>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Ha"</div><div class="map-symbol">H</div><div class="map-name">Hydrogen</div></div>
+                    <div class="map-box"><div class="map-trick">"Li"</div><div class="map-symbol">Li</div><div class="map-name">Lithium</div></div>
+                    <div class="map-box"><div class="map-trick">"Na"</div><div class="map-symbol">Na</div><div class="map-name">Sodium</div></div>
+                    <div class="map-box"><div class="map-trick">"Ki"</div><div class="map-symbol">K</div><div class="map-name">Potassium</div></div>
+                    <div class="map-box"><div class="map-trick">"Rb"</div><div class="map-symbol">Rb</div><div class="map-name">Rubidium</div></div>
+                    <div class="map-box"><div class="map-trick">"se (Cs)"</div><div class="map-symbol">Cs</div><div class="map-name">Cesium</div></div>
+                    <div class="map-box"><div class="map-trick">"Friyad"</div><div class="map-symbol">Fr</div><div class="map-name">Francium</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Group 2 (Alkaline Earth Metals)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">Be</span>ta <span class="elem-symbol">Mg</span> (Mange) <span class="elem-symbol">Ca</span>r <span class="elem-symbol">Sr</span> (Scooter) <span class="elem-symbol">Ba</span>ap <span class="elem-symbol">Ra</span>zi
+                </div>
+                <span class="meaning">Meaning: Beta mange car scooter, baap razi.</span>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Beta"</div><div class="map-symbol">Be</div><div class="map-name">Beryllium</div></div>
+                    <div class="map-box"><div class="map-trick">"Mange"</div><div class="map-symbol">Mg</div><div class="map-name">Magnesium</div></div>
+                    <div class="map-box"><div class="map-trick">"Car"</div><div class="map-symbol">Ca</div><div class="map-name">Calcium</div></div>
+                    <div class="map-box"><div class="map-trick">"Scooter"</div><div class="map-symbol">Sr</div><div class="map-name">Strontium</div></div>
+                    <div class="map-box"><div class="map-trick">"Baap"</div><div class="map-symbol">Ba</div><div class="map-name">Barium</div></div>
+                    <div class="map-box"><div class="map-trick">"Razi"</div><div class="map-symbol">Ra</div><div class="map-name">Radium</div></div>
+                </div>
+            </article>
+        </section>
+
+        <!-- P-Block Content -->
+        <section id="p-block">
+            <article class="card glass-gel">
+                <h3>Group 13 (Boron Family)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">B</span>aingan <span class="elem-symbol">Al</span>oo <span class="elem-symbol">Ga</span>jar <span class="elem-symbol">In</span> <span class="elem-symbol">T</span>hai<span class="elem-symbol">l</span>a
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Baingan"</div><div class="map-symbol">B</div><div class="map-name">Boron</div></div>
+                    <div class="map-box"><div class="map-trick">"Aloo"</div><div class="map-symbol">Al</div><div class="map-name">Aluminum</div></div>
+                    <div class="map-box"><div class="map-trick">"Gajar"</div><div class="map-symbol">Ga</div><div class="map-name">Gallium</div></div>
+                    <div class="map-box"><div class="map-trick">"In"</div><div class="map-symbol">In</div><div class="map-name">Indium</div></div>
+                    <div class="map-box"><div class="map-trick">"Thaila"</div><div class="map-symbol">Tl</div><div class="map-name">Thallium</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Group 14 (Carbon Family)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">C</span>ahe <span class="elem-symbol">Si</span>v <span class="elem-symbol">Ge</span> (Ji) <span class="elem-symbol">Sn</span>uno <span class="elem-symbol">Pb</span>rabhu
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Cahe"</div><div class="map-symbol">C</div><div class="map-name">Carbon</div></div>
+                    <div class="map-box"><div class="map-trick">"Siv"</div><div class="map-symbol">Si</div><div class="map-name">Silicon</div></div>
+                    <div class="map-box"><div class="map-trick">"Ge (Ji)"</div><div class="map-symbol">Ge</div><div class="map-name">Germanium</div></div>
+                    <div class="map-box"><div class="map-trick">"Snuno"</div><div class="map-symbol">Sn</div><div class="map-name">Tin</div></div>
+                    <div class="map-box"><div class="map-trick">"Pbrabhu"</div><div class="map-symbol">Pb</div><div class="map-name">Lead</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Group 15 (Nitrogen Family)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">N</span>ana <span class="elem-symbol">P</span>atekar <span class="elem-symbol">As</span>rani <span class="elem-symbol">Sb</span> (Sab) <span class="elem-symbol">Bi</span>mar
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Nana"</div><div class="map-symbol">N</div><div class="map-name">Nitrogen</div></div>
+                    <div class="map-box"><div class="map-trick">"Patekar"</div><div class="map-symbol">P</div><div class="map-name">Phosphorus</div></div>
+                    <div class="map-box"><div class="map-trick">"Asrani"</div><div class="map-symbol">As</div><div class="map-name">Arsenic</div></div>
+                    <div class="map-box"><div class="map-trick">"Sb (Sab)"</div><div class="map-symbol">Sb</div><div class="map-name">Antimony</div></div>
+                    <div class="map-box"><div class="map-trick">"Bimar"</div><div class="map-symbol">Bi</div><div class="map-name">Bismuth</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Group 16 (Oxygen Family)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">O</span> <span class="elem-symbol">S</span>tyle <span class="elem-symbol">Se</span> <span class="elem-symbol">Te</span> <span class="elem-symbol">Po</span>
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"O"</div><div class="map-symbol">O</div><div class="map-name">Oxygen</div></div>
+                    <div class="map-box"><div class="map-trick">"Style"</div><div class="map-symbol">S</div><div class="map-name">Sulfur</div></div>
+                    <div class="map-box"><div class="map-trick">"Se"</div><div class="map-symbol">Se</div><div class="map-name">Selenium</div></div>
+                    <div class="map-box"><div class="map-trick">"Te"</div><div class="map-symbol">Te</div><div class="map-name">Tellurium</div></div>
+                    <div class="map-box"><div class="map-trick">"Po"</div><div class="map-symbol">Po</div><div class="map-name">Polonium</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Group 17 (Halogens)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">F</span>ir <span class="elem-symbol">Cl</span> (Kal) <span class="elem-symbol">Br</span> (Bahar) <span class="elem-symbol">I</span> (Aayi) <span class="elem-symbol">At</span> (Aunty)
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Fir"</div><div class="map-symbol">F</div><div class="map-name">Fluorine</div></div>
+                    <div class="map-box"><div class="map-trick">"Kal"</div><div class="map-symbol">Cl</div><div class="map-name">Chlorine</div></div>
+                    <div class="map-box"><div class="map-trick">"Bahar"</div><div class="map-symbol">Br</div><div class="map-name">Bromine</div></div>
+                    <div class="map-box"><div class="map-trick">"Aayi"</div><div class="map-symbol">I</div><div class="map-name">Iodine</div></div>
+                    <div class="map-box"><div class="map-trick">"Aunty"</div><div class="map-symbol">At</div><div class="map-name">Astatine</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Group 18 (Noble Gases)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">He</span>na <span class="elem-symbol">Ne</span>ha <span class="elem-symbol">Ar</span> (Aur) <span class="elem-symbol">Kr</span>eena <span class="elem-symbol">Xe</span> (ka X-ray) <span class="elem-symbol">Rn</span> (Rangeen)
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Hena"</div><div class="map-symbol">He</div><div class="map-name">Helium</div></div>
+                    <div class="map-box"><div class="map-trick">"Neha"</div><div class="map-symbol">Ne</div><div class="map-name">Neon</div></div>
+                    <div class="map-box"><div class="map-trick">"Aur"</div><div class="map-symbol">Ar</div><div class="map-name">Argon</div></div>
+                    <div class="map-box"><div class="map-trick">"Kreena"</div><div class="map-symbol">Kr</div><div class="map-name">Krypton</div></div>
+                    <div class="map-box"><div class="map-trick">"X-ray"</div><div class="map-symbol">Xe</div><div class="map-name">Xenon</div></div>
+                    <div class="map-box"><div class="map-trick">"Rangeen"</div><div class="map-symbol">Rn</div><div class="map-name">Radon</div></div>
+                </div>
+            </article>
+        </section>
+
+        <!-- D-Block Content -->
+        <section id="d-block">
+            <article class="card glass-gel">
+                <h3>4th Period (3d Series)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">Sc</span>uno <span class="elem-symbol">Ti</span>m <span class="elem-symbol">V</span>ivah <span class="elem-symbol">Cr</span>lo <span class="elem-symbol">Mn</span>ujhse, <span class="elem-symbol">Fe</span>r <span class="elem-symbol">Co</span>i <span class="elem-symbol">Ni</span>ahi kahega <span class="elem-symbol">Cu</span> (Kyun) <span class="elem-symbol">Zn</span>andu
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Scuno"</div><div class="map-symbol">Sc</div><div class="map-name">Scandium</div></div>
+                    <div class="map-box"><div class="map-trick">"Tim"</div><div class="map-symbol">Ti</div><div class="map-name">Titanium</div></div>
+                    <div class="map-box"><div class="map-trick">"Vivah"</div><div class="map-symbol">V</div><div class="map-name">Vanadium</div></div>
+                    <div class="map-box"><div class="map-trick">"Crlo"</div><div class="map-symbol">Cr</div><div class="map-name">Chromium</div></div>
+                    <div class="map-box"><div class="map-trick">"Mnujhse"</div><div class="map-symbol">Mn</div><div class="map-name">Manganese</div></div>
+                    <div class="map-box"><div class="map-trick">"Fer"</div><div class="map-symbol">Fe</div><div class="map-name">Iron</div></div>
+                    <div class="map-box"><div class="map-trick">"Coi"</div><div class="map-symbol">Co</div><div class="map-name">Cobalt</div></div>
+                    <div class="map-box"><div class="map-trick">"Niahi"</div><div class="map-symbol">Ni</div><div class="map-name">Nickel</div></div>
+                    <div class="map-box"><div class="map-trick">"Cu (Kyun)"</div><div class="map-symbol">Cu</div><div class="map-name">Copper</div></div>
+                    <div class="map-box"><div class="map-trick">"Znandu"</div><div class="map-symbol">Zn</div><div class="map-name">Zinc</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>5th Period (4d Series)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">Y</span>aari <span class="elem-symbol">Zr</span>ara <span class="elem-symbol">Nb</span>ibhana <span class="elem-symbol">Mo</span>ut <span class="elem-symbol">Tc</span>ak, <span class="elem-symbol">Ru</span>kawat <span class="elem-symbol">Rh</span>aah me <span class="elem-symbol">Pd</span>e toh <span class="elem-symbol">Ag</span>aay <span class="elem-symbol">Cd</span>ood jana
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Yaari"</div><div class="map-symbol">Y</div><div class="map-name">Yttrium</div></div>
+                    <div class="map-box"><div class="map-trick">"Zrara"</div><div class="map-symbol">Zr</div><div class="map-name">Zirconium</div></div>
+                    <div class="map-box"><div class="map-trick">"Nbibhana"</div><div class="map-symbol">Nb</div><div class="map-name">Niobium</div></div>
+                    <div class="map-box"><div class="map-trick">"Mout"</div><div class="map-symbol">Mo</div><div class="map-name">Molybdenum</div></div>
+                    <div class="map-box"><div class="map-trick">"Tcak"</div><div class="map-symbol">Tc</div><div class="map-name">Technetium</div></div>
+                    <div class="map-box"><div class="map-trick">"Rukawat"</div><div class="map-symbol">Ru</div><div class="map-name">Ruthenium</div></div>
+                    <div class="map-box"><div class="map-trick">"Rhaah"</div><div class="map-symbol">Rh</div><div class="map-name">Rhodium</div></div>
+                    <div class="map-box"><div class="map-trick">"Pde"</div><div class="map-symbol">Pd</div><div class="map-name">Palladium</div></div>
+                    <div class="map-box"><div class="map-trick">"Agaay"</div><div class="map-symbol">Ag</div><div class="map-name">Silver</div></div>
+                    <div class="map-box"><div class="map-trick">"Cdood"</div><div class="map-symbol">Cd</div><div class="map-name">Cadmium</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>6th Period (5d Series)</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">La</span> <span class="elem-symbol">Hf</span> <span class="elem-symbol">Ta</span> (Hafta) <span class="elem-symbol">W</span>arna <span class="elem-symbol">Re</span> <span class="elem-symbol">Os</span> (Us) <span class="elem-symbol">Ir</span>on rod se <span class="elem-symbol">Pt</span>itega <span class="elem-symbol">Au</span>r <span class="elem-symbol">Hg</span>asega
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"La"</div><div class="map-symbol">La</div><div class="map-name">Lanthanum</div></div>
+                    <div class="map-box"><div class="map-trick">"Hf"</div><div class="map-symbol">Hf</div><div class="map-name">Hafnium</div></div>
+                    <div class="map-box"><div class="map-trick">"Ta"</div><div class="map-symbol">Ta</div><div class="map-name">Tantalum</div></div>
+                    <div class="map-box"><div class="map-trick">"Warna"</div><div class="map-symbol">W</div><div class="map-name">Tungsten</div></div>
+                    <div class="map-box"><div class="map-trick">"Re"</div><div class="map-symbol">Re</div><div class="map-name">Rhenium</div></div>
+                    <div class="map-box"><div class="map-trick">"Os (Us)"</div><div class="map-symbol">Os</div><div class="map-name">Osmium</div></div>
+                    <div class="map-box"><div class="map-trick">"Iron"</div><div class="map-symbol">Ir</div><div class="map-name">Iridium</div></div>
+                    <div class="map-box"><div class="map-trick">"Ptitega"</div><div class="map-symbol">Pt</div><div class="map-name">Platinum</div></div>
+                    <div class="map-box"><div class="map-trick">"Aur"</div><div class="map-symbol">Au</div><div class="map-name">Gold</div></div>
+                    <div class="map-box"><div class="map-trick">"Hgasega"</div><div class="map-symbol">Hg</div><div class="map-name">Mercury</div></div>
+                </div>
+            </article>
+        </section>
+
+        <!-- F-Block Content -->
+        <section id="f-block">
+            <article class="card glass-gel">
+                <h3>Lanthanide Series</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">Ce</span>ene <span class="elem-symbol">Pr</span> <span class="elem-symbol">Nd</span>iya <span class="elem-symbol">Pm</span>rem ki <span class="elem-symbol">Sm</span>amayi, <span class="elem-symbol">Eu</span>n <span class="elem-symbol">Gd</span>adgad <span class="elem-symbol">Tb</span>ab <span class="elem-symbol">Dy</span>il <span class="elem-symbol">Ho</span>ua, <span class="elem-symbol">Er</span>ur (Aur) <span class="elem-symbol">Tm</span>um <span class="elem-symbol">Yb</span>ahan <span class="elem-symbol">Lu</span>aute
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Ceene"</div><div class="map-symbol">Ce</div><div class="map-name">Cerium</div></div>
+                    <div class="map-box"><div class="map-trick">"Pr"</div><div class="map-symbol">Pr</div><div class="map-name">Praseodymium</div></div>
+                    <div class="map-box"><div class="map-trick">"Ndiya"</div><div class="map-symbol">Nd</div><div class="map-name">Neodymium</div></div>
+                    <div class="map-box"><div class="map-trick">"Pmrem"</div><div class="map-symbol">Pm</div><div class="map-name">Promethium</div></div>
+                    <div class="map-box"><div class="map-trick">"Smamayi"</div><div class="map-symbol">Sm</div><div class="map-name">Samarium</div></div>
+                    <div class="map-box"><div class="map-trick">"Eun"</div><div class="map-symbol">Eu</div><div class="map-name">Europium</div></div>
+                    <div class="map-box"><div class="map-trick">"Gdadgad"</div><div class="map-symbol">Gd</div><div class="map-name">Gadolinium</div></div>
+                    <div class="map-box"><div class="map-trick">"Tbab"</div><div class="map-symbol">Tb</div><div class="map-name">Terbium</div></div>
+                    <div class="map-box"><div class="map-trick">"Dyil"</div><div class="map-symbol">Dy</div><div class="map-name">Dysprosium</div></div>
+                    <div class="map-box"><div class="map-trick">"Houa"</div><div class="map-symbol">Ho</div><div class="map-name">Holmium</div></div>
+                    <div class="map-box"><div class="map-trick">"Erur"</div><div class="map-symbol">Er</div><div class="map-name">Erbium</div></div>
+                    <div class="map-box"><div class="map-trick">"Tmum"</div><div class="map-symbol">Tm</div><div class="map-name">Thulium</div></div>
+                    <div class="map-box"><div class="map-trick">"Ybahan"</div><div class="map-symbol">Yb</div><div class="map-name">Ytterbium</div></div>
+                    <div class="map-box"><div class="map-trick">"Luaute"</div><div class="map-symbol">Lu</div><div class="map-name">Lutetium</div></div>
+                </div>
+            </article>
+            <article class="card glass-gel">
+                <h3>Actinide Series</h3>
+                <div class="trick-highlight">
+                    <span class="elem-symbol">Th</span>oda <span class="elem-symbol">Pa</span>apad <span class="elem-symbol">U</span> <span class="elem-symbol">Np</span>apo, <span class="elem-symbol">Pu</span>rane <span class="elem-symbol">Am</span>aam <span class="elem-symbol">Cm</span>am <span class="elem-symbol">Bk</span>ikenge, <span class="elem-symbol">Cf</span>offee <span class="elem-symbol">Es</span>aise <span class="elem-symbol">Fm</span>armao, <span class="elem-symbol">Md</span>adam <span class="elem-symbol">No</span>asta <span class="elem-symbol">Lr</span>ao
+                </div>
+                <div class="element-mapping">
+                    <div class="map-box"><div class="map-trick">"Thoda"</div><div class="map-symbol">Th</div><div class="map-name">Thorium</div></div>
+                    <div class="map-box"><div class="map-trick">"Paapad"</div><div class="map-symbol">Pa</div><div class="map-name">Protactinium</div></div>
+                    <div class="map-box"><div class="map-trick">"U"</div><div class="map-symbol">U</div><div class="map-name">Uranium</div></div>
+                    <div class="map-box"><div class="map-trick">"Npapo"</div><div class="map-symbol">Np</div><div class="map-name">Neptunium</div></div>
+                    <div class="map-box"><div class="map-trick">"Purane"</div><div class="map-symbol">Pu</div><div class="map-name">Plutonium</div></div>
+                    <div class="map-box"><div class="map-trick">"Amaam"</div><div class="map-symbol">Am</div><div class="map-name">Americium</div></div>
+                    <div class="map-box"><div class="map-trick">"Cmam"</div><div class="map-symbol">Cm</div><div class="map-name">Curium</div></div>
+                    <div class="map-box"><div class="map-trick">"Bkikenge"</div><div class="map-symbol">Bk</div><div class="map-name">Berkelium</div></div>
+                    <div class="map-box"><div class="map-trick">"Cfoffee"</div><div class="map-symbol">Cf</div><div class="map-name">Californium</div></div>
+                    <div class="map-box"><div class="map-trick">"Esaise"</div><div class="map-symbol">Es</div><div class="map-name">Einsteinium</div></div>
+                    <div class="map-box"><div class="map-trick">"Fmarmao"</div><div class="map-symbol">Fm</div><div class="map-name">Fermium</div></div>
+                    <div class="map-box"><div class="map-trick">"Mdadam"</div><div class="map-symbol">Md</div><div class="map-name">Mendelevium</div></div>
+                    <div class="map-box"><div class="map-trick">"Noasta"</div><div class="map-symbol">No</div><div class="map-name">Nobelium</div></div>
+                    <div class="map-box"><div class="map-trick">"Lrao"</div><div class="map-symbol">Lr</div><div class="map-name">Lawrencium</div></div>
+                </div>
+            </article>
+        </section>
+
+    </main>
+
+    <script>
+        // Tab switching logic
+        function openTab(tabId, btnElement) {
+            document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tabs .btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        // --- Deep Dark Theme Molecule Canvas Animation ---
+        const canvas = document.getElementById('molecule-canvas');
+        const ctx = canvas.getContext('2d');
+        let atomsArray;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Atom {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1; 
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                // Subtle cyan atoms for dark theme
+                ctx.fillStyle = 'rgba(0, 242, 254, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initCanvas() {
+            atomsArray = [];
+            let numOfAtoms = (canvas.height * canvas.width) / 10000;
+            for (let i = 0; i < numOfAtoms; i++) {
+                atomsArray.push(new Atom());
+            }
+        }
+
+        function animateMolecules() {
+            requestAnimationFrame(animateMolecules);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < atomsArray.length; i++) {
+                atomsArray[i].update();
+                atomsArray[i].draw();
+                
+                // Draw Molecule Bonds
+                for (let j = i; j < atomsArray.length; j++) {
+                    let dx = atomsArray[i].x - atomsArray[j].x;
+                    let dy = atomsArray[i].y - atomsArray[j].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) { 
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance/1000})`; // Very faint white lines
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(atomsArray[i].x, atomsArray[i].y);
+                        ctx.lineTo(atomsArray[j].x, atomsArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initCanvas();
+        });
+
+        initCanvas();
+        animateMolecules();
+    </script>
+</body>
+</html>

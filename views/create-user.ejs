@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChemLabs | Interactive Periodic Table & Chemistry Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-color: #060913;
+            background-image: 
+                linear-gradient(rgba(0, 242, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 254, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(0, 242, 254, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(79, 172, 254, 0.2) 0%, transparent 45%),
+                linear-gradient(135deg, transparent 40%, rgba(0, 242, 254, 0.15) 50%, transparent 60%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ======== MOLECULE BACKGROUND ELEMENTS ======== */
+        .molecule-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .molecule {
+            position: absolute;
+            filter: drop-shadow(0 0 15px rgba(0, 242, 254, 0.9));
+            opacity: 0.85;
+            animation: floatMol 15s infinite linear;
+        }
+
+        .mol-1 { top: 15%; left: 10%; width: 150px; animation-duration: 20s; }
+        .mol-2 { bottom: 15%; right: 10%; width: 200px; animation-duration: 25s; animation-direction: reverse; }
+        .mol-3 { top: 20%; right: 20%; width: 120px; animation-duration: 18s; animation-delay: -5s; }
+        .mol-4 { bottom: 20%; left: 15%; width: 160px; animation-duration: 22s; animation-delay: -10s; }
+
+        @keyframes floatMol {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            33% { transform: translateY(-30px) rotate(10deg) scale(1.05); }
+            66% { transform: translateY(20px) rotate(-10deg) scale(0.95); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        .atom { transform-origin: center; animation: pulseAtom 3s infinite alternate; }
+        .bond { stroke-dasharray: 5; animation: reactBond 5s infinite linear; stroke-width: 2.5px; }
+
+        @keyframes pulseAtom {
+            0% { r: 5; opacity: 0.8; }
+            100% { r: 8; opacity: 1; filter: drop-shadow(0 0 12px #00f2fe); }
+        }
+        @keyframes reactBond { to { stroke-dashoffset: 20; } }
+
+        .bg-text {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.15);
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 3rem;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+            animation: floatText 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatText {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-20px); }
+        }
+
+        /* ======== ULTRA PREMIUM GLASSGEL SHINE BOX ======== */
+        .glass-wrapper {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            z-index: 10;
+            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.8), rgba(255, 255, 255, 0.1), rgba(79, 172, 254, 0.8));
+            background-size: 200% 200%;
+            animation: borderShine 4s ease infinite;
+            padding: 2px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 242, 254, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .glass-wrapper:hover {
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 60px rgba(0, 242, 254, 0.6);
+            transform: translateY(-5px);
+        }
+
+        @keyframes borderShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .registration-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
+            border-radius: 24px;
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .registration-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -150%;
+            width: 50%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(35deg);
+            animation: ultraGelShine 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        @keyframes ultraGelShine {
+            0% { left: -150%; opacity: 0; }
+            15% { opacity: 1; }
+            30% { left: 200%; opacity: 0; }
+            100% { left: 200%; opacity: 0; }
+        }
+
+        .form-viewport {
+            display: flex;
+            width: 300%;
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .form-page {
+            width: 33.333%;
+            padding: 50px 40px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.8);
+        }
+        
+        .sub-text {
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            outline: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 3px 10px rgba(0,0,0,0.8);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .input-group input:focus {
+            border-color: rgba(0, 242, 254, 1);
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6), inset 0 3px 10px rgba(0,0,0,0.8);
+            transform: translateY(-2px);
+        }
+
+        .action-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .action-area.single-right {
+            justify-content: flex-end;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .icon-btn:hover {
+            background: rgba(0, 242, 254, 0.4);
+            transform: scale(1.15) rotate(5deg);
+            border-color: #00f2fe;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.7);
+        }
+
+        .create-user-btn {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border: none;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 35px rgba(0, 242, 254, 0.8), inset 0 -3px 15px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .create-user-btn:hover {
+            transform: scale(1.2) translateY(-3px);
+            box-shadow: 0 15px 45px rgba(0, 242, 254, 1), inset 0 -3px 15px rgba(0,0,0,0.3);
+        }
+
+        .login-redirect {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .login-redirect a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: rgba(0, 242, 254, 0.15);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 242, 254, 0.5);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+            display: inline-block;
+        }
+
+        .login-redirect a:hover {
+            background: rgba(0, 242, 254, 0.3);
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+            text-shadow: 0 0 15px #fff;
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            pointer-events: none;
+            z-index: 5;
+            letter-spacing: 0.5px;
+            width: 100%;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        /* Error message styling */
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+            text-align: left;
+        }
+
+        @media (max-width: 480px) {
+            .form-page { padding: 40px 25px; }
+            h2 { font-size: 1.6rem; }
+            .bg-text { font-size: 2rem; }
+            .icon-btn, .create-user-btn { width: 55px; height: 55px; }
+            .mol-1 { width: 100px; } .mol-2 { width: 130px; }
+            .mol-3 { width: 80px; } .mol-4 { width: 110px; }
+        }
+    </style>
+<!-- Essential SEO Meta Tags -->
+<% 
+  const pageTitle = typeof title !== 'undefined' ? title : 'My Website';
+  const pageDesc = typeof description !== 'undefined' ? description : 'Welcome to our website';
+%>
+<title><%= pageTitle %></title>
+<meta name="title" content="<%= pageTitle %>">
+<meta name="description" content="<%= pageDesc %>">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="og:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="og:image" content="<%= image %>"><% } %>
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary">
+<meta property="twitter:title" content="<%= pageTitle %>">
+<meta property="twitter:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="twitter:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="twitter:image" content="<%= image %>"><% } %>
+
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+
+    <div class="bg-text" style="top: 10%; left: 10%; animation-delay: 0s;">H</div>
+    <div class="bg-text" style="top: 25%; left: 80%; animation-delay: 0.3s;">Li</div>
+    <div class="bg-text" style="bottom: 30%; left: 10%; animation-delay: 0.7s;">C</div>
+    <div class="bg-text" style="bottom: 15%; right: 15%; animation-delay: 0.2s;">O</div>
+
+    <div class="molecule-container">
+        <svg class="molecule mol-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <line class="bond" x1="20" y1="50" x2="50" y2="20" stroke="rgba(0, 242, 254, 0.8)" stroke-width="2.5"/>
+            <line class="bond" x1="50" y1="20" x2="80" y2="50" stroke="rgba(0, 242, 254, 0.8)" stroke-width="2.5"/>
+            <line class="bond" x1="50" y1="20" x2="50" y2="80" stroke="rgba(0, 242, 254, 0.8)" stroke-width="2.5"/>
+            <circle class="atom" cx="20" cy="50" r="5" fill="#00f2fe" />
+            <circle class="atom" cx="50" cy="20" r="7" fill="#4facfe" />
+            <circle class="atom" cx="80" cy="50" r="5" fill="#00f2fe" />
+            <circle class="atom" cx="50" cy="80" r="6" fill="#4facfe" />
+        </svg>
+        <svg class="molecule mol-2" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="bond" points="60,20 100,50 100,90 60,110 20,90 20,50" fill="none" stroke="rgba(0, 242, 254, 0.7)" stroke-width="2.5"/>
+            <line class="bond" x1="60" y1="65" x2="60" y2="20" stroke="rgba(0, 242, 254, 0.7)" stroke-width="2.5"/>
+            <line class="bond" x1="60" y1="65" x2="20" y2="90" stroke="rgba(0, 242, 254, 0.7)" stroke-width="2.5"/>
+            <line class="bond" x1="60" y1="65" x2="100" y2="90" stroke="rgba(0, 242, 254, 0.7)" stroke-width="2.5"/>
+            <circle class="atom" cx="60" cy="20" r="6" fill="#00f2fe"/>
+            <circle class="atom" cx="100" cy="50" r="4" fill="#4facfe"/>
+            <circle class="atom" cx="100" cy="90" r="5" fill="#00f2fe"/>
+            <circle class="atom" cx="60" cy="110" r="4" fill="#4facfe"/>
+            <circle class="atom" cx="20" cy="90" r="5" fill="#00f2fe"/>
+            <circle class="atom" cx="20" cy="50" r="4" fill="#4facfe"/>
+            <circle class="atom" cx="60" cy="65" r="8" fill="#fff" opacity="0.9"/>
+        </svg>
+        <svg class="molecule mol-3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <line class="bond" x1="10" y1="50" x2="90" y2="50" stroke="rgba(0, 242, 254, 0.7)" stroke-width="2.5"/>
+            <line class="bond" x1="50" y1="10" x2="50" y2="90" stroke="rgba(0, 242, 254, 0.7)" stroke-width="2.5"/>
+            <circle class="atom" cx="10" cy="50" r="5" fill="#4facfe"/>
+            <circle class="atom" cx="90" cy="50" r="5" fill="#4facfe"/>
+            <circle class="atom" cx="50" cy="10" r="5" fill="#00f2fe"/>
+            <circle class="atom" cx="50" cy="90" r="5" fill="#00f2fe"/>
+            <circle class="atom" cx="50" cy="50" r="7" fill="#fff" opacity="0.8"/>
+        </svg>
+        <svg class="molecule mol-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polyline class="bond" points="20,80 50,20 80,80" fill="none" stroke="rgba(0, 242, 254, 0.8)" stroke-width="2.5"/>
+            <line class="bond" x1="50" y1="60" x2="50" y2="20" stroke="rgba(0, 242, 254, 0.8)" stroke-width="2.5"/>
+            <circle class="atom" cx="20" cy="80" r="6" fill="#00f2fe"/>
+            <circle class="atom" cx="80" cy="80" r="6" fill="#00f2fe"/>
+            <circle class="atom" cx="50" cy="20" r="7" fill="#4facfe"/>
+            <circle class="atom" cx="50" cy="60" r="5" fill="#fff"/>
+        </svg>
+    </div>
+
+    <div class="glass-wrapper">
+        <div class="registration-box">
+            <form id="masterForm" action="/register" method="POST">
+                <div class="form-viewport" id="viewport">
+                    
+                    <!-- STEP 1: Full Name -->
+                    <div class="form-page">
+                        <h2>Step 1</h2>
+                        <div class="sub-text">Enter Your Full Name</div>
+                        <div class="input-group">
+                            <input type="text" name="name" id="name" placeholder="Full Name" minlength="3" required>
+                        </div>
+                        
+                        <div class="action-area single-right">
+                            <button type="button" class="icon-btn" id="nextToStep2" title="Next Step">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="login-redirect">
+                            <a href="/login">Log into existing account</a>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Username -->
+                    <div class="form-page">
+                        <h2>Step 2</h2>
+                        <div class="sub-text">Choose a Username</div>
+                        <div class="input-group">
+                            <input type="text" name="username" id="username" placeholder="Username" minlength="3" required>
+                            <!-- Error message yahan show hoga -->
+                            <p id="usernameError" class="error-msg"></p>
+                        </div>
+                        
+                        <div class="action-area">
+                            <button type="button" class="icon-btn" id="backToStep1" title="Go Back">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                            </button>
+                            <button type="button" class="icon-btn" id="nextToStep3" title="Next Step">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="login-redirect">
+                            <a href="/login">Log into existing account</a>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Password & Submit -->
+                    <div class="form-page">
+                        <h2>Final Step</h2>
+                        <div class="sub-text">Create Strong Password</div>
+                        <div class="input-group">
+                            <input type="password" name="password" id="password" placeholder="Password" minlength="3" required>
+                        </div>
+                        
+                        <div class="action-area">
+                            <button type="button" class="icon-btn" id="backToStep2" title="Go Back">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                            </button>
+                            <button type="submit" class="create-user-btn" title="Submit Form">
+                                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6L9 17l-5-5"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="login-redirect">
+                            <a href="/login">Log into existing account</a>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        Ultra Glass Gel Edition <br>
+        Modern UI / UX Synthesized
+    </div>
+
+    <script>
+        const viewport = document.getElementById('viewport');
+        const masterForm = document.getElementById('masterForm');
+        
+        const nameInput = document.getElementById('name');
+        const usernameInput = document.getElementById('username');
+        const usernameError = document.getElementById('usernameError');
+        
+        const nextToStep2 = document.getElementById('nextToStep2');
+        const nextToStep3 = document.getElementById('nextToStep3');
+        const backToStep1 = document.getElementById('backToStep1');
+        const backToStep2 = document.getElementById('backToStep2');
+        
+        nextToStep2.addEventListener('click', () => {
+            if(nameInput.checkValidity()) {
+                viewport.style.transform = 'translateX(-33.333%)';
+            } else {
+                masterForm.reportValidity();
+            }
+        });
+
+        nextToStep3.addEventListener('click', () => {
+            if(usernameInput.checkValidity()) {
+                viewport.style.transform = 'translateX(-66.666%)';
+            } else {
+                masterForm.reportValidity();
+            }
+        });
+
+        backToStep1.addEventListener('click', () => {
+            viewport.style.transform = 'translateX(0%)';
+        });
+
+        backToStep2.addEventListener('click', () => {
+            viewport.style.transform = 'translateX(-33.333%)';
+        });
+
+        // AJAX submission
+        masterForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            usernameError.style.display = 'none'; // Hide any previous error
+
+            const formData = new FormData(masterForm);
+            const payload = {
+                name: formData.get('name'),
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Successful registration – redirect to home
+                    window.location.href = data.redirect || '/home';
+                } else {
+                    // Show error and go back to step 2 (username)
+                    usernameError.textContent = data.error;
+                    usernameError.style.display = 'block';
+                    viewport.style.transform = 'translateX(-33.333%)';  // back to step 2
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                usernameError.textContent = 'Network error, please try again.';
+                usernameError.style.display = 'block';
+                viewport.style.transform = 'translateX(-33.333%)';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ASR PERIODIC TABLE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-color: #050914; 
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(162, 0, 255, 0.1) 0%, transparent 40%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* ---------------- BACKGROUND ELEMENTS ---------------- */
+        .bg-grid {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-element {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px; height: 40px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 6px;
+            background: rgba(0, 242, 254, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            font-weight: 600;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.1);
+            animation: floatElements 3s ease-in-out infinite alternate;
+        }
+
+        .el-1 { top: 15%; left: 10%; }
+        .el-2 { top: 35%; left: 8%; }
+        .el-3 { top: 55%; left: 12%; animation-delay: 0.5s; }
+        .el-4 { top: 75%; left: 10%; animation-delay: 1s; }
+        .el-5 { top: 15%; right: 10%; border-color: rgba(162, 0, 255, 0.3); color: #c480ff; animation-delay: 0.3s;}
+        .el-6 { top: 35%; right: 8%; border-color: rgba(162, 0, 255, 0.3); color: #c480ff; animation-delay: 0.8s;}
+        .el-7 { top: 55%; right: 12%; border-color: rgba(162, 0, 255, 0.3); color: #c480ff; }
+        .el-8 { top: 75%; right: 15%; border-color: #ff007f; color: #ff80bf; width: 50px; height: 50px; font-size: 1.5rem; border-radius: 10px;}
+
+        @keyframes floatElements {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        /* ---------------- FLASKS ---------------- */
+        .flask {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            border: 2px solid rgba(0, 242, 254, 0.6);
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-top: none;
+            z-index: 5;
+        }
+        .flask::before {
+            content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            width: 10px; height: 12px; border: 2px solid rgba(0, 242, 254, 0.6); border-bottom: none;
+        }
+        .flask::after {
+            content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            width: 16px; height: 2px; background: rgba(0, 242, 254, 0.6);
+        }
+        .flask-top-left { top: 30px; left: 30px; }
+        .flask-bottom-right { bottom: 30px; right: 30px; }
+
+        /* ---------------- TOP RIGHT AUTH BUTTONS ---------------- */
+        .auth-buttons {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .auth-btn {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 8px 22px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.05);
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), rgba(0,0,0,0.2));
+        }
+
+        .auth-btn:hover {
+            border-color: #00f2fe;
+            color: #00f2fe;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4), inset 0 0 12px rgba(0, 242, 254, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .auth-btn.logout {
+            border-color: rgba(255, 80, 80, 0.5);
+        }
+        .auth-btn.logout:hover {
+            border-color: #ff5050;
+            color: #ff5050;
+            box-shadow: 0 0 20px rgba(255, 80, 80, 0.4), inset 0 0 12px rgba(255, 80, 80, 0.2);
+        }
+
+        .auth-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* ---------------- MAIN GLASS PANEL ---------------- */
+        .glass-panel {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 40px 60px;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .glass-panel::-webkit-scrollbar { width: 5px; }
+        .glass-panel::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.3); border-radius: 10px; }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        .btn-start {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.6);
+            color: #00f2fe;
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2), inset 0 0 10px rgba(0, 242, 254, 0.1);
+            margin-bottom: 30px;
+        }
+        .btn-start:hover {
+            background: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), inset 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        /* ---------------- 3D GEL CARDS (BUBBLES) ---------------- */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 50px;
+            row-gap: 30px;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: 0.4s ease;
+            text-decoration: none;
+        }
+        
+        .nav-item:hover {
+            transform: translateX(10px) scale(1.05);
+        }
+
+        .gel-sphere {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                inset 10px 10px 20px rgba(255, 255, 255, 0.2),
+                inset -10px -10px 20px rgba(0, 242, 254, 0.15),
+                0 15px 25px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(0, 242, 254, 0.3);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .gel-sphere::before {
+            content: ''; position: absolute; top: 4px; left: 15%; width: 70%; height: 35%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 50%; pointer-events: none;
+        }
+
+        .gel-sphere svg {
+            width: 35px;
+            height: 35px;
+            stroke: #00f2fe;
+            stroke-width: 1.5;
+            fill: none;
+            filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.5));
+        }
+
+        .item-text {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 1.4;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* ---------------- PRIVACY POLICY LINK (BOTTOM) ---------------- */
+        .privacy-link {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(5px);
+            border: 1px solid transparent;
+        }
+
+        .privacy-link:hover {
+            color: #00f2fe;
+            text-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+            border-color: rgba(0, 242, 254, 0.5);
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        /* ---------------- FOOTER (original text removed, now only privacy link) ---------------- */
+        .footer-text {
+            display: none; /* hidden, replaced by privacy link */
+        }
+
+        /* ================= MOBILE RESPONSIVENESS ================= */
+        @media (max-width: 768px) {
+            .auth-buttons {
+                top: 15px;
+                right: 15px;
+                gap: 8px;
+            }
+            .auth-btn {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+            }
+            .auth-btn svg { width: 14px; height: 14px; }
+
+            .glass-panel {
+                padding: 30px 20px;
+                border-radius: 16px;
+            }
+
+            h2 { font-size: 1.2rem; }
+            .btn-start { padding: 8px 20px; font-size: 0.9rem; }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+                row-gap: 20px;
+            }
+
+            .nav-item { gap: 15px; }
+
+            .gel-sphere {
+                width: 65px; height: 65px;
+            }
+            .gel-sphere svg { width: 28px; height: 28px; }
+
+            .item-text { font-size: 0.9rem; }
+
+            .el-1, .el-4, .el-5, .el-8 { display: none; }
+            .el-2, .el-3, .el-6, .el-7 {
+                width: 30px; height: 30px; font-size: 0.8rem;
+            }
+
+            .flask { transform: scale(0.7); }
+            .flask-top-left { top: 15px; left: 15px; }
+            .flask-bottom-right { bottom: 35px; right: 15px; }
+
+            .privacy-link { bottom: 10px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="flask flask-top-left"></div>
+    <div class="flask flask-bottom-right"></div>
+
+    <div class="bg-element el-1">H</div>
+    <div class="bg-element el-2">Li</div>
+    <div class="bg-element el-3">Na</div>
+    <div class="bg-element el-4">K</div>
+    <div class="bg-element el-5">He</div>
+    <div class="bg-element el-6">Ne</div>
+    <div class="bg-element el-7">Ar</div>
+    <div class="bg-element el-8">Au</div>
+
+    <!-- TOP RIGHT AUTH BUTTONS -->
+    <div class="auth-buttons">
+        <a href="/login" class="auth-btn">
+            <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/></svg>
+            Login
+        </a>
+        <a href="/logout" class="auth-btn logout">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Logout
+        </a>
+    </div>
+
+    <div class="glass-panel">
+        <h2>WELCOME TO ELEMENTARY</h2>
+        <button class="btn-start">START EXPLORING</button>
+
+        <div class="dashboard">
+            
+            <a href="/periodic_table" class="nav-item">
+                <div class="gel-sphere">
+                    <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z M3 9h18 M9 9v12 M15 9v12 M3 15h18"/></svg>
+                </div>
+                <div class="item-text">Periodic Table</div>
+            </a>
+
+            <a href="/learning" class="nav-item">
+                <div class="gel-sphere">
+                    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <div class="item-text">Learning</div>
+            </a>
+
+            <a href="/quiz" class="nav-item">
+                <div class="gel-sphere">
+                    <svg viewBox="0 0 24 24"><path d="M12 22A10 10 0 1 1 12 2a10 10 0 0 1 0 20z M12 16v2 M12 7a3 3 0 0 1 3 3c0 2-3 3-3 3"/></svg>
+                </div>
+                <div class="item-text">Quiz</div>
+            </a>
+
+            <a href="/about" class="nav-item">
+                <div class="gel-sphere">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4 M12 8h.01"/></svg>
+                </div>
+                <div class="item-text">About Us</div>
+            </a>
+            
+        </div>
+    </div>
+
+    <!-- PRIVACY POLICY LINK AT VERY BOTTOM -->
+    <a href="/" class="privacy-link">Privacy Policy</a>
+
+</body>
+</html>

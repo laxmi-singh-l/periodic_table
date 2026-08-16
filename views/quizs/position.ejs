@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodic Table Position Quiz | 30 Questions | Electronic Configuration</title>
+
+    <meta name="description" content="30-question interactive quiz on finding element position in the periodic table using electronic configuration. Test your knowledge of period, group, and block determination.">
+    <meta name="keywords" content="periodic table quiz, electronic configuration quiz, find element position quiz, s block p block d block f block, group period block quiz, chemistry MCQ, आवर्त सारणी क्विज, इलेक्ट्रॉनिक विन्यास प्रश्नोत्तरी">
+    <meta name="robots" content="index, follow">
+
+    <style>
+        :root {
+            --bg-dark: #080b12;
+            --bg-card: rgba(18, 24, 38, 0.9);
+            --bg-card-hover: rgba(26, 35, 56, 0.95);
+            --bg-input: #0d1322;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff007f;
+            --neon-purple: #a855f7;
+            --neon-green: #00ff66;
+            --neon-amber: #f59e0b;
+            --neon-red: #ff3355;
+            --glow-cyan: 0 0 18px rgba(0, 243, 255, 0.45), 0 0 35px rgba(0, 243, 255, 0.2);
+            --glow-pink: 0 0 18px rgba(255, 0, 127, 0.45), 0 0 35px rgba(255, 0, 127, 0.2);
+            --glow-green: 0 0 18px rgba(0, 255, 102, 0.5), 0 0 30px rgba(0, 255, 102, 0.25);
+            --glow-red: 0 0 18px rgba(255, 51, 85, 0.5), 0 0 30px rgba(255, 51, 85, 0.25);
+            --glow-purple: 0 0 15px rgba(168, 85, 247, 0.4);
+            --text-main: #f0f6fc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border-subtle: rgba(0, 243, 255, 0.2);
+            --border-pink: rgba(255, 0, 127, 0.3);
+            --border-green: rgba(0, 255, 102, 0.4);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 15% 20%, rgba(0, 243, 255, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 85% 60%, rgba(255, 0, 127, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 50% 90%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(8, 11, 18, 0.85);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-dark);
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: var(--glow-cyan);
+        }
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #ffffff, var(--neon-cyan));
+            -webkit-text-fill-color: transparent;
+        }
+        .tag-badge {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .quiz-wrapper {
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        /* Progress Bar */
+        .progress-area {
+            margin-bottom: 28px;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .progress-info .score-display {
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+        .progress-bar-outer {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+        .progress-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--glow-cyan);
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+            position: relative;
+            animation: fadeSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question-number {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid var(--neon-purple);
+            color: var(--neon-purple);
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(13, 19, 34, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: left;
+            font-family: inherit;
+            position: relative;
+        }
+        .option-btn:hover:not(.locked) {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 243, 255, 0.06);
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.2);
+            transform: translateX(3px);
+        }
+        .option-btn.locked {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .option-btn.correct-highlight {
+            border-color: var(--neon-green) !important;
+            box-shadow: var(--glow-green) !important;
+            background: rgba(0, 255, 102, 0.08) !important;
+            animation: pulseGreen 0.6s ease;
+        }
+        .option-btn.wrong-highlight {
+            border-color: var(--neon-red) !important;
+            box-shadow: var(--glow-red) !important;
+            background: rgba(255, 51, 85, 0.08) !important;
+            animation: shakeRed 0.5s ease;
+        }
+        @keyframes pulseGreen {
+            0%,
+            100% {
+                box-shadow: 0 0 18px rgba(0, 255, 102, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 255, 102, 0.8);
+            }
+        }
+        @keyframes shakeRed {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-6px);
+            }
+            40% {
+                transform: translateX(6px);
+            }
+            60% {
+                transform: translateX(-4px);
+            }
+            80% {
+                transform: translateX(4px);
+            }
+        }
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: var(--transition-fast);
+        }
+        .option-btn.correct-highlight .option-letter {
+            background: rgba(0, 255, 102, 0.2);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+        .option-btn.wrong-highlight .option-letter {
+            background: rgba(255, 51, 85, 0.2);
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+        .option-text {
+            flex: 1;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            margin-top: 20px;
+            padding: 18px 20px;
+            background: rgba(8, 11, 18, 0.7);
+            border-left: 4px solid var(--neon-cyan);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            display: none;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .explanation-box.visible {
+            display: block;
+        }
+        .explanation-box strong {
+            color: var(--neon-cyan);
+        }
+        .explanation-label {
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-cyan), #00a8ff);
+            color: var(--bg-dark);
+            box-shadow: var(--glow-cyan);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 28px rgba(0, 243, 255, 0.65);
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: var(--text-muted);
+        }
+        .btn-outline:hover {
+            border-color: var(--neon-pink);
+            color: #ffffff;
+            background: rgba(255, 0, 127, 0.06);
+        }
+        .btn-skip {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+        .btn-skip:hover {
+            border-color: var(--neon-amber);
+            color: var(--neon-amber);
+            background: rgba(245, 158, 11, 0.06);
+        }
+        .btn-restart {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--border-pink);
+            color: var(--neon-pink);
+            font-weight: 700;
+        }
+        .btn-restart:hover {
+            background: rgba(255, 0, 127, 0.1);
+            box-shadow: var(--glow-pink);
+        }
+
+        /* Results Page */
+        .results-card {
+            background: var(--bg-card);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: var(--glow-cyan);
+            border-radius: var(--radius-lg);
+            padding: 40px 30px;
+            text-align: center;
+            animation: fadeSlideIn 0.5s ease;
+        }
+        .results-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+        .results-score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        .results-outof {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .results-percent {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--neon-purple);
+            margin-bottom: 16px;
+        }
+        .results-msg {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .mini-review {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .review-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+        }
+        .review-dot.correct {
+            background: rgba(0, 255, 102, 0.15);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+        .review-dot.wrong {
+            background: rgba(255, 51, 85, 0.15);
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+        .review-dot.skipped {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-dim);
+        }
+        .review-dot:hover {
+            transform: scale(1.2);
+            box-shadow: var(--glow-cyan);
+            z-index: 5;
+        }
+
+        /* Feedback toast */
+        .feedback-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 999;
+            pointer-events: none;
+            animation: toastPop 0.45s ease forwards;
+            letter-spacing: 0.5px;
+        }
+        .feedback-toast.correct-toast {
+            background: rgba(0, 255, 102, 0.2);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: var(--glow-green);
+        }
+        .feedback-toast.wrong-toast {
+            background: rgba(255, 51, 85, 0.2);
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            box-shadow: var(--glow-red);
+        }
+        @keyframes toastPop {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-30px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(4px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .question-card {
+                padding: 20px 14px;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+            .option-btn {
+                padding: 14px 16px;
+                font-size: 0.9rem;
+            }
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .results-score {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#" class="brand">
+                <div class="brand-icon">Pt</div>
+                <span class="brand-title">Periodic Positioning</span>
+            </a>
+            <span class="tag-badge">30-Question Quiz</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="quiz-wrapper" id="quizWrapper">
+            <!-- Progress Area -->
+            <div class="progress-area" id="progressArea">
+                <div class="progress-info">
+                    <span id="progressLabel">Question 1 of 30</span>
+                    <span class="score-display" id="scoreDisplay">Score: 0</span>
+                </div>
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progressBar" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Dynamic Question Card renders here -->
+            <div id="questionContainer"></div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons" id="navButtons">
+                <button class="btn btn-outline" id="prevBtn" disabled>
+                    ◀ Previous
+                </button>
+                <button class="btn btn-skip" id="skipBtn">
+                    Skip ▸
+                </button>
+                <button class="btn btn-primary" id="nextBtn" disabled>
+                    Next Question ▶
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            // ==================== 30 QUESTIONS DATABASE ====================
+            const questions = [{
+                id: 1,
+                question: 'किसी तत्व की आवर्त संख्या (Period) कैसे ज्ञात की जाती है?<br><small style="color:#94a3b8;">How is the period number of an element determined?</small>',
+                options: [
+                    'A) इलेक्ट्रॉनिक विन्यास में उपस्थित अधिकतम मुख्य क्वांटम संख्या (n) से<br><small>By the highest principal quantum number (n)</small>',
+                    'B) अंतिम इलेक्ट्रॉन के उपकोश से<br><small>By the subshell of the last electron</small>',
+                    'C) संयोजी इलेक्ट्रॉनों की संख्या से<br><small>By the number of valence electrons</small>',
+                    'D) परमाणु द्रव्यमान से<br><small>By the atomic mass</small>'
+                ],
+                correct: 0,
+                explanation: '<strong>अधिकतम मुख्य क्वांटम संख्या (n) आवर्त संख्या निर्धारित करती है।</strong> इलेक्ट्रॉनिक विन्यास में जो सबसे बड़ा n (principal quantum number) मौजूद होता है, वही तत्व की आवर्त (period) होती है। उदाहरण: Na (Z=11) का विन्यास 1s² 2s² 2p⁶ <strong>3</strong>s¹ है → अधिकतम n = 3 → आवर्त 3।'
+            }, {
+                id: 2,
+                question: 's-ब्लॉक तत्वों के लिए समूह (Group) संख्या का सूत्र क्या है?<br><small style="color:#94a3b8;">What is the formula for the group number of s-block elements?</small>',
+                options: [
+                    'A) समूह = 12 + s-इलेक्ट्रॉनों की संख्या<br><small>Group = 12 + number of s-electrons</small>',
+                    'B) समूह = (n-1)d + ns इलेक्ट्रॉनों का योग<br><small>Group = sum of (n-1)d + ns electrons</small>',
+                    'C) समूह = संयोजी s-इलेक्ट्रॉनों की संख्या<br><small>Group = number of valence s-electrons</small>',
+                    'D) समूह = हमेशा 3<br><small>Group = always 3</small>'
+                ],
+                correct: 2,
+                explanation: '<strong>s-ब्लॉक में समूह = संयोजी s-इलेक्ट्रॉनों की संख्या।</strong> s-ब्लॉक तत्वों के बाहरी कोश में केवल s-इलेक्ट्रॉन होते हैं। जितने s-इलेक्ट्रॉन, उतना समूह। जैसे Na (3s¹) → समूह 1, Mg (3s²) → समूह 2। <em>अपवाद:</em> हीलियम (1s²) s-ब्लॉक होते हुए भी समूह 18 में है।'
+            }, {
+                id: 3,
+                question: 'सोडियम (Na, Z=11) का इलेक्ट्रॉनिक विन्यास 1s² 2s² 2p⁶ 3s¹ है। यह किस समूह में आता है?<br><small style="color:#94a3b8;">Sodium (Na, Z=11) has configuration 1s² 2s² 2p⁶ 3s¹. Which group?</small>',
+                options: [
+                    'A) समूह 2 / Group 2',
+                    'B) समूह 1 / Group 1',
+                    'C) समूह 11 / Group 11',
+                    'D) समूह 3 / Group 3'
+                ],
+                correct: 1,
+                explanation: '<strong>Na का समूह 1 है।</strong> Na s-ब्लॉक का तत्व है (अंतिम e⁻ 3s¹ में)। s-ब्लॉक में समूह = संयोजी s-इलेक्ट्रॉन = <strong>1</strong>। अधिकतम n = 3 → आवर्त 3। यह क्षार धातु (alkali metal) है।'
+            }, {
+                id: 4,
+                question: 'p-ब्लॉक तत्वों के लिए समूह संख्या ज्ञात करने का सही सूत्र क्या है?<br><small style="color:#94a3b8;">What is the correct formula for the group number of p-block elements?</small>',
+                options: [
+                    'A) समूह = 10 + p-इलेक्ट्रॉन / Group = 10 + p-electrons',
+                    'B) समूह = 12 + p-इलेक्ट्रॉन / Group = 12 + p-electrons',
+                    'C) समूह = ns + np इलेक्ट्रॉन / Group = ns + np electrons',
+                    'D) समूह = 18 − p-इलेक्ट्रॉन / Group = 18 − p-electrons'
+                ],
+                correct: 1,
+                explanation: '<strong>p-ब्लॉक: समूह = 12 + p-इलेक्ट्रॉनों की संख्या।</strong> उदाहरण: Cl (Z=17) → [Ne] 3s² 3p⁵ → p-इलेक्ट्रॉन = 5 → समूह = 12 + 5 = <strong>17</strong>। Ne (Z=10) → 2p⁶ → p-इलेक्ट्रॉन = 6 → समूह = 12 + 6 = <strong>18</strong>।'
+            }, {
+                id: 5,
+                question: 'क्लोरीन (Cl, Z=17) का इलेक्ट्रॉनिक विन्यास [Ne] 3s² 3p⁵ है। इसका समूह क्या होगा?<br><small style="color:#94a3b8;">Chlorine (Cl, Z=17) has configuration [Ne] 3s² 3p⁵. What is its group?</small>',
+                options: ['A) 15', 'B) 16', 'C) 17', 'D) 18'],
+                correct: 2,
+                explanation: '<strong>Cl का समूह 17 है।</strong> यह p-ब्लॉक तत्व है (अंतिम e⁻ 3p⁵ में)। p-इलेक्ट्रॉन = 5 → समूह = 12 + 5 = <strong>17</strong>। अधिकतम n = 3 → आवर्त 3। क्लोरीन हैलोजन (halogen) परिवार का सदस्य है।'
+            }, {
+                id: 6,
+                question: 'नियॉन (Ne, Z=10) का विन्यास 1s² 2s² 2p⁶ है। 12+6=18, इसलिए समूह 18 है। यह किस ब्लॉक का तत्व है?<br><small style="color:#94a3b8;">Neon (Ne, Z=10) has 1s² 2s² 2p⁶. 12+6=18, Group 18. Which block?</small>',
+                options: ['A) s-ब्लॉक', 'B) p-ब्लॉक', 'C) d-ब्लॉक', 'D) f-ब्लॉक'],
+                correct: 1,
+                explanation: '<strong>Ne p-ब्लॉक में है।</strong> अंतिम प्रवेश करने वाला इलेक्ट्रॉन <strong>2p</strong> उपकोश में जाता है। इसलिए यह p-ब्लॉक का तत्व है। p-ब्लॉक में समूह = 12 + 6 = 18 (अक्रिय गैस)। आवर्त 2 (अधिकतम n = 2)।'
+            }, {
+                id: 7,
+                question: 'd-ब्लॉक तत्वों का समूह ज्ञात करने का सूत्र क्या है?<br><small style="color:#94a3b8;">What is the formula to find the group of d-block elements?</small>',
+                options: [
+                    'A) केवल ns इलेक्ट्रॉन / Only ns electrons',
+                    'B) (n-1)d इलेक्ट्रॉन + ns इलेक्ट्रॉन / (n-1)d electrons + ns electrons',
+                    'C) 12 + d-इलेक्ट्रॉन / 12 + d-electrons',
+                    'D) (n-2)f + ns इलेक्ट्रॉन / (n-2)f + ns electrons'
+                ],
+                correct: 1,
+                explanation: '<strong>d-ब्लॉक: समूह = (n-1)d + ns इलेक्ट्रॉनों का योग।</strong> उदाहरण: Fe (Z=26) → [Ar] 3d⁶ 4s² → d-इलेक्ट्रॉन = 6, s-इलेक्ट्रॉन = 2 → समूह = 6 + 2 = <strong>8</strong>। Cu (Z=29) → 3d¹⁰ 4s¹ → 10 + 1 = <strong>11</strong>।'
+            }, {
+                id: 8,
+                question: 'आयरन (Fe, Z=26) का विन्यास [Ar] 3d⁶ 4s² है। 6+2=8, समूह 8। इसकी आवर्त संख्या क्या है?<br><small style="color:#94a3b8;">Iron (Fe, Z=26) has [Ar] 3d⁶ 4s². 6+2=8, Group 8. What is its period?</small>',
+                options: ['A) 3', 'B) 4', 'C) 5', 'D) 6'],
+                correct: 1,
+                explanation: '<strong>Fe की आवर्त संख्या 4 है।</strong> इलेक्ट्रॉनिक विन्यास में सबसे बड़ा n = <strong>4</strong> (4s² में) है। d-ब्लॉक तत्वों में बाहरी कोश का n ही आवर्त होता है। Fe एक संक्रमण धातु (transition metal) है।'
+            }, {
+                id: 9,
+                question: 'कॉपर (Cu, Z=29) का विन्यास [Ar] 3d¹⁰ 4s¹ है। 10+1=11, समूह 11। यह किस ब्लॉक में आता है?<br><small style="color:#94a3b8;">Copper (Cu, Z=29) has [Ar] 3d¹⁰ 4s¹. 10+1=11, Group 11. Which block?</small>',
+                options: ['A) s-ब्लॉक', 'B) p-ब्लॉक', 'C) d-ब्लॉक', 'D) f-ब्लॉक'],
+                correct: 2,
+                explanation: '<strong>Cu d-ब्लॉक में है।</strong> अंतिम इलेक्ट्रॉन <strong>3d</strong> (आंतरिक (n-1)d उपकोश) में प्रवेश करता है। इसलिए यह d-ब्लॉक संक्रमण तत्व है। Cu में अपवादीय विन्यास [Ar] 3d¹⁰ 4s¹ होता है (पूर्ण d-उपकोश की स्थिरता के कारण)।'
+            }, {
+                id: 10,
+                question: 'जिंक (Zn, Z=30) का विन्यास [Ar] 3d¹⁰ 4s² है। इसका समूह क्या है?<br><small style="color:#94a3b8;">Zinc (Zn, Z=30) has [Ar] 3d¹⁰ 4s². What is its group?</small>',
+                options: ['A) 10', 'B) 11', 'C) 12', 'D) 2'],
+                correct: 2,
+                explanation: '<strong>Zn का समूह 12 है।</strong> d-ब्लॉक सूत्र: (n-1)d + ns = 10 + 2 = <strong>12</strong>। Zn रंगहीन यौगिक बनाता है क्योंकि इसका d-उपकोश पूर्ण भरा है। आवर्त 4 (अधिकतम n = 4)।'
+            }, {
+                id: 11,
+                question: 'f-ब्लॉक तत्व हमेशा किस समूह में रखे जाते हैं?<br><small style="color:#94a3b8;">f-block elements are always placed in which group?</small>',
+                options: ['A) समूह 1 / Group 1', 'B) समूह 2 / Group 2', 'C) समूह 3 / Group 3',
+                    'D) समूह 18 / Group 18'
+                ],
+                correct: 2,
+                explanation: '<strong>सभी f-ब्लॉक तत्व समूह 3 में रखे जाते हैं।</strong> लैंथेनाइड (Z=57-71) और एक्टिनाइड (Z=89-103) दोनों श्रेणियाँ समूह 3 में स्थित हैं। इन्हें आंतरिक संक्रमण तत्व (inner transition elements) कहते हैं।'
+            }, {
+                id: 12,
+                question: 'लैंथेनाइड श्रेणी (Z=57 से 71) किस आवर्त में आती है?<br><small style="color:#94a3b8;">The Lanthanide series (Z=57 to 71) belongs to which period?</small>',
+                options: ['A) आवर्त 4 / Period 4', 'B) आवर्त 5 / Period 5', 'C) आवर्त 6 / Period 6',
+                    'D) आवर्त 7 / Period 7'
+                ],
+                correct: 2,
+                explanation: '<strong>लैंथेनाइड आवर्त 6 में हैं।</strong> इनका बाहरी इलेक्ट्रॉनिक विन्यास 6s² होता है और अंतिम e⁻ 4f में प्रवेश करता है। अधिकतम n = 6 → आवर्त 6। सभी f-ब्लॉक तत्व समूह 3 के सदस्य हैं।'
+            }, {
+                id: 13,
+                question: 'हीलियम (He, Z=2) का विन्यास 1s² है। यह s-ब्लॉक का तत्व होते हुए भी समूह 18 में क्यों रखा जाता है?<br><small style="color:#94a3b8;">Why is Helium (He, Z=2) with 1s² placed in Group 18 despite being s-block?</small>',
+                options: [
+                    'A) क्योंकि यह एक अक्रिय गैस है / Because it\'s a noble gas',
+                    'B) इसका बाहरी कोश पूर्ण भरा होता है (डुप्लेट नियम) / Outer shell is fully filled (duplet rule)',
+                    'C) क्योंकि यह p-ब्लॉक जैसा व्यवहार करता है / Because it behaves like p-block',
+                    'D) उपरोक्त A और B दोनों / Both A and B'
+                ],
+                correct: 3,
+                explanation: '<strong>He समूह 18 में है क्योंकि यह अक्रिय गैस है और इसका बाहरी कोश डुप्लेट नियम से पूर्ण भरा है।</strong> हालाँकि अंतिम e⁻ 1s में जाता है (s-ब्लॉक), लेकिन रासायनिक गुणों के आधार पर इसे अक्रिय गैसों (Group 18) के साथ रखा गया है।'
+            }, {
+                id: 14,
+                question: 'पोटैशियम (K, Z=19) का विन्यास 1s² 2s² 2p⁶ 3s² 3p⁶ 4s¹ है। इसकी आवर्त संख्या है:<br><small style="color:#94a3b8;">Potassium (K, Z=19) has ...4s¹. Its period is:</small>',
+                options: ['A) 1', 'B) 2', 'C) 3', 'D) 4'],
+                correct: 3,
+                explanation: '<strong>K की आवर्त संख्या 4 है।</strong> इलेक्ट्रॉनिक विन्यास में सबसे बड़ा n = <strong>4</strong> (4s¹) है। K s-ब्लॉक का तत्व है, समूह 1 (एक संयोजी s-इलेक्ट्रॉन)। यह क्षार धातु है।'
+            }, {
+                id: 15,
+                question: 'यूरेनियम (U, Z=92) किस ब्लॉक का तत्व है?<br><small style="color:#94a3b8;">Uranium (Z=92) belongs to which block?</small>',
+                options: ['A) s-ब्लॉक', 'B) p-ब्लॉक', 'C) d-ब्लॉक', 'D) f-ब्लॉक'],
+                correct: 3,
+                explanation: '<strong>U f-ब्लॉक का तत्व है।</strong> U का विन्यास [Rn] 5f³ 6d¹ 7s² है। अंतिम e⁻ <strong>5f</strong> (आंतरिक (n-2)f उपकोश) में प्रवेश करता है। यह एक्टिनाइड श्रेणी का सदस्य है, आवर्त 7, समूह 3।'
+            }, {
+                id: 16,
+                question: 'मैग्नीशियम (Mg, Z=12) का विन्यास 1s² 2s² 2p⁶ 3s² है। इसके संयोजी इलेक्ट्रॉनों की संख्या कितनी है?<br><small style="color:#94a3b8;">Mg (Z=12) has ...3s². How many valence electrons?</small>',
+                options: ['A) 1', 'B) 2', 'C) 6', 'D) 8'],
+                correct: 1,
+                explanation: '<strong>Mg में 2 संयोजी इलेक्ट्रॉन हैं।</strong> बाहरी कोश (n=3) में केवल 3s² है → 2 संयोजी e⁻। s-ब्लॉक तत्व, समूह = संयोजी s-e⁻ = <strong>2</strong>। Mg क्षारीय मृदा धातु (alkaline earth metal) है।'
+            }, {
+                id: 17,
+                question: 'क्रोमियम (Cr, Z=24) का विन्यास [Ar] 3d⁵ 4s¹ (अपवाद) है। 5+1=6, समूह 6। यह अपवादीय विन्यास क्यों दर्शाता है?<br><small style="color:#94a3b8;">Why does Chromium (Cr, Z=24) show exceptional configuration [Ar] 3d⁵ 4s¹?</small>',
+                options: [
+                    'A) अर्धपूर्ण d⁵ उपकोश की स्थिरता के कारण / Stability of half-filled d⁵',
+                    'B) पूर्णपूर्ण s-उपकोश के कारण / Due to fully filled s-subshell',
+                    'C) उच्च आयनन ऊर्जा के कारण / Due to high ionization energy',
+                    'D) कम परमाणु त्रिज्या के कारण / Due to small atomic radius'
+                ],
+                correct: 0,
+                explanation: '<strong>Cr में अर्धपूर्ण d⁵ की अतिरिक्त स्थिरता के कारण 4s से एक e⁻ 3d में चला जाता है।</strong> सामान्य विन्यास [Ar] 3d⁴ 4s² होना चाहिए, लेकिन 3d⁵ (अर्धपूर्ण) अधिक स्थायी है। इसी तरह Cu में 3d¹⁰ 4s¹ (पूर्ण d¹⁰) होता है।'
+            }, {
+                id: 18,
+                question: 'सिल्वर (Ag, Z=47) का विन्यास [Kr] 4d¹⁰ 5s¹ है। 10+1=11, समूह 11। इसकी आवर्त संख्या क्या है?<br><small style="color:#94a3b8;">Silver (Ag, Z=47) has [Kr] 4d¹⁰ 5s¹. What is its period?</small>',
+                options: ['A) 4', 'B) 5', 'C) 6', 'D) 3'],
+                correct: 1,
+                explanation: '<strong>Ag की आवर्त संख्या 5 है।</strong> विन्यास में सबसे बड़ा n = <strong>5</strong> (5s¹) है। Ag d-ब्लॉक का संक्रमण तत्व है, समूह 11 (10+1)। यह एक उत्कृष्ट धातु (noble metal) है।'
+            }, {
+                id: 19,
+                question: 'कैल्शियम (Ca, Z=20) का विन्यास [Ar] 4s² है। यह s-ब्लॉक का तत्व है। इसका समूह क्या है?<br><small style="color:#94a3b8;">Calcium (Ca, Z=20) has [Ar] 4s². It\'s s-block. What is its group?</small>',
+                options: ['A) समूह 1 / Group 1', 'B) समूह 2 / Group 2', 'C) समूह 12 / Group 12',
+                    'D) समूह 4 / Group 4'],
+                correct: 1,
+                explanation: '<strong>Ca का समूह 2 है।</strong> s-ब्लॉक: समूह = संयोजी s-इलेक्ट्रॉन = <strong>2</strong> (4s²)। आवर्त 4। Ca क्षारीय मृदा धातु है और हड्डियों के निर्माण के लिए आवश्यक है।'
+            }, {
+                id: 20,
+                question: 'ऑक्सीजन (O, Z=8) का विन्यास 1s² 2s² 2p⁴ है। 12+4=16, समूह 16। अधिकतम n = 2, इसलिए आवर्त क्या है?<br><small style="color:#94a3b8;">Oxygen (O, Z=8) has 1s² 2s² 2p⁴. Max n=2. What is its period?</small>',
+                options: ['A) 1', 'B) 2', 'C) 3', 'D) 4'],
+                correct: 1,
+                explanation: '<strong>O की आवर्त संख्या 2 है।</strong> अधिकतम n = 2 → आवर्त 2। p-ब्लॉक, p-e⁻ = 4 → समूह = 12+4 = <strong>16</strong> (चाल्कोजन परिवार)। ऑक्सीजन पृथ्वी पर सबसे प्रचुर तत्व है।'
+            }, {
+                id: 21,
+                question: 'एक तत्व का विन्यास ...3d³ 4s² है। d=3, s=2 → समूह=5, आवर्त=4। यह कौन सा तत्व है?<br><small style="color:#94a3b8;">An element has ...3d³ 4s². d=3, s=2, Group=5, Period=4. Which element?</small>',
+                options: ['A) स्कैंडियम / Sc (Z=21)', 'B) टाइटेनियम / Ti (Z=22)', 'C) वैनेडियम / V (Z=23)',
+                    'D) क्रोमियम / Cr (Z=24)'],
+                correct: 2,
+                explanation: '<strong>यह वैनेडियम (V, Z=23) है।</strong> V का विन्यास [Ar] 3d³ 4s² है। d-ब्लॉक: समूह = 3+2 = <strong>5</strong>, आवर्त 4। Sc (3d¹ 4s², Gr=3), Ti (3d² 4s², Gr=4), Cr अपवाद है (3d⁵ 4s¹, Gr=6)।'
+            }, {
+                id: 22,
+                question: 'एक्टिनाइड श्रेणी (Z=89 से 103) किस आवर्त में स्थित है?<br><small style="color:#94a3b8;">The Actinide series (Z=89 to 103) is placed in which period?</small>',
+                options: ['A) आवर्त 5 / Period 5', 'B) आवर्त 6 / Period 6', 'C) आवर्त 7 / Period 7',
+                    'D) आवर्त 4 / Period 4'],
+                correct: 2,
+                explanation: '<strong>एक्टिनाइड आवर्त 7 में हैं।</strong> इनका बाहरी विन्यास 7s² होता है, अंतिम e⁻ 5f में प्रवेश करता है। सभी f-ब्लॉक तत्व समूह 3 में रखे जाते हैं। उदाहरण: U (Z=92), आवर्त 7, समूह 3।'
+            }, {
+                id: 23,
+                question: 'पैलेडियम (Pd, Z=46) का विन्यास [Kr] 4d¹⁰ है (5s खाली!)। d-ब्लॉक में इसका समूह क्या है?<br><small style="color:#94a3b8;">Palladium (Pd, Z=46) has [Kr] 4d¹⁰ (5s empty!). d-block. What is its group?</small>',
+                options: ['A) 8', 'B) 9', 'C) 10', 'D) 11'],
+                correct: 2,
+                explanation: '<strong>Pd का समूह 10 है।</strong> d-ब्लॉक सूत्र: (n-1)d + ns = 10 + 0 = <strong>10</strong>। Pd एक अपवाद है जहाँ 5s पूरी तरह खाली है और 4d पूर्ण भरा है। फिर भी यह d-ब्लॉक में ही गिना जाता है। आवर्त 5।'
+            }, {
+                id: 24,
+                question: 'एल्युमिनियम (Al, Z=13) का विन्यास [Ne] 3s² 3p¹ है। p-ब्लॉक, 12+1=13, समूह 13। अधिकतम n क्या है?<br><small style="color:#94a3b8;">Aluminium (Al, Z=13) has [Ne] 3s² 3p¹. What is max n?</small>',
+                options: ['A) 1', 'B) 2', 'C) 3', 'D) 4'],
+                correct: 2,
+                explanation: '<strong>Al में अधिकतम n = 3 है।</strong> इसलिए आवर्त 3। p-ब्लॉक: p-e⁻ = 1 → समूह = 12+1 = <strong>13</strong>। Al बोरॉन परिवार का सदस्य है और पृथ्वी की पपड़ी में सबसे प्रचुर धातु है।'
+            }, {
+                id: 25,
+                question: 'गोल्ड (Au, Z=79) का विन्यास [Xe] 4f¹⁴ 5d¹⁰ 6s¹ है। d-ब्लॉक, 10+1=11, समूह 11, आवर्त 6। क्या यह संक्रमण तत्व है?<br><small style="color:#94a3b8;">Is Gold (Au, Z=79) a transition element?</small>',
+                options: [
+                    'A) हाँ, d-ब्लॉक तत्व होने के कारण / Yes, because it\'s d-block',
+                    'B) नहीं, क्योंकि d-उपकोश पूर्ण है / No, d-subshell is full',
+                    'C) यह उपधातु है / It\'s a metalloid',
+                    'D) यह आंतरिक संक्रमण तत्व है / It\'s inner transition'
+                ],
+                correct: 0,
+                explanation: '<strong>हाँ, Au एक संक्रमण तत्व (transition element) है।</strong> d-ब्लॉक के सभी तत्व संक्रमण तत्व कहलाते हैं, चाहे d-उपकोश पूर्ण ही क्यों न हो। Au समूह 11 में है, आवर्त 6। यह एक उत्कृष्ट धातु है।'
+            }, {
+                id: 26,
+                question: 'बोरॉन (B, Z=5) का विन्यास 1s² 2s² 2p¹ है। p-ब्लॉक, 12+1=13, समूह 13। संयोजी इलेक्ट्रॉनों की संख्या कितनी है?<br><small style="color:#94a3b8;">Boron (B, Z=5) has ...2p¹. How many valence electrons?</small>',
+                options: ['A) 1', 'B) 2', 'C) 3', 'D) 5'],
+                correct: 2,
+                explanation: '<strong>B में 3 संयोजी इलेक्ट्रॉन हैं।</strong> बाहरी कोश (n=2): 2s² 2p¹ → कुल 2+1 = <strong>3</strong> संयोजी e⁻। p-ब्लॉक तत्व, समूह 13। B एक उपधातु (metalloid) है।'
+            }, {
+                id: 27,
+                question: 'फ्रैंशियम (Fr, Z=87) का विन्यास [Rn] 7s¹ है। s-ब्लॉक, समूह 1, आवर्त 7। यह किस परिवार का सदस्य है?<br><small style="color:#94a3b8;">Francium (Fr, Z=87) has [Rn] 7s¹. Which family?</small>',
+                options: ['A) क्षार धातु / Alkali metals', 'B) क्षारीय मृदा धातु / Alkaline earth metals',
+                    'C) हैलोजन / Halogens', 'D) अक्रिय गैस / Noble gases'
+                ],
+                correct: 0,
+                explanation: '<strong>Fr क्षार धातु (alkali metal) है।</strong> s-ब्लॉक, समूह 1 (एक संयोजी s-e⁻)। आवर्त 7। Fr अत्यधिक रेडियोधर्मी और अत्यंत दुर्लभ तत्व है। सभी समूह 1 तत्व क्षार धातु कहलाते हैं।'
+            }, {
+                id: 28,
+                question: 'कार्बन (C, Z=6) का विन्यास 1s² 2s² 2p² है। p-ब्लॉक, 12+2=14, समूह 14। यह p-ब्लॉक में क्यों है?<br><small style="color:#94a3b8;">Why is Carbon (C, Z=6) in p-block?</small>',
+                options: [
+                    'A) अंतिम इलेक्ट्रॉन p-उपकोश (2p) में प्रवेश करता है / Last e⁻ enters p-subshell',
+                    'B) क्योंकि यह अधातु है / Because it\'s non-metal',
+                    'C) क्योंकि आवर्त 2 है / Because period is 2',
+                    'D) क्योंकि 4 संयोजी e⁻ हैं / Because 4 valence e⁻'
+                ],
+                correct: 0,
+                explanation: '<strong>C p-ब्लॉक में है क्योंकि अंतिम e⁻ 2p उपकोश में प्रवेश करता है।</strong> ब्लॉक पहचान का नियम: जिस उपकोश में अंतिम e⁻ जाए, वही ब्लॉक। C का अंतिम e⁻ 2p² में → p-ब्लॉक। समूह = 12+2 = 14, आवर्त 2।'
+            }, {
+                id: 29,
+                question: 'रेडॉन (Rn, Z=86) का विन्यास [Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶ है। p-ब्लॉक, 12+6=18, समूह 18। यह किस प्रकार का तत्व है?<br><small style="color:#94a3b8;">Radon (Rn, Z=86) Group 18. What type of element?</small>',
+                options: ['A) क्षार धातु / Alkali metal', 'B) हैलोजन / Halogen', 'C) अक्रिय गैस / Noble gas',
+                    'D) संक्रमण तत्व / Transition element'
+                ],
+                correct: 2,
+                explanation: '<strong>Rn एक अक्रिय गैस (noble gas) है।</strong> p-ब्लॉक, समूह 18 (12+6)। आवर्त 6। Rn रेडियोधर्मी है और इसका उपयोग कैंसर चिकित्सा में होता है। सभी समूह 18 तत्व अक्रिय गैसें हैं।'
+            }, {
+                id: 30,
+                question: 'ओगनेसन (Og, Z=118) का विन्यास [Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶ है। p-ब्लॉक, 12+6=18, समूह 18। आवर्त संख्या क्या है?<br><small style="color:#94a3b8;">Oganesson (Og, Z=118) Group 18. What is the period number?</small>',
+                options: ['A) 5', 'B) 6', 'C) 7', 'D) 8'],
+                correct: 2,
+                explanation: '<strong>Og की आवर्त संख्या 7 है।</strong> विन्यास में सबसे बड़ा n = <strong>7</strong> (7s² 7p⁶) है। p-ब्लॉक, p-e⁻ = 6 → समूह = 12+6 = <strong>18</strong>। Og सबसे भारी ज्ञात तत्व है (Z=118), अक्रिय गैस परिवार का सदस्य।'
+            }];
+
+            // ==================== STATE MANAGEMENT ====================
+            const TOTAL = questions.length;
+            let currentIndex = 0;
+            // userAnswers: -1 = unanswered, -2 = skipped, 0-3 = selected option index
+            let userAnswers = new Array(TOTAL).fill(-1);
+            let score = 0;
+            let quizCompleted = false;
+
+            // ==================== DOM ELEMENTS ====================
+            const questionContainer = document.getElementById('questionContainer');
+            const progressLabel = document.getElementById('progressLabel');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const progressBar = document.getElementById('progressBar');
+            const prevBtn = document.getElementById('prevBtn');
+            const skipBtn = document.getElementById('skipBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const quizWrapper = document.getElementById('quizWrapper');
+
+            // ==================== TOAST FEEDBACK ====================
+            function showToast(message, type) {
+                const existing = document.querySelector('.feedback-toast');
+                if (existing) existing.remove();
+                const toast = document.createElement('div');
+                toast.className = 'feedback-toast ' + (type === 'correct' ? 'correct-toast' : 'wrong-toast');
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 1800);
+            }
+
+            // ==================== RENDER FUNCTION ====================
+            function renderQuestion() {
+                if (quizCompleted) {
+                    renderResults();
+                    return;
+                }
+
+                const q = questions[currentIndex];
+                const userAnswer = userAnswers[currentIndex];
+                const isAnswered = userAnswer >= 0;
+                const isSkipped = userAnswer === -2;
+                const isLocked = isAnswered || isSkipped;
+
+                // Update progress
+                const attemptedCount = userAnswers.filter(a => a >= 0 || a === -2).length;
+                progressLabel.textContent = `Question ${currentIndex + 1} of ${TOTAL}`;
+                scoreDisplay.textContent = `Score: ${score}`;
+                progressBar.style.width = `${(attemptedCount / TOTAL) * 100}%`;
+                prevBtn.disabled = currentIndex === 0;
+                skipBtn.style.display = isLocked ? 'none' : 'inline-flex';
+                nextBtn.textContent = currentIndex === TOTAL - 1 ? 'View Results 📊' : 'Next Question ▶';
+                nextBtn.disabled = !isLocked;
+
+                let optionsHTML = '';
+                q.options.forEach((opt, i) => {
+                    let btnClass = 'option-btn';
+                    if (isLocked) {
+                        btnClass += ' locked';
+                        if (i === q.correct) {
+                            btnClass += ' correct-highlight';
+                        } else if (i === userAnswer && userAnswer !== q.correct) {
+                            btnClass += ' wrong-highlight';
+                        }
+                    }
+                    optionsHTML += `
+                    <button class="${btnClass}" data-index="${i}" ${isLocked ? 'disabled' : ''}>
+                        <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                        <span class="option-text">${opt}</span>
+                    </button>`;
+                });
+
+                const explanationVisible = isLocked ? 'visible' : '';
+
+                questionContainer.innerHTML = `
+                <div class="question-card" id="questionCard">
+                    <span class="question-number">Question ${currentIndex + 1} / ${TOTAL}</span>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list" id="optionsList">
+                        ${optionsHTML}
+                    </div>
+                    <div class="explanation-box ${explanationVisible}" id="explanationBox">
+                        <div class="explanation-label">📖 सही उत्तर की व्याख्या / Correct Answer Explanation</div>
+                        ${isLocked ? q.explanation : ''}
+                    </div>
+                </div>`;
+
+                // Attach click handlers if not locked
+                if (!isLocked) {
+                    const optionButtons = document.querySelectorAll('.option-btn');
+                    optionButtons.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const selectedIndex = parseInt(this.getAttribute('data-index'));
+                            handleOptionSelect(selectedIndex);
+                        });
+                    });
+                }
+
+                // Scroll to top of card
+                const card = document.getElementById('questionCard');
+                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // ==================== HANDLE OPTION SELECTION ====================
+            function handleOptionSelect(selectedIndex) {
+                if (userAnswers[currentIndex] >= 0) return; // already answered
+                const q = questions[currentIndex];
+                const isCorrect = selectedIndex === q.correct;
+
+                // Record answer
+                userAnswers[currentIndex] = selectedIndex;
+                if (isCorrect) {
+                    score++;
+                    showToast('✅ Correct! Well done!', 'correct');
+                } else {
+                    showToast('❌ Wrong! See explanation below.', 'wrong');
+                }
+
+                // Update score display
+                scoreDisplay.textContent = `Score: ${score}`;
+
+                // Re-render with locked state
+                renderQuestion();
+
+                // Enable next button
+                nextBtn.disabled = false;
+                skipBtn.style.display = 'none';
+
+                // Auto-scroll to explanation
+                setTimeout(() => {
+                    const expBox = document.getElementById('explanationBox');
+                    if (expBox) expBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+
+            // ==================== SKIP HANDLER ====================
+            function handleSkip() {
+                if (userAnswers[currentIndex] >= 0) return;
+                userAnswers[currentIndex] = -2; // mark as skipped
+                const q = questions[currentIndex];
+                // Show correct answer highlighted
+                renderQuestion();
+                nextBtn.disabled = false;
+                skipBtn.style.display = 'none';
+                // Scroll to explanation
+                setTimeout(() => {
+                    const expBox = document.getElementById('explanationBox');
+                    if (expBox) expBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+
+            // ==================== NAVIGATION ====================
+            function goToNext() {
+                if (currentIndex < TOTAL - 1) {
+                    currentIndex++;
+                    renderQuestion();
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    // Show results
+                    quizCompleted = true;
+                    renderResults();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            function goToPrev() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    renderQuestion();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            // ==================== RESULTS PAGE ====================
+            function renderResults() {
+                const attempted = userAnswers.filter(a => a >= 0).length;
+                const skipped = userAnswers.filter(a => a === -2).length;
+                const correctCount = score;
+                const percent = attempted > 0 ? Math.round((correctCount / attempted) * 100) : 0;
+                const totalPercent = Math.round((correctCount / TOTAL) * 100);
+
+                let emoji, msg;
+                if (totalPercent >= 90) { emoji = '🏆';
+                    msg =
+                        'उत्कृष्ट! आपको आवर्त सारणी में तत्वों की स्थिति ज्ञात करने की विधि पर बहुत अच्छी पकड़ है।<br><small>Excellent! You have a strong command of finding element positions.</small>';
+                } else if (totalPercent >= 70) { emoji = '🌟';
+                    msg =
+                        'बहुत अच्छा! आपको अधिकांश अवधारणाएँ समझ आ गई हैं। थोड़ा और अभ्यास करें।<br><small>Very good! You understand most concepts. Practice a bit more.</small>';
+                } else if (totalPercent >= 50) { emoji = '📚';
+                    msg =
+                        'अच्छा प्रयास! कुछ अवधारणाओं पर और ध्यान देने की आवश्यकता है।<br><small>Good effort! Some concepts need more attention.</small>';
+                } else { emoji = '💪';
+                    msg =
+                        'अभ्यास जारी रखें! s, p, d, f ब्लॉक के सूत्रों को दोबारा पढ़ें।<br><small>Keep practicing! Review the formulas for s, p, d, f blocks.</small>';
+                }
+
+                // Build mini review dots
+                let dotsHTML = '';
+                for (let i = 0; i < TOTAL; i++) {
+                    const ans = userAnswers[i];
+                    let dotClass = 'skipped';
+                    if (ans >= 0) {
+                        dotClass = (ans === questions[i].correct) ? 'correct' : 'wrong';
+                    }
+                    dotsHTML +=
+                        `<span class="review-dot ${dotClass}" title="Q${i+1}: ${ans>=0 ? (ans===questions[i].correct?'Correct':'Wrong') : 'Skipped'}" onclick="reviewQuestion(${i})">${i+1}</span>`;
+                }
+
+                questionContainer.innerHTML = `
+                <div class="results-card">
+                    <div class="results-icon">${emoji}</div>
+                    <div class="results-score">${correctCount} / ${TOTAL}</div>
+                    <div class="results-outof">Attempted: ${attempted} | Skipped: ${skipped}</div>
+                    <div class="results-percent">${totalPercent}% Overall Score</div>
+                    <div class="results-msg">${msg}</div>
+                    <div class="mini-review" id="miniReview">${dotsHTML}</div>
+                    <button class="btn btn-restart" onclick="restartQuiz()">🔄 Restart Quiz</button>
+                </div>`;
+
+                // Hide nav buttons
+                prevBtn.style.display = 'none';
+                skipBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                progressLabel.textContent = 'Quiz Complete!';
+                progressBar.style.width = '100%';
+                scoreDisplay.textContent = `Final Score: ${correctCount}/${TOTAL}`;
+            }
+
+            // ==================== REVIEW SPECIFIC QUESTION ====================
+            window.reviewQuestion = function(index) {
+                quizCompleted = false;
+                currentIndex = index;
+                prevBtn.style.display = 'inline-flex';
+                skipBtn.style.display = 'inline-flex';
+                nextBtn.style.display = 'inline-flex';
+                nextBtn.textContent = currentIndex === TOTAL - 1 ? 'View Results 📊' : 'Next Question ▶';
+                nextBtn.disabled = !(userAnswers[currentIndex] >= 0 || userAnswers[currentIndex] === -2);
+                skipBtn.style.display = (userAnswers[currentIndex] >= 0 || userAnswers[currentIndex] === -2) ? 'none' :
+                    'inline-flex';
+                prevBtn.disabled = currentIndex === 0;
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            // ==================== RESTART ====================
+            window.restartQuiz = function() {
+                currentIndex = 0;
+                userAnswers = new Array(TOTAL).fill(-1);
+                score = 0;
+                quizCompleted = false;
+                prevBtn.style.display = 'inline-flex';
+                skipBtn.style.display = 'inline-flex';
+                nextBtn.style.display = 'inline-flex';
+                nextBtn.textContent = 'Next Question ▶';
+                nextBtn.disabled = true;
+                prevBtn.disabled = true;
+                skipBtn.style.display = 'inline-flex';
+                scoreDisplay.textContent = 'Score: 0';
+                progressBar.style.width = '0%';
+                progressLabel.textContent = `Question 1 of ${TOTAL}`;
+                renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            // ==================== EVENT LISTENERS ====================
+            nextBtn.addEventListener('click', goToNext);
+            prevBtn.addEventListener('click', goToPrev);
+            skipBtn.addEventListener('click', handleSkip);
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (quizCompleted) return;
+                if (e.key === 'ArrowRight' && !nextBtn.disabled) {
+                    e.preventDefault();
+                    goToNext();
+                } else if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
+                    e.preventDefault();
+                    goToPrev();
+                } else if (e.key === 's' && skipBtn.style.display !== 'none' && !e.ctrlKey && !e.metaKey && !e
+                    .altKey) {
+                    e.preventDefault();
+                    handleSkip();
+                }
+            });
+
+            // ==================== INITIAL RENDER ====================
+            renderQuestion();
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+        })();
+    </script>
+</body>
+</html>

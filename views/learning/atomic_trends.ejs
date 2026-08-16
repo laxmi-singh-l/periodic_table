@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Periodic Table Trends (Periodicity) - Atomic Radius, Ionization Energy, Electronegativity, Electron Gain Enthalpy, and Metallic & Non-metallic Character. Learn Z_eff, trend reasons, formulas, units, and memory tricks. आवर्त सारणी के रुझान - परमाणु त्रिज्या, आयनन ऊर्जा, विद्युत ऋणात्मकता, इलेक्ट्रॉन ग्रहण एन्थैल्पी, धात्विक व अधात्विक गुण।">
+    <meta name="keywords" content="Periodic Table Trends, Periodicity, Atomic Radius, Ionization Energy, Electronegativity, Electron Gain Enthalpy, Metallic Character, Z_eff, आवर्त सारणी, परमाणु त्रिज्या, आयनन ऊर्जा, विद्युत ऋणात्मकता, इलेक्ट्रॉन ग्रहण एन्थैल्पी, धात्विक गुण, periodicity in hindi, periodic trends explained, ASR, Chemistry">
+    <meta name="author" content="ASR">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0a0f">
+    <link rel="canonical" href="https://chemtrends.example.com/periodic-trends">
+    <link rel="alternate" hreflang="en" href="https://chemtrends.example.com/periodic-trends">
+    <link rel="alternate" hreflang="hi" href="https://chemtrends.example.com/hi/periodic-trends">
+    <meta property="og:title" content="Periodic Table Trends (Periodicity) — Learn with Neon Visuals">
+    <meta property="og:description" content="Master 5 key periodic trends: Atomic Radius, Ionization Energy, Electronegativity, Electron Gain Enthalpy & Metallic Character. Interactive cards with formulas, reasons & tricks.">
+    <title>Periodic Table Trends (Periodicity) — Atomic Radius, Ionization Energy, Electronegativity & More | Dark Neon Guide</title>
+
+    <style>
+        :root {
+            --bg-deep: #06060f;
+            --bg-card: #111122;
+            --bg-card-hover: #161630;
+            --bg-panel: #0d0d1d;
+            --border-subtle: #1e1e3a;
+            --border-neon-cyan: #00e5ff;
+            --border-neon-magenta: #ff2d95;
+            --border-neon-lime: #b8ff3d;
+            --border-neon-gold: #ffb347;
+            --glow-cyan: rgba(0, 229, 255, 0.45);
+            --glow-magenta: rgba(255, 45, 149, 0.4);
+            --glow-lime: rgba(184, 255, 61, 0.5);
+            --glow-gold: rgba(255, 179, 71, 0.5);
+            --text-primary: #e8e8f0;
+            --text-secondary: #a8a8c0;
+            --text-muted: #7a7a96;
+            --text-heading: #ffffff;
+            --accent-cyan: #00e5ff;
+            --accent-magenta: #ff2d95;
+            --accent-lime: #b8ff3d;
+            --accent-gold: #ffb347;
+            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-card: 16px;
+            --radius-inner: 10px;
+            --font-body: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            --metal: #4a4a4a;
+            --semimetal: #d4a373;
+            --nonmetal: #00b4d8;
+            --ionization: #4361ee;
+            --electroneg: #2dc653;
+            --atomic-radius: #0077b6;
+            --electron-affinity: #4cc9f0;
+            --metallic-char: #343a40;
+            --nonmetallic-char: #e63946;
+            --cell-size: clamp(14px, 2.2vw, 26px);
+            --grid-gap: 2px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.04) 0%, transparent 65%),
+                radial-gradient(ellipse at 85% 15%, rgba(255, 45, 149, 0.03) 0%, transparent 55%),
+                radial-gradient(ellipse at 15% 75%, rgba(184, 255, 61, 0.025) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 10px;
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            z-index: 200;
+            font-weight: 700;
+            text-decoration: none;
+            transition: top 0.3s;
+        }
+        .skip-link:focus { top: 10px; }
+
+        header {
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(10, 10, 20, 0.75);
+            backdrop-filter: blur(14px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .backlink {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(255, 179, 71, 0.35);
+            border-radius: 24px;
+            transition: all var(--transition-smooth);
+            background: rgba(255, 179, 71, 0.05);
+            white-space: nowrap;
+        }
+        .backlink:hover {
+            color: #000;
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 22px var(--glow-gold);
+            transform: translateY(-1px);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-heading);
+        }
+        .header-logo .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #000;
+            font-weight: 900;
+            box-shadow: 0 0 18px var(--glow-cyan);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .header-logo .logo-icon:hover {
+            transform: rotate(15deg) scale(1.15);
+            box-shadow: 0 0 28px var(--glow-cyan);
+        }
+
+        .header-nav { display: flex; gap: 1.6rem; list-style: none; flex-wrap: wrap; }
+        .header-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all var(--transition-smooth);
+            position: relative;
+        }
+        .header-nav a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 12px var(--glow-cyan);
+            transform: translateY(-2px);
+        }
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--accent-cyan);
+            transition: width var(--transition-smooth);
+            box-shadow: 0 0 8px var(--glow-cyan);
+        }
+        .header-nav a:hover::after { width: 100%; }
+
+        main { max-width: 1300px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--text-heading);
+            text-shadow: 0 0 40px var(--glow-cyan);
+            margin-bottom: 1rem;
+            transition: text-shadow 0.3s;
+        }
+        .hero h1:hover { text-shadow: 0 0 60px var(--glow-cyan); }
+        .hero .highlight { color: var(--accent-cyan); }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+        .hero .zeff-badge {
+            display: inline-block;
+            padding: 0.55rem 1.3rem;
+            border: 1px solid var(--border-neon-magenta);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-magenta);
+            background: rgba(255, 45, 149, 0.06);
+            box-shadow: 0 0 20px rgba(255, 45, 149, 0.15);
+            transition: all var(--transition-smooth);
+            cursor: default;
+        }
+        .hero .zeff-badge:hover {
+            box-shadow: 0 0 35px rgba(255, 45, 149, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* INFOGRAPHIC SECTION */
+        .infographic-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            padding: 2rem 1.5rem;
+            margin: 2rem 0;
+        }
+        .infographic-section h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        .model-container {
+            position: relative;
+            background: #0b0d14;
+            border-radius: 12px;
+            padding: 3rem 2rem 2rem;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, var(--cell-size));
+            grid-auto-rows: var(--cell-size);
+            gap: var(--grid-gap);
+            background: #11131c;
+            padding: 6px;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        .pt-cell {
+            background: transparent;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            cursor: default;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .pt-cell.metal { background: var(--metal); }
+        .pt-cell.semimetal { background: var(--semimetal); }
+        .pt-cell.nonmetal { background: var(--nonmetal); }
+        .pt-cell.occupied:hover {
+            transform: scale(1.25);
+            z-index: 5;
+            box-shadow: 0 0 14px var(--glow-cyan);
+            border: 1px solid rgba(0,229,255,0.6);
+        }
+
+        /* Overlay arrows on the model */
+        .overlay-arrow {
+            position: absolute;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            z-index: 3;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .overlay-arrow:hover {
+            transform: scale(1.03);
+            filter: drop-shadow(0 0 12px currentColor);
+        }
+        .overlay-arrow .shaft {
+            background: currentColor;
+            border-radius: 4px;
+        }
+        .overlay-arrow .arrowhead {
+            width: 0; height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            position: absolute;
+        }
+        .overlay-arrow .arrow-label {
+            position: absolute;
+            font-weight: 700;
+            font-size: clamp(0.5rem, 1vw, 0.7rem);
+            color: inherit;
+            text-shadow: 0 0 8px currentColor;
+            background: rgba(6,6,15,0.9);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+        }
+        .overlay-arrow:hover .arrow-label {
+            text-shadow: 0 0 14px currentColor;
+            background: rgba(6,6,15,0.95);
+        }
+
+        /* Horizontal overlay arrows */
+        .overlay-arrow.h-right {
+            flex-direction: row;
+        }
+        .overlay-arrow.h-right .shaft {
+            height: 8px;
+            width: clamp(60px, 10vw, 100px);
+        }
+        .overlay-arrow.h-right .arrowhead {
+            right: 0;
+            border-left: 14px solid currentColor;
+        }
+        .overlay-arrow.h-left {
+            flex-direction: row;
+        }
+        .overlay-arrow.h-left .shaft {
+            height: 8px;
+            width: clamp(60px, 10vw, 100px);
+        }
+        .overlay-arrow.h-left .arrowhead {
+            left: 0;
+            border-right: 14px solid currentColor;
+        }
+
+        /* Vertical overlay arrows */
+        .overlay-arrow.v-up,
+        .overlay-arrow.v-down {
+            flex-direction: column;
+        }
+        .overlay-arrow.v-up .shaft,
+        .overlay-arrow.v-down .shaft {
+            width: 8px;
+            height: clamp(60px, 12vh, 100px);
+        }
+        .overlay-arrow.v-up .arrowhead {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom: 14px solid currentColor;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+        .overlay-arrow.v-down .arrowhead {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 14px solid currentColor;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+
+        /* Positions */
+        .arrow-top-left {
+            top: 15px;
+            left: 50%;
+            transform: translateX(-120%);
+        }
+        .arrow-top-right {
+            top: 15px;
+            left: 50%;
+            transform: translateX(20%);
+        }
+        .arrow-bottom-left {
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-120%);
+        }
+        .arrow-bottom-right {
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(20%);
+        }
+        .arrow-left-top {
+            left: 10px;
+            top: 25%;
+        }
+        .arrow-left-bottom {
+            left: 10px;
+            bottom: 25%;
+        }
+        .arrow-right-top {
+            right: 10px;
+            top: 25%;
+        }
+        .arrow-right-bottom {
+            right: 10px;
+            bottom: 25%;
+        }
+
+        /* Label positions for arrows */
+        .overlay-arrow.h-right .arrow-label { top: -1.6rem; left: 50%; transform: translateX(-50%); }
+        .overlay-arrow.h-left .arrow-label { top: -1.6rem; left: 50%; transform: translateX(-50%); }
+        .overlay-arrow.v-up .arrow-label { bottom: -1.4rem; left: 50%; transform: translateX(-50%); }
+        .overlay-arrow.v-down .arrow-label { top: -1.4rem; left: 50%; transform: translateX(-50%); }
+
+        /* Diagonal arrows */
+        .diagonal-arrow {
+            position: absolute;
+            pointer-events: none;
+            z-index: 4;
+        }
+        .diagonal-arrow .shaft {
+            height: 8px;
+            width: clamp(70px, 12vw, 130px);
+            background: currentColor;
+            border-radius: 4px;
+        }
+        .diagonal-arrow .arrowhead {
+            width: 0; height: 0;
+            border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+            position: absolute;
+        }
+        .metallic-char { bottom: 18px; left: 10px; transform: rotate(45deg); }
+        .metallic-char .arrowhead { right: 0; border-left: 14px solid currentColor; }
+        .nonmetallic-char { top: 18px; right: 10px; transform: rotate(-45deg); }
+        .nonmetallic-char .arrowhead { left: 0; border-right: 14px solid currentColor; }
+        .diag-label {
+            position: absolute; top: -1.5rem; left: 50%; transform: translateX(-50%);
+            font-weight: 700; font-size: clamp(0.5rem, 1vw, 0.7rem);
+            color: inherit; text-shadow: 0 0 6px rgba(255,255,255,0.3);
+            background: rgba(6,6,15,0.85); padding: 0.15rem 0.5rem;
+            border-radius: 4px; white-space: nowrap;
+            transition: all 0.2s;
+            pointer-events: auto;
+        }
+        .diag-label:hover {
+            transform: translateX(-50%) scale(1.1);
+            text-shadow: 0 0 12px rgba(255,255,255,0.6);
+            background: rgba(6,6,15,0.95);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: #ccc;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            background: rgba(0,0,0,0.6);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: transform 0.2s;
+            cursor: default;
+        }
+        .legend-item:hover { transform: scale(1.1); color: #fff; }
+        .legend-color {
+            width: 14px; height: 14px; border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .legend-item:hover .legend-color { border-color: rgba(255,255,255,0.8); box-shadow: 0 0 10px currentColor; }
+        .legend-color.metal { background: var(--metal); }
+        .legend-color.semimetal { background: var(--semimetal); }
+        .legend-color.nonmetal { background: var(--nonmetal); }
+
+        .arrow-explanation {
+            background: rgba(17, 17, 34, 0.8);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-inner);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .arrow-explanation h3 {
+            grid-column: 1/-1;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--accent-lime);
+            text-shadow: 0 0 10px rgba(184,255,61,0.5);
+        }
+        .explain-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.4rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .explain-item:hover { background: rgba(255,255,255,0.04); transform: scale(1.02); }
+        .explain-item .color-dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            margin-top: 0.35rem; flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        .explain-item:hover .color-dot { transform: scale(1.3); }
+
+        /* TRENDS CARDS */
+        .trends-section { margin: 2rem 0; }
+        .trends-section h2 { text-align: center; font-size: 1.7rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.4rem; }
+        .section-subtitle { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+        .trend-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            padding: 1.3rem 1rem;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 140px;
+            justify-content: center;
+        }
+        .trend-card:hover {
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 12px 40px rgba(0, 229, 255, 0.18), inset 0 0 20px rgba(0,229,255,0.05);
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+        }
+        .trend-card.active {
+            border-color: var(--border-neon-cyan) !important;
+            box-shadow: 0 0 30px var(--glow-cyan);
+            animation: activePulse 2.4s infinite;
+        }
+        .trend-card.active:hover {
+            animation-play-state: paused;
+            box-shadow: 0 0 60px rgba(0, 229, 255, 0.7);
+        }
+        @keyframes activePulse {
+            0%,100%{ box-shadow:0 0 30px var(--glow-cyan); }
+            50%{ box-shadow:0 0 50px rgba(0,229,255,0.55); }
+        }
+        .card-icon { font-size: 2rem; transition: transform var(--transition-smooth); }
+        .trend-card:hover .card-icon { transform: scale(1.15); }
+        .card-title { font-weight: 700; font-size: 0.95rem; color: var(--text-heading); }
+        .card-hint { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
+
+        .detail-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            padding: 2rem;
+            min-height: 220px;
+            transition: border-color var(--transition-smooth);
+        }
+        .detail-panel.active-glow {
+            border-color: rgba(0, 229, 255, 0.45);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+        }
+        .detail-panel h3 {
+            font-size: 1.4rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.2rem;
+            text-shadow: 0 0 18px rgba(0,229,255,0.3);
+        }
+        .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+        .detail-block {
+            background: rgba(20, 21, 31, 0.7);
+            border-radius: var(--radius-inner);
+            padding: 1rem 1.2rem;
+            border: 1px solid var(--border-subtle);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+        .detail-block:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .detail-block h4 { font-size: 0.85rem; text-transform: uppercase; color: var(--accent-magenta); margin-bottom: 0.5rem; }
+        .detail-block p { font-size: 0.92rem; color: var(--text-secondary); }
+        .trick-box {
+            grid-column: 1/-1;
+            background: rgba(184, 255, 61, 0.04);
+            border: 1.5px solid var(--border-neon-lime);
+            border-radius: var(--radius-inner);
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 0 28px rgba(184,255,61,0.2);
+            animation: trickGlow 3s infinite;
+            transition: box-shadow 0.3s;
+        }
+        .trick-box:hover { box-shadow: 0 0 60px rgba(184,255,61,0.5), inset 0 0 40px rgba(184,255,61,0.08); animation-play-state: paused; }
+        @keyframes trickGlow {
+            0%,100%{ box-shadow:0 0 28px rgba(184,255,61,0.2); }
+            50%{ box-shadow:0 0 48px rgba(184,255,61,0.4); }
+        }
+        .trick-box h4 { color: var(--accent-lime); text-shadow: 0 0 14px rgba(184,255,61,0.5); }
+        .trick-box p { color: #d4e8b0; font-weight: 500; }
+        .detail-content { transition: opacity 0.25s, transform 0.25s; }
+        .detail-content.switching { opacity: 0; transform: translateY(8px); }
+
+        footer {
+            text-align: center; padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(10,10,20,0.5);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        footer p:first-of-type:hover { text-shadow: 0 0 20px var(--glow-cyan); cursor: default; }
+        footer a { color: var(--accent-gold); text-decoration: none; }
+        footer a:hover { text-shadow: 0 0 12px var(--glow-gold); }
+
+        @media (max-width: 900px) {
+            .overlay-arrow { transform: scale(0.8); }
+            .arrow-top-left { top: 5px; left: 40%; transform: translateX(-50%) scale(0.8); }
+            .arrow-top-right { top: 5px; left: 60%; transform: translateX(-50%) scale(0.8); }
+            .arrow-bottom-left { bottom: 5px; left: 40%; transform: translateX(-50%) scale(0.8); }
+            .arrow-bottom-right { bottom: 5px; left: 60%; transform: translateX(-50%) scale(0.8); }
+            .arrow-left-top { left: 2px; top: 20%; }
+            .arrow-left-bottom { left: 2px; bottom: 20%; }
+            .arrow-right-top { right: 2px; top: 20%; }
+            .arrow-right-bottom { right: 2px; bottom: 20%; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+    <header>
+        <a href="#" class="backlink" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> ChemTrends
+        </a>
+        <div class="header-logo">
+            <span class="logo-icon" aria-hidden="true">⚛</span>
+            <span>Periodic<span style="color:#00e5ff;">Trends</span></span>
+        </div>
+        <nav aria-label="Main navigation">
+            <ul class="header-nav">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#infographic">Infographic</a></li>
+                <li><a href="#trends-section">Trends</a></li>
+                <li><a href="#detail-panel">Details</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section id="hero" class="hero">
+            <h1>Periodic Table <span class="highlight">Trends</span> (Periodicity)</h1>
+            <p class="subtitle">
+                In the periodic table, element properties repeat in a <strong>specific pattern</strong> — this is called <em>Periodicity</em>. The real hero behind it all is <strong>Z<sub>eff</sub></strong> (Effective Nuclear Charge). As we move <strong>Left → Right</strong> across a period, Z<sub>eff</sub> increases — the nucleus pulls outer electrons tighter. Moving <strong>Top → Bottom</strong> down a group, new shells are added and the distance grows.
+            </p>
+            <span class="zeff-badge">🔬 Z<sub>eff</sub> = Z − σ (Screening Constant)</span>
+        </section>
+
+        <section id="infographic" class="infographic-section">
+            <h2>📊 TREND DIRECTIONS</h2>
+
+            <div class="model-container">
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-color metal"></span> Metals</div>
+                    <div class="legend-item"><span class="legend-color semimetal"></span> Semimetals</div>
+                    <div class="legend-item"><span class="legend-color nonmetal"></span> Nonmetals</div>
+                </div>
+
+                <div class="periodic-table" id="periodic-table-infographic"></div>
+
+                <div class="overlay-arrow h-right arrow-top-left" style="color:var(--ionization);">
+                    <span class="arrow-label">Ionization Energy →</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+                <div class="overlay-arrow h-right arrow-top-right" style="color:var(--electroneg);">
+                    <span class="arrow-label">Electronegativity →</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+
+                <div class="overlay-arrow h-left arrow-bottom-left" style="color:var(--atomic-radius);">
+                    <span class="arrow-label">← Atomic Radius</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+                <div class="overlay-arrow h-right arrow-bottom-right" style="color:var(--electron-affinity);">
+                    <span class="arrow-label">Electron Affinity →</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+
+                <div class="overlay-arrow v-down arrow-left-top" style="color:var(--atomic-radius);">
+                    <span class="arrow-label">Atomic Radius</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+                <div class="overlay-arrow v-up arrow-left-bottom" style="color:var(--electron-affinity);">
+                    <span class="arrow-label">Electron Affinity</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+
+                <div class="overlay-arrow v-up arrow-right-top" style="color:var(--ionization);">
+                    <span class="arrow-label">Ionization Energy</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+                <div class="overlay-arrow v-up arrow-right-bottom" style="color:var(--electroneg);">
+                    <span class="arrow-label">Electronegativity</span>
+                    <div class="shaft"></div>
+                    <div class="arrowhead"></div>
+                </div>
+            </div>
+
+            <div class="arrow-explanation">
+                <h3>📌 Understanding the Arrows</h3>
+                <div class="explain-item"><span class="color-dot" style="background: var(--ionization);"></span><strong>Ionization Energy (Blue):</strong> Increases Left → Right and Upwards (↑).</div>
+                <div class="explain-item"><span class="color-dot" style="background: var(--electroneg);"></span><strong>Electronegativity (Green):</strong> Increases Left → Right and Upwards (↑).</div>
+                <div class="explain-item"><span class="color-dot" style="background: var(--atomic-radius);"></span><strong>Atomic Radius (Bright Blue):</strong> Increases Right → Left (←) and Downwards (↓).</div>
+                <div class="explain-item"><span class="color-dot" style="background: var(--electron-affinity);"></span><strong>Electron Affinity (Cyan):</strong> Increases Left → Right (→) and Upwards (↑).</div>
+                <div class="explain-item"><span class="color-dot" style="background: var(--metallic-char);"></span><strong>Metallic Character (Gray):</strong> Increases towards Bottom‑Left (↙).</div>
+                <div class="explain-item"><span class="color-dot" style="background: var(--nonmetallic-char);"></span><strong>Nonmetallic Character (Red):</strong> Increases towards Top‑Right (↗).</div>
+            </div>
+        </section>
+
+        <section id="trends-section" class="trends-section">
+            <h2>5 Main Periodic Trends</h2>
+            <p class="section-subtitle">Click any trend card — details appear below ✨</p>
+            <div class="cards-grid" role="tablist">
+                <div class="trend-card active" data-trend="atomic-radius" role="tab" aria-selected="true" tabindex="0">
+                    <span class="card-icon">🔵</span>
+                    <span class="card-title">Atomic Radius</span>
+                    <span class="card-hint">Click for details</span>
+                </div>
+                <div class="trend-card" data-trend="ionization-energy" role="tab" aria-selected="false" tabindex="0">
+                    <span class="card-icon">⚡</span>
+                    <span class="card-title">Ionization Energy</span>
+                    <span class="card-hint">Click for details</span>
+                </div>
+                <div class="trend-card" data-trend="electronegativity" role="tab" aria-selected="false" tabindex="0">
+                    <span class="card-icon">🧲</span>
+                    <span class="card-title">Electronegativity</span>
+                    <span class="card-hint">Click for details</span>
+                </div>
+                <div class="trend-card" data-trend="electron-gain-enthalpy" role="tab" aria-selected="false" tabindex="0">
+                    <span class="card-icon">🔋</span>
+                    <span class="card-title">Electron Gain Enthalpy</span>
+                    <span class="card-hint">Click for details</span>
+                </div>
+                <div class="trend-card" data-trend="metallic-character" role="tab" aria-selected="false" tabindex="0">
+                    <span class="card-icon">🪙</span>
+                    <span class="card-title">Metallic & Non-metallic</span>
+                    <span class="card-hint">Click for details</span>
+                </div>
+            </div>
+            <article id="detail-panel" class="detail-panel active-glow" aria-live="polite">
+                <div class="detail-content" id="detail-content"></div>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p><span style="text-shadow:0 0 10px var(--glow-cyan);">⚛ Periodicity Summary:</span> Left to Right — Z<sub>eff</sub>↑, size↓, IE↑, EN↑ | Top to Bottom — Shells↑, size↑, IE↓, EN↓</p>
+        <p>Fluorine most electronegative, Francium largest atom, Chlorine most negative EGE.</p>
+        <p style="font-size:0.75rem;">© 2026 ASR — Interactive Periodic Trends Guide.</p>
+    </footer>
+
+    <script>
+        (function() {
+            const periodicData = [
+                [{col:1,type:'nonmetal'},{col:18,type:'nonmetal'}],
+                [{col:1,type:'metal'},{col:2,type:'metal'},{col:13,type:'semimetal'},{col:14,type:'nonmetal'},{col:15,type:'nonmetal'},{col:16,type:'nonmetal'},{col:17,type:'nonmetal'},{col:18,type:'nonmetal'}],
+                [{col:1,type:'metal'},{col:2,type:'metal'},{col:13,type:'metal'},{col:14,type:'semimetal'},{col:15,type:'nonmetal'},{col:16,type:'nonmetal'},{col:17,type:'nonmetal'},{col:18,type:'nonmetal'}],
+                [{col:1,type:'metal'},{col:2,type:'metal'},{col:3,type:'metal'},{col:4,type:'metal'},{col:5,type:'metal'},{col:6,type:'metal'},{col:7,type:'metal'},{col:8,type:'metal'},{col:9,type:'metal'},{col:10,type:'metal'},{col:11,type:'metal'},{col:12,type:'metal'},{col:13,type:'metal'},{col:14,type:'semimetal'},{col:15,type:'nonmetal'},{col:16,type:'nonmetal'},{col:17,type:'nonmetal'},{col:18,type:'nonmetal'}],
+                [{col:1,type:'metal'},{col:2,type:'metal'},{col:3,type:'metal'},{col:4,type:'metal'},{col:5,type:'metal'},{col:6,type:'metal'},{col:7,type:'metal'},{col:8,type:'metal'},{col:9,type:'metal'},{col:10,type:'metal'},{col:11,type:'metal'},{col:12,type:'metal'},{col:13,type:'metal'},{col:14,type:'semimetal'},{col:15,type:'semimetal'},{col:16,type:'nonmetal'},{col:17,type:'nonmetal'},{col:18,type:'nonmetal'}],
+                [{col:1,type:'metal'},{col:2,type:'metal'},{col:3,type:'metal'},{col:4,type:'metal'},{col:5,type:'metal'},{col:6,type:'metal'},{col:7,type:'metal'},{col:8,type:'metal'},{col:9,type:'metal'},{col:10,type:'metal'},{col:11,type:'metal'},{col:12,type:'metal'},{col:13,type:'metal'},{col:14,type:'metal'},{col:15,type:'semimetal'},{col:16,type:'nonmetal'},{col:17,type:'nonmetal'},{col:18,type:'nonmetal'}],
+                [{col:1,type:'metal'},{col:2,type:'metal'},{col:3,type:'metal'},{col:4,type:'metal'},{col:5,type:'metal'},{col:6,type:'metal'},{col:7,type:'metal'},{col:8,type:'metal'},{col:9,type:'metal'},{col:10,type:'metal'},{col:11,type:'metal'},{col:12,type:'metal'},{col:13,type:'metal'},{col:14,type:'metal'},{col:15,type:'metal'},{col:16,type:'nonmetal'},{col:17,type:'nonmetal'},{col:18,type:'nonmetal'}]
+            ];
+            const container = document.getElementById('periodic-table-infographic');
+            container.innerHTML = '';
+            periodicData.forEach(period => {
+                const row = new Array(18).fill(null);
+                period.forEach(elem => { row[elem.col-1] = elem.type; });
+                row.forEach(type => {
+                    const cell = document.createElement('div');
+                    cell.className = 'pt-cell' + (type ? ` ${type} occupied` : '');
+                    container.appendChild(cell);
+                });
+            });
+            const metallicDiv = document.createElement('div');
+            metallicDiv.className = 'diagonal-arrow metallic-char';
+            metallicDiv.style.color = 'var(--metallic-char)';
+            metallicDiv.innerHTML = `<div class="arrow"><span class="diag-label">Metallic Character</span><div class="shaft"></div><div class="arrowhead"></div></div>`;
+            container.appendChild(metallicDiv);
+            const nonmetallicDiv = document.createElement('div');
+            nonmetallicDiv.className = 'diagonal-arrow nonmetallic-char';
+            nonmetallicDiv.style.color = 'var(--nonmetallic-char)';
+            nonmetallicDiv.innerHTML = `<div class="arrow"><span class="diag-label">Nonmetallic Character</span><div class="shaft"></div><div class="arrowhead"></div></div>`;
+            container.appendChild(nonmetallicDiv);
+
+            const trendData = {
+                'atomic-radius': { title:'Atomic Radius', icon:'🔵', definition:'Distance from nucleus to outermost shell.', reasonTTB:'▲ Top→Bottom: INCREASES — new shells added.', reasonLTR:'◀ Left→Right: DECREASES — Z<sub>eff</sub>↑ pulls electrons tighter.', formula:'r = n²×a₀ / Z<sub>eff</sub> (a₀=52.9 pm)', unit:'pm or Å', trick:'Down: "new floors". Right: "grip tightens". Fr largest, He smallest.' },
+                'ionization-energy': { title:'Ionization Energy', icon:'⚡', definition:'Minimum energy to remove an electron from gaseous atom.', reasonTTB:'▲ Top→Bottom: DECREASES — electron farther.', reasonLTR:'◀ Left→Right: INCREASES — Z<sub>eff</sub>↑ binds tighter.', formula:'IE = 13.6×(Z<sub>eff</sub>²/n²) eV', unit:'kJ/mol or eV', trick:'He highest IE, Cs lowest. Down: easier; Right: harder.' },
+                'electronegativity': { title:'Electronegativity', icon:'🧲', definition:'Ability of an atom in a bond to attract shared electrons.', reasonTTB:'▲ Top→Bottom: DECREASES — larger size reduces pull.', reasonLTR:'◀ Left→Right: INCREASES — Z<sub>eff</sub>↑ strengthens attraction.', formula:'Pauling scale: F=3.98 (highest)', unit:'No unit (relative)', trick:'F > O > N > Cl. Fluorine is king. Noble gases undefined.' },
+                'electron-gain-enthalpy': { title:'Electron Gain Enthalpy', icon:'🔋', definition:'Enthalpy change when an electron is added to neutral gaseous atom.', reasonTTB:'▲ Top→Bottom: LESS NEGATIVE — size↑, attraction↓.', reasonLTR:'◀ Left→Right: MORE NEGATIVE — Z<sub>eff</sub>↑, addition favorable.', formula:'Δ<sub>eg</sub>H (kJ/mol)', unit:'kJ/mol', trick:'Cl most negative (-349). F less due to repulsion. Noble gases positive.' },
+                'metallic-character': { title:'Metallic & Non-metallic', icon:'🪙', definition:'Metallic: donate e⁻. Non-metallic: accept e⁻.', reasonTTB:'▲ Top→Bottom: Metallic↑ (Non-metallic↓).', reasonLTR:'◀ Left→Right: Non-metallic↑ (Metallic↓).', formula:'Low IE+EN=metallic; High IE+EN=non-metallic', unit:'Qualitative', trick:'Left-bottom most metallic (Fr). Right-top most non-metallic (F).' }
+            };
+            const cards = document.querySelectorAll('.trend-card');
+            const detailContent = document.getElementById('detail-content');
+            const detailPanel = document.getElementById('detail-panel');
+
+            function buildHTML(key) {
+                const d = trendData[key];
+                if(!d) return '<p style="color:var(--text-muted);text-align:center;">Click a card to explore.</p>';
+                return `<h3>${d.icon} ${d.title}</h3><div class="detail-grid"><div class="detail-block"><h4>📏 Definition</h4><p>${d.definition}</p></div><div class="detail-block"><h4>🤔 Reason</h4><p>${d.reasonTTB}</p><p>${d.reasonLTR}</p></div><div class="detail-block"><h4>📐 Formula</h4><p>${d.formula}</p></div><div class="detail-block"><h4>📊 Unit</h4><p>${d.unit}</p></div><div class="trick-box"><h4>💡 Trick</h4><p>${d.trick}</p></div></div>`;
+            }
+
+            function updateDetail(key) {
+                detailContent.classList.add('switching');
+                setTimeout(() => {
+                    detailContent.innerHTML = buildHTML(key);
+                    detailContent.classList.remove('switching');
+                    // Smooth scroll to the detail panel after content update
+                    detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 200);
+                detailPanel.classList.add('active-glow');
+            }
+
+            function setActive(card) {
+                cards.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-selected','false'); });
+                card.classList.add('active');
+                card.setAttribute('aria-selected','true');
+            }
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const key = card.dataset.trend;
+                    setActive(card);
+                    updateDetail(key);
+                });
+                card.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+
+            // Initial load without scrolling
+            detailContent.innerHTML = buildHTML('atomic-radius');
+            detailPanel.classList.add('active-glow');
+        })();
+    </script>
+</body>
+</html>

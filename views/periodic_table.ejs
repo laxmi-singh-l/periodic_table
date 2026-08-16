@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Periodic Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+  /* =====================================================================
+     GAP CONTROLS — sirf inhi 2 values ko change karke poori table ki
+     spacing turant badal sakte ho. Baaki sab CSS neeche isi par depend
+     karta hai, isliye inhe hamesha yahi sabse upar rakha hai.
+     ===================================================================== */
+  :root{
+    --element-gap: 6px;   /* har element-box ke beech ka MINIMUM gap */
+    --block-gap:   18px;   /* s/d/p/f block ke beech ka MINIMUM gap (group 2→3, 12→13, aur f-block se pehle) */
+  }
+  /* ===================================================================== */
+
+  :root{
+    --box-w: 96px;
+    --box-h: 84px;
+
+    --bg-1:#1a1030;
+    --bg-2:#0a0714;
+    --bg-3:#050308;
+    --text:#EDEEFA;
+    --text-dim:#9296B8;
+
+    /* category ke neon rang — same category = same rang, guaranteed */
+    --alkali:#FF3D6E;      --alkali-rgb:255,61,110;
+    --alkaline:#FA8B29;    --alkaline-rgb:250,139,41;
+    --lanthanide:#F9CF29;  --lanthanide-rgb:249,207,41;
+    --actinide:#A6E62E;    --actinide-rgb:166,230,46;
+    --transition:#29E693;  --transition-rgb:41,230,147;
+    --posttrans:#1FDDC4;   --posttrans-rgb:31,221,196;
+    --metalloid:#29C4F2;   --metalloid-rgb:41,196,242;
+    --nonmetal:#4A80F5;    --nonmetal-rgb:74,128,245;
+    --halogen:#8452F0;     --halogen-rgb:132,82,240;
+    --noble:#EE41D6;       --noble-rgb:238,65,214;
+    --unknown:#A3A6C2;     --unknown-rgb:163,166,194;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background: radial-gradient(ellipse 1300px 800px at 50% -8%, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+    color:var(--text);
+    font-family:'Space Grotesk',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:36px 16px 60px;
+    position:relative;
+  }
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size:28px 28px;
+    pointer-events:none;
+    z-index:0;
+  }
+  .container{position:relative;z-index:1;max-width:1800px;margin:0 auto;}
+
+  header{text-align:center;margin-bottom:20px;}
+  .neon-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(30px,6vw,52px);
+    letter-spacing:6px;
+    margin:0;
+    color:#fff;
+    text-shadow:0 0 6px #fff, 0 0 22px #29C4F2, 0 0 46px #8452F0, 0 0 90px rgba(132,82,240,.5);
+    animation:flicker 5s ease-in-out infinite;
+  }
+  @keyframes flicker{
+    0%,17%,19%,21%,52%,54%,100%{opacity:1;}
+    18%,20%,53%{opacity:.82;}
+  }
+  .stat-line{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:3px;
+    color:var(--text-dim);
+    margin:10px 0 4px;
+    text-transform:uppercase;
+  }
+  .subtitle{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    margin:0;
+    letter-spacing:.4px;
+  }
+
+  .legend{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;
+    margin:24px auto 26px;max-width:1100px;
+  }
+  .legend-item{
+    display:flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--text-dim);
+    letter-spacing:.3px;
+  }
+  .legend-item .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--cat);
+    box-shadow:0 0 6px var(--cat),0 0 12px var(--cat);
+    flex-shrink:0;
+  }
+
+  .table-scroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;  /* smooth momentum-scroll on Android/iOS */
+    padding-bottom:16px;
+    scrollbar-width:thin;
+    scrollbar-color:#8452F0 #0a0714;
+  }
+  .table-scroll::-webkit-scrollbar{height:10px;}
+  .table-scroll::-webkit-scrollbar-track{background:#0a0714;border-radius:10px;}
+  .table-scroll::-webkit-scrollbar-thumb{background:linear-gradient(90deg,#EE41D6,#29C4F2);border-radius:10px;}
+
+  /* IMPORTANT: centering yahan margin:auto se hoti hai, flexbox/grid ke
+     align-items:center se NAHI. Jab content chhoti screen par overflow
+     karta hai to margin:auto khud 0 ban jaata hai aur table left se
+     shuru hoti hai — isliye s-block (group 1-2) scroll karke hamesha
+     milega. align-items:center use karne par overflow ka "start" hissa
+     (yahan s-block) scroll se kabhi reach nahi hota — ye ek common
+     CSS gotcha hai, isse bachna hai. */
+  .periodic-table, .f-block{
+    display:grid;
+    grid-template-columns:repeat(18,minmax(var(--box-w),1fr));
+    grid-auto-rows:var(--box-h);
+    gap:var(--element-gap);
+    width:max-content;
+    margin:0 auto;
+  }
+  .f-block{margin-top:var(--block-gap);}
+
+  /* ---- category colour classes: same category -> same --cat/--cat-rgb ---- */
+  .cat-alkali{--cat:var(--alkali);--cat-rgb:var(--alkali-rgb);}
+  .cat-alkaline{--cat:var(--alkaline);--cat-rgb:var(--alkaline-rgb);}
+  .cat-transition{--cat:var(--transition);--cat-rgb:var(--transition-rgb);}
+  .cat-lanthanide{--cat:var(--lanthanide);--cat-rgb:var(--lanthanide-rgb);}
+  .cat-actinide{--cat:var(--actinide);--cat-rgb:var(--actinide-rgb);}
+  .cat-posttrans{--cat:var(--posttrans);--cat-rgb:var(--posttrans-rgb);}
+  .cat-metalloid{--cat:var(--metalloid);--cat-rgb:var(--metalloid-rgb);}
+  .cat-nonmetal{--cat:var(--nonmetal);--cat-rgb:var(--nonmetal-rgb);}
+  .cat-halogen{--cat:var(--halogen);--cat-rgb:var(--halogen-rgb);}
+  .cat-noble{--cat:var(--noble);--cat-rgb:var(--noble-rgb);}
+  .cat-unknown{--cat:var(--unknown);--cat-rgb:var(--unknown-rgb);}
+
+  .element-box{
+    text-decoration:none;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:6px 7px;
+    border-radius:11px;
+    border:1px solid var(--cat);
+    background:rgba(var(--cat-rgb),.10);
+    box-shadow:0 0 5px rgba(var(--cat-rgb),.5), inset 0 0 8px rgba(var(--cat-rgb),.12);
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .32s ease, background .32s ease;
+  }
+  /* block-start = jahan se ek naya block (d-block ya p-block) shuru hota hai */
+  .element-box.block-start,
+  .placeholder-box.block-start{margin-left:var(--block-gap);}
+
+  .element-box:hover{
+    transform:translateY(-6px) scale(1.16);
+    z-index:30;
+    background:rgba(var(--cat-rgb),.22);
+    box-shadow:0 0 14px rgba(var(--cat-rgb),.9), 0 0 34px rgba(var(--cat-rgb),.5), 0 12px 22px rgba(0,0,0,.5);
+  }
+  .element-box:active{transform:translateY(-2px) scale(1.05);}
+
+  /* shine-sweep: hover par ek neon light box ke upar se guzarti hai */
+  .element-box::after{
+    content:'';
+    position:absolute;top:0;left:-60%;width:40%;height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+    transform:skewX(-20deg);
+    transition:left .6s ease;
+    pointer-events:none;
+  }
+  .element-box:hover::after{left:120%;}
+
+  .box-left{display:flex;flex-direction:column;overflow:hidden;max-width:54px;}
+  .symbol{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:24px;line-height:1;
+    color:var(--cat);
+    text-shadow:0 0 8px rgba(var(--cat-rgb),.85);
+  }
+  .ename{
+    font-family:'Space Grotesk',sans-serif;font-weight:500;
+    font-size:8px;text-transform:uppercase;letter-spacing:.4px;
+    color:#D6D6F2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    margin-top:3px;
+  }
+  .box-right{
+    display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;
+    font-family:'JetBrains Mono',monospace;line-height:1.35;
+    margin-left:4px;
+  }
+  .box-right .num{font-size:11px;font-weight:700;color:#fff;}
+  .box-right .wt{font-size:7.5px;font-weight:500;color:rgba(255,255,255,.7);}
+  .box-right .val{font-size:7.5px;font-weight:500;color:rgba(255,255,255,.7);}
+
+  .placeholder-box{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed rgba(255,255,255,.32);
+    border-radius:11px;
+    background:linear-gradient(135deg,rgba(249,207,41,.10),rgba(166,230,46,.10));
+  }
+  .placeholder-box .ph-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#fff;}
+  .placeholder-box .ph-label{font-family:'Space Grotesk',sans-serif;font-size:9px;color:#9296B8;margin-top:3px;letter-spacing:.3px;}
+
+  footer{
+    text-align:center;margin-top:26px;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    color:var(--text-dim);letter-spacing:.4px;
+  }
+
+  .scroll-hint{
+    display:none; /* sirf mobile par dikhega, neeche media query me on hota hai */
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    margin:2px 0 14px;
+    animation:hint-pulse 2s ease-in-out infinite;
+  }
+  @keyframes hint-pulse{0%,100%{opacity:.45;}50%{opacity:1;}}
+
+  /* ===================== ANDROID / MOBILE BREAKPOINTS ===================== */
+  @media (max-width:768px){
+    body{padding:26px 10px 50px;}
+    .neon-title{letter-spacing:3px;}
+    .stat-line{letter-spacing:2px;font-size:10.5px;}
+    .subtitle{font-size:10.5px;padding:0 6px;}
+    .legend{gap:6px 12px;margin:16px auto 6px;}
+    .legend-item{font-size:10px;}
+    .scroll-hint{display:block;}
+  }
+
+  @media (max-width:480px){
+    :root{
+      --box-w:78px;   /* chhote phone par box thoda chhota, scroll kam karna pade */
+      --box-h:74px;
+    }
+    .symbol{font-size:20px;}
+    .ename{font-size:7px;max-width:44px;}
+    .box-left{max-width:44px;}
+    .box-right .num{font-size:9.5px;}
+    .box-right .wt,.box-right .val{font-size:6.5px;}
+    .neon-title{font-size:26px;}
+  }
+  /* =========================================================================== */
+
+  /* ========== TOP-LEFT BACK BUTTON (NEON THEME) ========== */
+  .back-home-btn {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #00ffff;
+    border-radius: 30px;
+    color: #00ffff;
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4), 0 4px 15px rgba(0, 0, 0, 0.5);
+  }
+  .back-home-btn:hover {
+    background: rgba(0, 255, 255, 0.1);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7), 0 0 15px rgba(0, 255, 255, 0.4) inset;
+    color: #ffffff;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+  }
+  .back-home-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+  }
+  @media (max-width: 600px) {
+    .back-home-btn {
+      top: 15px;
+      left: 15px;
+      padding: 8px 16px;
+      font-size: 0.75rem;
+    }
+    .back-home-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+</style>
+<!-- Essential SEO Meta Tags -->
+<% 
+  const pageTitle = typeof title !== 'undefined' ? title : 'My Website';
+  const pageDesc = typeof description !== 'undefined' ? description : 'Welcome to our website';
+%>
+<title><%= pageTitle %></title>
+<meta name="title" content="<%= pageTitle %>">
+<meta name="description" content="<%= pageDesc %>">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="og:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="og:image" content="<%= image %>"><% } %>
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary">
+<meta property="twitter:title" content="<%= pageTitle %>">
+<meta property="twitter:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="twitter:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="twitter:image" content="<%= image %>"><% } %>
+
+</head>
+<body>
+
+  <!-- 🔙 NEON BACK TO HOME BUTTON (top-left, fixed) -->
+  <a href="/home" class="back-home-btn" title="Back to Home" aria-label="Go back to Home">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Home
+  </a>
+
+<div class="container">
+  <header>
+    <h1 class="neon-title">PERIODIC TABLE</h1>
+    <p class="stat-line">118 ELEMENTS · 7 PERIODS · 18 GROUPS</p>
+    <p class="subtitle">तत्वों की आवर्त सारणी — hover karke dekho, click karke uske apne route (/sanket) par jao</p>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <p class="scroll-hint">⟷ table ko left-right swipe karo — saare 18 groups yahin milenge</p>
+
+  <div class="table-scroll">
+    <div class="periodic-table" id="mainTable"></div>
+    <div class="f-block" id="fBlockTable"></div>
+  </div>
+</div>
+
+<script>
+  // Har row: [atomic number, symbol, name, atomic weight (g/mol), valency, category, grid-row, grid-col]
+  const ELEMENTS = [
+    [1,'H','Hydrogen',1.008,'1','nonmetal',1,1],
+    [2,'He','Helium',4.003,'0','noble',1,18],
+    [3,'Li','Lithium',6.94,'1','alkali',2,1],
+    [4,'Be','Beryllium',9.012,'2','alkaline',2,2],
+    [5,'B','Boron',10.81,'3','metalloid',2,13],
+    [6,'C','Carbon',12.011,'4','nonmetal',2,14],
+    [7,'N','Nitrogen',14.007,'3','nonmetal',2,15],
+    [8,'O','Oxygen',15.999,'2','nonmetal',2,16],
+    [9,'F','Fluorine',18.998,'1','halogen',2,17],
+    [10,'Ne','Neon',20.180,'0','noble',2,18],
+    [11,'Na','Sodium',22.990,'1','alkali',3,1],
+    [12,'Mg','Magnesium',24.305,'2','alkaline',3,2],
+    [13,'Al','Aluminium',26.982,'3','posttrans',3,13],
+    [14,'Si','Silicon',28.085,'4','metalloid',3,14],
+    [15,'P','Phosphorus',30.974,'3,5','nonmetal',3,15],
+    [16,'S','Sulfur',32.06,'2,6','nonmetal',3,16],
+    [17,'Cl','Chlorine',35.45,'1,7','halogen',3,17],
+    [18,'Ar','Argon',39.948,'0','noble',3,18],
+    [19,'K','Potassium',39.098,'1','alkali',4,1],
+    [20,'Ca','Calcium',40.078,'2','alkaline',4,2],
+    [21,'Sc','Scandium',44.956,'3','transition',4,3],
+    [22,'Ti','Titanium',47.867,'4','transition',4,4],
+    [23,'V','Vanadium',50.942,'5','transition',4,5],
+    [24,'Cr','Chromium',51.996,'3,6','transition',4,6],
+    [25,'Mn','Manganese',54.938,'2,7','transition',4,7],
+    [26,'Fe','Iron',55.845,'2,3','transition',4,8],
+    [27,'Co','Cobalt',58.933,'2,3','transition',4,9],
+    [28,'Ni','Nickel',58.693,'2','transition',4,10],
+    [29,'Cu','Copper',63.546,'1,2','transition',4,11],
+    [30,'Zn','Zinc',65.38,'2','transition',4,12],
+    [31,'Ga','Gallium',69.723,'3','posttrans',4,13],
+    [32,'Ge','Germanium',72.630,'4','metalloid',4,14],
+    [33,'As','Arsenic',74.922,'3,5','metalloid',4,15],
+    [34,'Se','Selenium',78.971,'2,6','nonmetal',4,16],
+    [35,'Br','Bromine',79.904,'1,7','halogen',4,17],
+    [36,'Kr','Krypton',83.798,'0','noble',4,18],
+    [37,'Rb','Rubidium',85.468,'1','alkali',5,1],
+    [38,'Sr','Strontium',87.62,'2','alkaline',5,2],
+    [39,'Y','Yttrium',88.906,'3','transition',5,3],
+    [40,'Zr','Zirconium',91.224,'4','transition',5,4],
+    [41,'Nb','Niobium',92.906,'5','transition',5,5],
+    [42,'Mo','Molybdenum',95.95,'6','transition',5,6],
+    [43,'Tc','Technetium',98,'7','transition',5,7],
+    [44,'Ru','Ruthenium',101.07,'3,4','transition',5,8],
+    [45,'Rh','Rhodium',102.906,'3','transition',5,9],
+    [46,'Pd','Palladium',106.42,'2,4','transition',5,10],
+    [47,'Ag','Silver',107.868,'1','transition',5,11],
+    [48,'Cd','Cadmium',112.414,'2','transition',5,12],
+    [49,'In','Indium',114.818,'3','posttrans',5,13],
+    [50,'Sn','Tin',118.710,'2,4','posttrans',5,14],
+    [51,'Sb','Antimony',121.760,'3,5','metalloid',5,15],
+    [52,'Te','Tellurium',127.60,'2,6','metalloid',5,16],
+    [53,'I','Iodine',126.904,'1,7','halogen',5,17],
+    [54,'Xe','Xenon',131.293,'0','noble',5,18],
+    [55,'Cs','Cesium',132.905,'1','alkali',6,1],
+    [56,'Ba','Barium',137.327,'2','alkaline',6,2],
+    [57,'La','Lanthanum',138.905,'3','lanthanide',9,3],
+    [58,'Ce','Cerium',140.116,'3,4','lanthanide',9,4],
+    [59,'Pr','Praseodymium',140.908,'3','lanthanide',9,5],
+    [60,'Nd','Neodymium',144.242,'3','lanthanide',9,6],
+    [61,'Pm','Promethium',145,'3','lanthanide',9,7],
+    [62,'Sm','Samarium',150.36,'3','lanthanide',9,8],
+    [63,'Eu','Europium',151.964,'2,3','lanthanide',9,9],
+    [64,'Gd','Gadolinium',157.25,'3','lanthanide',9,10],
+    [65,'Tb','Terbium',158.925,'3','lanthanide',9,11],
+    [66,'Dy','Dysprosium',162.500,'3','lanthanide',9,12],
+    [67,'Ho','Holmium',164.930,'3','lanthanide',9,13],
+    [68,'Er','Erbium',167.259,'3','lanthanide',9,14],
+    [69,'Tm','Thulium',168.934,'3','lanthanide',9,15],
+    [70,'Yb','Ytterbium',173.045,'2,3','lanthanide',9,16],
+    [71,'Lu','Lutetium',174.967,'3','lanthanide',9,17],
+    [72,'Hf','Hafnium',178.49,'4','transition',6,4],
+    [73,'Ta','Tantalum',180.948,'5','transition',6,5],
+    [74,'W','Tungsten',183.84,'6','transition',6,6],
+    [75,'Re','Rhenium',186.207,'7','transition',6,7],
+    [76,'Os','Osmium',190.23,'3,4','transition',6,8],
+    [77,'Ir','Iridium',192.217,'3,4','transition',6,9],
+    [78,'Pt','Platinum',195.085,'2,4','transition',6,10],
+    [79,'Au','Gold',196.967,'1,3','transition',6,11],
+    [80,'Hg','Mercury',200.592,'1,2','transition',6,12],
+    [81,'Tl','Thallium',204.38,'1,3','posttrans',6,13],
+    [82,'Pb','Lead',207.2,'2,4','posttrans',6,14],
+    [83,'Bi','Bismuth',208.980,'3,5','posttrans',6,15],
+    [84,'Po','Polonium',209,'2,4','posttrans',6,16],
+    [85,'At','Astatine',210,'1','halogen',6,17],
+    [86,'Rn','Radon',222,'0','noble',6,18],
+    [87,'Fr','Francium',223,'1','alkali',7,1],
+    [88,'Ra','Radium',226,'2','alkaline',7,2],
+    [89,'Ac','Actinium',227,'3','actinide',10,3],
+    [90,'Th','Thorium',232.038,'4','actinide',10,4],
+    [91,'Pa','Protactinium',231.036,'5','actinide',10,5],
+    [92,'U','Uranium',238.029,'6','actinide',10,6],
+    [93,'Np','Neptunium',237,'5','actinide',10,7],
+    [94,'Pu','Plutonium',244,'4','actinide',10,8],
+    [95,'Am','Americium',243,'3','actinide',10,9],
+    [96,'Cm','Curium',247,'3','actinide',10,10],
+    [97,'Bk','Berkelium',247,'3','actinide',10,11],
+    [98,'Cf','Californium',251,'3','actinide',10,12],
+    [99,'Es','Einsteinium',252,'3','actinide',10,13],
+    [100,'Fm','Fermium',257,'3','actinide',10,14],
+    [101,'Md','Mendelevium',258,'3','actinide',10,15],
+    [102,'No','Nobelium',259,'3','actinide',10,16],
+    [103,'Lr','Lawrencium',266,'3','actinide',10,17],
+    [104,'Rf','Rutherfordium',267,'4','transition',7,4],
+    [105,'Db','Dubnium',268,'5','transition',7,5],
+    [106,'Sg','Seaborgium',269,'6','transition',7,6],
+    [107,'Bh','Bohrium',270,'7','transition',7,7],
+    [108,'Hs','Hassium',269,'8','transition',7,8],
+    [109,'Mt','Meitnerium',278,'-','unknown',7,9],
+    [110,'Ds','Darmstadtium',281,'-','unknown',7,10],
+    [111,'Rg','Roentgenium',282,'-','unknown',7,11],
+    [112,'Cn','Copernicium',285,'2','transition',7,12],
+    [113,'Nh','Nihonium',286,'1,3','posttrans',7,13],
+    [114,'Fl','Flerovium',289,'2,4','posttrans',7,14],
+    [115,'Mc','Moscovium',290,'1,3','posttrans',7,15],
+    [116,'Lv','Livermorium',293,'2,4','posttrans',7,16],
+    [117,'Ts','Tennessine',294,'1','halogen',7,17],
+    [118,'Og','Oganesson',294,'0','noble',7,18]
+  ];
+
+  const CATS = [
+    ['alkali','Alkali Metal'],
+    ['alkaline','Alkaline Earth'],
+    ['transition','Transition Metal'],
+    ['lanthanide','Lanthanide'],
+    ['actinide','Actinide'],
+    ['posttrans','Post-Transition'],
+    ['metalloid','Metalloid'],
+    ['nonmetal','Reactive Nonmetal'],
+    ['halogen','Halogen'],
+    ['noble','Noble Gas'],
+    ['unknown','Unknown']
+  ];
+
+  const mainTable   = document.getElementById('mainTable');
+  const fBlockTable = document.getElementById('fBlockTable');
+  const legend      = document.getElementById('legend');
+
+  // ---- legend banate hain ----
+  CATS.forEach(([key, label]) => {
+    const item = document.createElement('div');
+    item.className = 'legend-item cat-' + key;
+    item.innerHTML = '<span class="dot"></span>' + label;
+    legend.appendChild(item);
+  });
+
+  // ---- 118 element-boxes generate karte hain data se ----
+  ELEMENTS.forEach(d => {
+    const [num, sym, name, wt, val, cat, row, col] = d;
+    const isMain   = row <= 7;
+    const gridRow  = isMain ? row : row - 8; // f-block ke apne 2 rows (9,10 -> 1,2)
+
+    const a = document.createElement('a');
+    a.href = sym;                              // <-- routing ke liye khud element ka sanket
+    a.className = 'element-box cat-' + cat;
+    a.style.gridColumn = col;
+    a.style.gridRow = gridRow;
+    a.setAttribute('aria-label', name + ', atomic number ' + num);
+    a.title = name + ' (' + sym + ')  |  Atomic No: ' + num + '  |  Atomic Weight: ' + wt + ' g/mol  |  Valency: ' + val;
+
+    if (isMain && (col === 3 || col === 13)) a.classList.add('block-start');
+
+    a.innerHTML =
+      '<span class="box-left">' +
+        '<span class="symbol">' + sym + '</span>' +
+        '<span class="ename">' + name + '</span>' +
+      '</span>' +
+      '<span class="box-right">' +
+        '<span class="num">' + num + '</span>' +
+        '<span class="wt">' + wt + '</span>' +
+        '<span class="val">V:' + val + '</span>' +
+      '</span>';
+
+    (isMain ? mainTable : fBlockTable).appendChild(a);
+  });
+
+  // ---- lanthanide / actinide series ke placeholder box (main table mein) ----
+  function addPlaceholder(row, col, big, small) {
+    const div = document.createElement('div');
+    div.className = 'placeholder-box block-start';
+    div.style.gridColumn = col;
+    div.style.gridRow = row;
+    div.title = small + ' series';
+    div.innerHTML = '<span class="ph-num">' + big + '</span><span class="ph-label">' + small + '</span>';
+    mainTable.appendChild(div);
+  }
+  addPlaceholder(6, 3, '57-71', 'La \u2013 Lu');
+  addPlaceholder(7, 3, '89-103', 'Ac \u2013 Lr');
+</script>
+
+</body>
+</html>

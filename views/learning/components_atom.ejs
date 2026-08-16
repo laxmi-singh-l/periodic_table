@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Interactive Atomic Quantities Explorer. Learn and calculate electrons, protons, neutrons, atomic number, and atomic weight with interactive quizzes.">
+    <meta name="keywords" content="Atomic Quantities, Electrons, Protons, Neutrons, Chemistry Quiz, Science Explorer">
+    <title>Atomic Quantities Explorer</title>
+    
+    <style>
+        :root { 
+            --bg-color: #050505; 
+            --accent-blue: #00f2ff; 
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --correct: #2ecc71;
+            --wrong: #e74c3c;
+        }
+        
+        /* Fixed Body Positioning */
+        body { 
+            background: var(--bg-color); 
+            color: #fff; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Changed to start for vertical scrolling */
+            padding-top: 60px; /* Spacing from top */
+            padding-bottom: 60px;
+            overflow-x: hidden;
+        }
+
+        .hero-header {
+            text-align: center;
+            margin-bottom: 40px;
+            z-index: 10;
+        }
+        
+        .hero-header h1 { 
+            color: var(--accent-blue); 
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        /* Vertical Menu Container */
+        .vertical-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Space between buttons */
+            width: 100%;
+            max-width: 400px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        /* Updated Button Styling for Vertical Layout */
+        .topic-btn { 
+            background: rgba(0, 0, 0, 0.85); 
+            border: 2px solid var(--accent-blue); 
+            border-radius: 12px; 
+            color: var(--accent-blue); 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            padding: 18px 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            outline: none;
+            width: 100%; 
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.1);
+        }
+        
+        /* Neon Shine On Hover */
+        .topic-btn:hover { 
+            background: var(--accent-blue); 
+            color: #000; 
+            box-shadow: 0 0 15px var(--accent-blue), 0 0 30px var(--accent-blue);
+            transform: translateY(-3px); /* Slight lift effect */
+        }
+
+        /* Panel/Modal Styles (Unchanged) */
+        #panel { 
+            display: none; 
+            position: fixed; 
+            inset: 50px; 
+            max-width: 900px;
+            margin: auto;
+            background: rgba(10, 10, 15, 0.98); 
+            border: 1px solid #444; 
+            border-radius: 20px; 
+            padding: 40px; 
+            z-index: 1000; 
+            overflow-y: auto; 
+            backdrop-filter: blur(20px); 
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.2); 
+        }
+        
+        .close-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 25px; 
+            cursor: pointer; 
+            color: var(--accent-blue); 
+            font-size: 2.5rem; 
+            transition: 0.3s;
+        }
+        .close-btn:hover { color: #fff; transform: scale(1.1); }
+        
+        /* Content inside Modal */
+        h1, h2, h3 { color: var(--accent-blue); margin-top: 0; }
+        .section-box { background: var(--glass-bg); padding: 20px; border-radius: 10px; margin-bottom: 25px; line-height: 1.6; }
+        
+        .points-list { padding-left: 20px; margin: 0; }
+        .points-list li { margin-bottom: 8px; }
+
+        .example-box { background: rgba(0, 242, 255, 0.05); border-left: 4px solid var(--accent-blue); padding: 15px; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        .example-box p { margin: 5px 0; }
+
+        .question-box { background: rgba(255, 255, 255, 0.05); padding: 20px; margin-bottom: 20px; border-radius: 15px; border-left: 4px solid var(--accent-blue); }
+        .opt-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; background: rgba(255, 255, 255, 0.1); border: 1px solid #555; color: white; cursor: pointer; border-radius: 8px; transition: 0.3s; text-align: left; font-size: 1rem;}
+        .opt-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .opt-btn.correct { background: var(--correct) !important; color: #fff; border-color: var(--correct); }
+        .opt-btn.wrong { background: var(--wrong) !important; color: #fff; border-color: var(--wrong); }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+
+            .hero-header { margin-bottom: 30px; }
+            .hero-header h1 { font-size: 1.8rem; }
+
+            .topic-btn {
+                font-size: 1.1rem;
+                padding: 15px 20px;
+            }
+
+            #panel { 
+                inset: 15px; 
+                padding: 30px 15px 15px 15px; 
+                border-radius: 15px; 
+                max-height: 85vh; 
+            }
+            .close-btn { top: 5px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-header">
+        <h1>Atomic Quantities Calculation</h1>
+    </header>
+
+    <main>
+        <!-- Replaced Orbit with Vertical Menu -->
+        <nav class="vertical-menu" aria-label="Atomic Topics Menu">
+            <button class="topic-btn" onclick="openTopic('electron')" aria-label="Number of Electrons">
+                Number of Electrons
+            </button>
+            <button class="topic-btn" onclick="openTopic('neutron')" aria-label="Number of Neutrons">
+                Number of Neutrons
+            </button>
+            <button class="topic-btn" onclick="openTopic('proton')" aria-label="Number of Protons">
+                Number of Protons
+            </button>
+            <button class="topic-btn" onclick="openTopic('atomicNum')" aria-label="Atomic Number">
+                Atomic Number
+            </button>
+            <button class="topic-btn" onclick="openTopic('atomicWeight')" aria-label="Atomic Weight">
+                Atomic Weight
+            </button>
+        </nav>
+    </main>
+
+    <!-- Semantic aside element for popup panel -->
+    <aside id="panel" aria-hidden="true" role="dialog">
+        <span class="close-btn" onclick="closePanel()" aria-label="Close Panel">&times;</span>
+        <article id="content-area"></article>
+    </aside>
+
+    <script>
+        const quizData = {
+            "electron": {
+                title: "Number of Electrons",
+                description: "Electrons are negatively charged subatomic particles that orbit the nucleus in specific energy levels or shells. Despite having a virtually negligible mass compared to protons and neutrons, electrons are the primary drivers of an element's chemical properties, reactivity, and bonding capabilities. In a stable, neutral atom, the number of electrons perfectly balances the number of positively charged protons.",
+                points: [
+                    "They carry a relative electrical charge of -1.",
+                    "Mass is extremely small (approx. 1/1836 of a proton).",
+                    "For a neutral atom: Number of Electrons = Atomic Number (Z).",
+                    "When an atom gains electrons, it becomes a negatively charged Anion.",
+                    "When an atom loses electrons, it becomes a positively charged Cation."
+                ],
+                examples: [
+                    {p: "How many electrons are in a neutral Carbon (C) atom (Atomic Number = 6)?", s: "Since it is neutral, Electrons = Protons = 6."},
+                    {p: "Find the number of electrons in a Sodium ion (Na+), Z=11.", s: "A neutral Na atom has 11 electrons. The '+' charge means it lost 1 electron. 11 - 1 = 10 electrons."},
+                    {p: "How many electrons in an Oxide ion (O2-), Z=8?", s: "Neutral Oxygen has 8 electrons. The '2-' charge means it gained 2 electrons. 8 + 2 = 10 electrons."},
+                    {p: "Determine electrons in neutral Gold (Au), Z=79.", s: "Neutral atom, so Electrons = Atomic Number = 79."},
+                    {p: "Find electrons in Aluminum ion (Al3+), Z=13.", s: "Neutral has 13. '3+' means loss of 3 electrons. 13 - 3 = 10 electrons."}
+                ],
+                questions: [
+                    {q: "What is the charge of an electron?", opt: ["Positive", "Negative", "Neutral", "Variable"], ans: 1},
+                    {q: "Electrons reside in:", opt: ["Nucleus", "Shells", "Protons", "None"], ans: 1},
+                    {q: "In a neutral atom (Z=11), electrons are:", opt: ["10", "11", "12", "22"], ans: 1},
+                    {q: "A Cation is formed by:", opt: ["Gaining e-", "Losing e-", "Losing p+", "Gaining n"], ans: 1},
+                    {q: "Which particle is lightest?", opt: ["Proton", "Neutron", "Electron", "Alpha"], ans: 2},
+                    {q: "Anion has extra:", opt: ["Protons", "Neutrons", "Electrons", "Mass"], ans: 2},
+                    {q: "Charge of electron is approx:", opt: ["-1.6x10^-19 C", "1.6x10^-19 C", "0", "1 C"], ans: 0},
+                    {q: "Shell capacity formula:", opt: ["n^2", "2n^2", "n", "2n"], ans: 1},
+                    {q: "Valence electrons are:", opt: ["Inner", "Outer", "Middle", "All"], ans: 1},
+                    {q: "Electron was discovered by:", opt: ["Thomson", "Rutherford", "Bohr", "Chadwick"], ans: 0}
+                ]
+            },
+            "neutron": {
+                title: "Number of Neutrons",
+                description: "Neutrons are neutrally charged subatomic particles located within the atomic nucleus alongside protons. They provide the necessary strong nuclear force to bind protons together, overcoming their natural electromagnetic repulsion. The number of neutrons determines the specific isotope of an element.",
+                points: [
+                    "They carry no electrical charge (neutral).",
+                    "Mass is approximately equal to 1 amu (slightly heavier than a proton).",
+                    "Formula to find neutrons: N = Mass Number (A) - Atomic Number (Z).",
+                    "Atoms of the same element with different neutron numbers are called Isotopes.",
+                    "Hydrogen-1 (Protium) is the only stable isotope containing zero neutrons."
+                ],
+                examples: [
+                    {p: "Find neutrons in Carbon-14 (Mass = 14, Z = 6).", s: "Neutrons = Mass(A) - Z = 14 - 6 = 8 neutrons."},
+                    {p: "Calculate neutrons for Uranium-235 (Z = 92).", s: "Neutrons = 235 - 92 = 143 neutrons."},
+                    {p: "How many neutrons in regular Hydrogen (H-1, Z=1)?", s: "Neutrons = 1 - 1 = 0 neutrons."},
+                    {p: "Find neutrons in Oxygen-16 (Z=8).", s: "Neutrons = 16 - 8 = 8 neutrons."},
+                    {p: "An atom has 15 protons and mass number 31. Neutrons?", s: "Neutrons = A - Z = 31 - 15 = 16 neutrons."}
+                ],
+                questions: [
+                    {q: "Neutron charge is:", opt: ["+1", "-1", "0", "Neutral and positive"], ans: 2},
+                    {q: "Formula for N is:", opt: ["A+Z", "A-Z", "Z-A", "A*Z"], ans: 1},
+                    {q: "Isotopes have different:", opt: ["Protons", "Electrons", "Neutrons", "All"], ans: 2},
+                    {q: "Neutrons are located in:", opt: ["Orbitals", "Shells", "Nucleus", "Space"], ans: 2},
+                    {q: "Which element has no neutron?", opt: ["H-1", "He", "Li", "C"], ans: 0},
+                    {q: "Mass of neutron is close to:", opt: ["Proton", "Electron", "Zero", "Double proton"], ans: 0},
+                    {q: "Stable nuclei have:", opt: ["Too many n", "Too few n", "Optimal n/p ratio", "No n"], ans: 2},
+                    {q: "Discovery of neutron:", opt: ["Chadwick", "Bohr", "Thomson", "Dalton"], ans: 0},
+                    {q: "N+Z equals:", opt: ["Mass No", "Atomic No", "Electron count", "Charge"], ans: 0},
+                    {q: "Are neutrons nucleons?", opt: ["Yes", "No", "Only if proton", "Depends"], ans: 0}
+                ]
+            },
+            "proton": {
+                title: "Number of Protons",
+                description: "Protons are positively charged subatomic particles found strictly inside the nucleus of an atom. The number of protons is the ultimate identifier for any element; if you change the number of protons, you change the element entirely. This count is defined as the Atomic Number.",
+                points: [
+                    "Charge is +1 (positive).",
+                    "Mass is approximately 1 atomic mass unit (amu).",
+                    "The number of protons ALWAYS equals the Atomic Number (Z).",
+                    "Protons and neutrons together are referred to as nucleons.",
+                    "Number of protons never changes in standard chemical reactions."
+                ],
+                examples: [
+                    {p: "How many protons does Helium (Z=2) have?", s: "Protons = Z = 2."},
+                    {p: "If an atom has Atomic Number 79 (Gold), what is its proton count?", s: "Protons = Atomic Number = 79."},
+                    {p: "In a Chloride ion (Cl-), Z=17, how many protons are there?", s: "Ions only change electrons. Protons remain Z = 17."},
+                    {p: "An atom has 6 electrons and is neutral. Protons?", s: "Neutral atom means p = e. Protons = 6 (Carbon)."},
+                    {p: "Mass number is 14, neutrons are 8. Find protons.", s: "Protons = Mass(A) - Neutrons = 14 - 8 = 6 protons."}
+                ],
+                questions: [
+                    {q: "Protons define:", opt: ["Mass", "Identity", "Density", "Charge"], ans: 1},
+                    {q: "If Z=6, it is:", opt: ["N", "O", "C", "H"], ans: 2},
+                    {q: "Charge of proton is:", opt: ["-1", "0", "+1", "Variable"], ans: 2},
+                    {q: "Protons + Neutrons = ?", opt: ["Atomic No", "Mass No", "Electrons", "Valency"], ans: 1},
+                    {q: "Proton location:", opt: ["Shell", "Nucleus", "Orbit", "Outside"], ans: 1},
+                    {q: "Atomic No 1 represents:", opt: ["He", "H", "Li", "Be"], ans: 1},
+                    {q: "Protons are found in:", opt: ["All atoms", "Only ions", "Metals only", "Non-metals only"], ans: 0},
+                    {q: "Relative mass of proton:", opt: ["1 amu", "0.0005 amu", "0", "10 amu"], ans: 0},
+                    {q: "Proton/Electron ratio in neutral atom:", opt: ["1", "0", "2", "Undefined"], ans: 0},
+                    {q: "Who discovered Proton?", opt: ["Goldstein", "Rutherford", "Bohr", "Thomson"], ans: 1}
+                ]
+            },
+            "atomicNum": {
+                title: "Atomic Number (Z)",
+                description: "The Atomic Number, represented by the letter 'Z', is the fundamental property of an element. It indicates the exact number of protons found in the nucleus of every atom of that element. The modern periodic table is ordered strictly by increasing atomic number.",
+                points: [
+                    "Represented by the symbol Z.",
+                    "Defines the chemical identity of the element.",
+                    "Z = Number of Protons.",
+                    "In a completely neutral atom, Z also equals the Number of Electrons.",
+                    "Each element has a unique, non-repeating Atomic Number."
+                ],
+                examples: [
+                    {p: "What is the atomic number of an atom with 8 protons?", s: "Z = Protons = 8 (Oxygen)."},
+                    {p: "An atom has 11 protons, 12 neutrons, 10 electrons. Find Z.", s: "Z depends ONLY on protons. Z = 11."},
+                    {p: "Find Z for an element with mass 40 and 20 neutrons.", s: "Z = Mass - Neutrons = 40 - 20 = 20."},
+                    {p: "If a neutral atom has 15 electrons, what is Z?", s: "For neutral atoms, Z = e. So Z = 15."},
+                    {p: "What is Z for Hydrogen?", s: "Hydrogen has 1 proton, so Z = 1."}
+                ],
+                questions: [
+                    {q: "Z stands for:", opt: ["Atomic No", "Mass No", "Neutrons", "Charge"], ans: 0},
+                    {q: "Periodic table is based on:", opt: ["Atomic No", "Mass", "Neutrons", "Density"], ans: 0},
+                    {q: "Does Z change in chemical reaction?", opt: ["Yes", "No", "Sometimes", "Only in plasma"], ans: 1},
+                    {q: "Which is not Z?", opt: ["Protons", "Electrons(neutral)", "Nucleons", "None"], ans: 2},
+                    {q: "Oxygen Z is:", opt: ["6", "7", "8", "9"], ans: 2},
+                    {q: "Atomic number of Gold:", opt: ["79", "80", "1", "100"], ans: 0},
+                    {q: "Is atomic number unique?", opt: ["Yes", "No", "For isotopes yes", "Never"], ans: 0},
+                    {q: "Are elements identified by Z?", opt: ["Yes", "No", "Sometimes", "Rarely"], ans: 0},
+                    {q: "Can Z be fraction?", opt: ["Yes", "No", "Only for ions", "Rarely"], ans: 1},
+                    {q: "Smallest Z:", opt: ["H", "He", "Li", "Be"], ans: 0}
+                ]
+            },
+            "atomicWeight": {
+                title: "Atomic Weight (Mass Number, A)",
+                description: "The Mass Number (or Atomic Mass) represents the total heavy particles in the nucleus—specifically the sum of protons and neutrons. Because electrons have virtually zero mass, they are ignored in this calculation. Elements often exist as a mixture of isotopes, resulting in the fractional 'Atomic Weights' seen on periodic tables (calculated as a weighted average).",
+                points: [
+                    "Represented by the symbol A.",
+                    "Formula: A = Protons + Neutrons.",
+                    "Mass Number is always a whole number for a specific isotope.",
+                    "Atomic Weight (on periodic table) is an average of all natural isotopes.",
+                    "Provides the bulk of the atom's mass since it includes both nucleons."
+                ],
+                examples: [
+                    {p: "Find Mass Number (A) for an atom with 6 protons and 6 neutrons.", s: "A = p + n = 6 + 6 = 12."},
+                    {p: "Calculate A for Sodium (11 protons, 12 neutrons).", s: "A = 11 + 12 = 23."},
+                    {p: "Uranium has 92 protons and 146 neutrons. Find A.", s: "A = 92 + 146 = 238 (U-238)."},
+                    {p: "An isotope has Z=17 and 18 neutrons. What is its Mass Number?", s: "A = Z + n = 17 + 18 = 35."},
+                    {p: "If Chlorine-37 has Z=17, why is '37' important?", s: "37 is the Mass Number (A), meaning it has 17 protons and 20 neutrons."}
+                ],
+                questions: [
+                    {q: "Mass No (A) = ?", opt: ["p+e", "p+n", "n+e", "p-n"], ans: 1},
+                    {q: "Atomic weight of Carbon-12:", opt: ["12", "6", "18", "14"], ans: 0},
+                    {q: "Does A include electrons?", opt: ["Yes", "No", "Partially", "Only in ions"], ans: 1},
+                    {q: "Isotopes differ by:", opt: ["A", "Z", "Charge", "Volume"], ans: 0},
+                    {q: "Nucleons are:", opt: ["p+n", "p+e", "n+e", "p"], ans: 0},
+                    {q: "Mass of proton:", opt: ["1.67x10^-27 kg", "0", "1g", "9x10^-31 kg"], ans: 0},
+                    {q: "Atomic mass unit is based on:", opt: ["C-12", "H-1", "O-16", "N-14"], ans: 0},
+                    {q: "Does weight vary by isotope?", opt: ["Yes", "No", "Only charge", "Depends"], ans: 0},
+                    {q: "Weighted avg of isotopes:", opt: ["Atomic weight", "Atomic number", "Charge", "Valency"], ans: 0},
+                    {q: "Where is mass concentrated?", opt: ["Nucleus", "Shell", "Empty space", "Equally"], ans: 0}
+                ]
+            }
+        };
+
+        function openTopic(id) {
+            const data = quizData[id];
+            
+            // Build Main Points HTML
+            let pointsHtml = `<ul class="points-list">`;
+            data.points.forEach(pt => { pointsHtml += `<li>${pt}</li>`; });
+            pointsHtml += `</ul>`;
+
+            // Build Examples HTML
+            let examplesHtml = ``;
+            data.examples.forEach((ex, i) => {
+                examplesHtml += `
+                <div class="example-box">
+                    <p><b>Example ${i+1}:</b> ${ex.p}</p>
+                    <p><b>Solution:</b> ${ex.s}</p>
+                </div>`;
+            });
+
+            // Build Quiz HTML
+            let quizHtml = ``;
+            data.questions.forEach((q, i) => {
+                quizHtml += `<section class="question-box">
+                    <p><b>Q${i+1}: ${q.q}</b></p>
+                    ${q.opt.map((o, idx) => `<button class="opt-btn" onclick="checkAnswer(this, ${idx}, ${q.ans})">${o}</button>`).join('')}
+                </section>`;
+            });
+            
+            // Assemble Full HTML utilizing semantic tags
+            document.getElementById('content-area').innerHTML = `
+                <header>
+                    <h1>${data.title}</h1>
+                </header>
+                
+                <section class="section-box">
+                    <h2>Detailed Description</h2>
+                    <p>${data.description}</p>
+                </section>
+                
+                <section class="section-box">
+                    <h2>Main Points</h2>
+                    ${pointsHtml}
+                </section>
+                
+                <section class="section-box">
+                    <h2>Solved Examples</h2>
+                    ${examplesHtml}
+                </section>
+                
+                <section class="section-box">
+                    <h2>Test Your Knowledge (10 MCQs)</h2>
+                    ${quizHtml}
+                </section>
+            `;
+            
+            const panel = document.getElementById('panel');
+            panel.style.display = 'block';
+            panel.setAttribute('aria-hidden', 'false');
+        }
+
+        function checkAnswer(btn, selected, correct) {
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('.opt-btn');
+            
+            // Disable all buttons in this question to prevent multiple clicks
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+            
+            if (selected === correct) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('wrong');
+                buttons[correct].classList.add('correct'); // Highlight right answer
+            }
+        }
+
+        function closePanel() {
+            const panel = document.getElementById('panel');
+            panel.style.display = 'none';
+            panel.setAttribute('aria-hidden', 'true');
+        }
+    </script>
+</body>
+</html>

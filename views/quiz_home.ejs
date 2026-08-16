@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore our interactive Quiz Inventory featuring SPDF Configuration, Orbit Explorer, Atomic Position, Atomic Trends, and more science quizzes.">
+    <meta name="keywords" content="Quiz, Science Quiz, Quantum Physics, Chemistry, Orbit Explorer, SPDF Configuration, Atomic Position, Atomic Trends, Education">
+    <meta name="author" content="Quiz Explorer">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Quiz Inventory - Science & Quantum Quizzes">
+    <meta property="og:description" content="Test your knowledge with our interactive science and quantum quizzes.">
+    <meta property="og:type" content="website">
+
+    <title>Quiz Inventory - Science & Quantum Quizzes</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body {
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; color: #fff;
+            background-color: #0b0f19;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.15), transparent 25%);
+            background-attachment: fixed; padding: 20px;
+        }
+
+        main.glass-panel {
+            background: rgba(20, 25, 40, 0.45); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); width: 100%; max-width: 900px; padding: 40px; text-align: center;
+        }
+
+        .inventory-title { font-size: 2.2rem; color: #00f2fe; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; }
+        .type-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        
+        .type-card {
+            background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 25px 20px; border-radius: 16px; cursor: pointer; width: 150px; transition: all 0.3s ease;
+        }
+        
+        .type-card:hover { transform: translateY(-5px); border-color: #00f2fe; background: rgba(0, 242, 254, 0.15); box-shadow: 0 0 20px rgba(0, 242, 254, 0.4); }
+        .type-card .icon { font-size: 2.5rem; margin-bottom: 15px; }
+        
+        .type-card h2 { font-size: 1.2rem; margin-bottom: 5px; color: #fff; }
+        .type-card p { font-size: 0.8rem; color: #d1d5db; }
+
+        @media (max-width: 600px) {
+            .type-card { width: 130px; padding: 20px 15px; }
+            .type-card .icon { font-size: 2rem; }
+            .inventory-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="glass-panel">
+        <header>
+            <h1 class="inventory-title">Quiz Inventory</h1>
+        </header>
+        
+        <nav aria-label="Quiz Navigation Types">
+            <div class="type-container">
+                
+                <!-- TYPE 1: Configuration (spelling corrected, replaces SPDF Quantum) -->
+                <article class="type-card" onclick="window.location.href='/quiz1'" role="button" tabindex="0">
+                    <div class="icon" aria-hidden="true">⚛️</div>
+                    <h2>Type-1</h2>
+                    <p>Configuration</p>
+                </article>
+                
+                <!-- TYPE 2 -->
+                <article class="type-card" onclick="window.location.href='/quiz2'" role="button" tabindex="0">
+                    <div class="icon" aria-hidden="true">🧪</div>
+                    <h2>Type-2</h2>
+                    <p>Orbit Explorer</p>
+                </article>
+                
+                <!-- TYPE 3: Atomic Position (alert removed, link added) -->
+                <article class="type-card" onclick="window.location.href='/atomic-position_quiz'" role="button" tabindex="0">
+                    <div class="icon" aria-hidden="true">🧬</div>
+                    <h2>Type-3</h2>
+                    <p>Atomic Position</p>
+                </article>
+
+                <!-- TYPE 4: Atomic Trends (alert removed, link added) -->
+                <article class="type-card" onclick="window.location.href='/atomic-trends-quiz'" role="button" tabindex="0">
+                    <div class="icon" aria-hidden="true">🔬</div>
+                    <h2>Type-4</h2>
+                    <p>Atomic Trends</p>
+                </article>
+
+                <!-- TYPE 5: Remains as coming soon (unchanged) -->
+                <article class="type-card" onclick="alert('Type-5 is coming soon!')" role="button" tabindex="0">
+                    <div class="icon" aria-hidden="true">🔭</div>
+                    <h2>Type-5</h2>
+                    <p>Coming Soon</p>
+                </article>
+
+            </div>
+        </nav>
+    </main>
+
+</body>
+</html>

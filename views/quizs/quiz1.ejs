@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags (SEO Optimized) -->
+    <title>SPDF Quantum Chemistry Quiz | Test Your Knowledge</title>
+    <meta name="title" content="SPDF Quantum Chemistry Quiz | Test Your Knowledge">
+    <meta name="description" content="Challenge yourself with 30 interactive questions on Quantum Chemistry, SPDF orbitals, and electron configurations. Perfect for science students!">
+    <meta name="keywords" content="Quantum chemistry quiz, SPDF orbitals, electron configuration, science quiz, chemistry test, educational quiz">
+    <meta name="author" content="Quiz Master">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SPDF Quantum Chemistry Quiz">
+    <meta property="og:description" content="Challenge yourself with our SPDF Quantum Chemistry Quiz. Master orbitals, rules, and electron configurations.">
+    
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="SPDF Quantum Chemistry Quiz">
+    <meta property="twitter:description" content="Challenge yourself with our SPDF Quantum Chemistry Quiz. Master orbitals and electron configurations.">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        /* CSS Reset & Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            background-color: #0b0f19;
+            /* Scientific Background Formulas & Elements Applied Globally */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.15), transparent 25%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(255,255,255,0.03)' font-family='Arial' font-size='10'%3E%3Ctext x='10' y='20'%3EE=mc²%3C/text%3E%3Ctext x='60' y='40'%3EH₂O%3C/text%3E%3Ctext x='20' y='80'%3EΔxΔp≥ℏ/2%3C/text%3E%3Ccircle cx='80' cy='80' r='8' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3Ccircle cx='80' cy='80' r='3'/%3E%3Cellipse cx='80' cy='80' rx='12' ry='4' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1' transform='rotate(45 80 80)'/%3E%3Cellipse cx='80' cy='80' rx='12' ry='4' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1' transform='rotate(-45 80 80)'/%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed;
+            padding: 20px;
+        }
+
+        /* Glassy Gel Shine Container */
+        .glass-panel {
+            background: rgba(20, 25, 40, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-25deg);
+            animation: gelShine 6s infinite;
+        }
+
+        @keyframes gelShine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* --- HOME PAGE STYLES --- */
+        #homePage {
+            text-align: center;
+        }
+
+        .inventory-title {
+            font-size: 2.2rem;
+            color: #00f2fe;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .inventory-subtitle {
+            font-size: 1rem;
+            color: #d1d5db;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .start-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* --- QUIZ STYLES --- */
+        #quizContent, #resultContent {
+            display: none;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #00f2fe;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 15px;
+        }
+
+        /* Semantic Button Styling for Options */
+        .option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1rem;
+            color: #ffffff;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .option:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #00f2fe;
+            transform: translateY(-2px);
+        }
+
+        .option.disabled {
+            pointer-events: none; 
+            opacity: 0.9;
+        }
+
+        .option.correct {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .option.wrong {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .explanation {
+            margin-top: 25px;
+            background: rgba(0, 242, 254, 0.05);
+            border-left: 4px solid #00f2fe;
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.95rem;
+            color: #d1d5db;
+            display: none; 
+            animation: fadeIn 0.5s;
+        }
+
+        .explanation strong {
+            color: #00f2fe;
+        }
+
+        .quiz-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+        }
+
+        .btn.start-btn {
+            padding: 15px 50px;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .btn.finish {
+            background: linear-gradient(135deg, #d946ef, #7f00ff);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
+        }
+
+        /* Results */
+        .result-container h2 { margin-bottom: 20px; color: #00f2fe; }
+        .result-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: rgba(0,0,0,0.2); border-radius: 12px; overflow: hidden; }
+        .result-table th, .result-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        .result-table th { background: rgba(255,255,255,0.05); color: #00f2fe; }
+        .text-green { color: #10b981; font-weight: bold; }
+        .text-red { color: #ef4444; font-weight: bold; }
+        .text-gray { color: #9ca3af; font-weight: bold; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .glass-panel { padding: 25px 15px; }
+            .inventory-title { font-size: 1.8rem; }
+            .question-text { font-size: 1.1rem; }
+            .option { font-size: 0.9rem; padding: 12px 15px; }
+            .result-table th, .result-table td { padding: 10px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Semantic MAIN Tag -->
+    <main class="glass-panel" id="mainBox">
+        
+        <!-- PAGE 1: LANDING PAGE -->
+        <section id="homePage">
+            <header>
+                <div style="font-size: 4rem; margin-bottom: 10px;">⚛️</div>
+                <h1 class="inventory-title">SPDF Quantum Quiz</h1>
+                <p class="inventory-subtitle">Dive deep into atomic structure! Test your knowledge on Quantum Mechanics, SPDF orbitals, and electron configurations.</p>
+            </header>
+
+            <div class="start-container">
+                <button class="btn start-btn" onclick="startQuiz()" aria-label="Start Quiz">▶ Start Quiz</button>
+            </div>
+        </section>
+
+        <!-- PAGE 2: QUIZ CONTENT -->
+        <section id="quizContent" aria-live="polite">
+            <header class="header-info">
+                <span id="qNumber">Question 1 of x</span>
+                <span id="scoreDisplay">Score: 0</span>
+            </header>
+
+            <h2 class="question-text" id="questionText">Loading question...</h2>
+
+            <div class="options-container" id="optionsContainer" role="group" aria-label="Multiple Choice Options">
+                <!-- Options injected here as semantic <button> tags -->
+            </div>
+
+            <!-- Explanation Box opens here after click -->
+            <div class="explanation" id="explanationBox" role="alert">
+                <strong>Description/Logic: </strong> <span id="logicText"></span>
+            </div>
+
+            <footer class="quiz-footer">
+                <button class="btn" id="nextBtn" onclick="handleNext()" aria-label="Next Question">Next ➔</button>
+            </footer>
+        </section>
+
+        <!-- PAGE 3: RESULT CONTENT -->
+        <section class="result-container" id="resultContent">
+            <h2>Quiz Completed! 🎯</h2>
+            <p>Here is your performance summary:</p>
+            
+            <div style="overflow-x:auto;">
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Total</th>
+                            <th>Attempted</th>
+                            <th>Correct <span class="text-green">✔</span></th>
+                            <th>Incorrect <span class="text-red">✘</span></th>
+                            <th>Skipped <span class="text-gray">−</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="resTotal">0</td>
+                            <td id="resAttempted">0</td>
+                            <td id="resCorrect" class="text-green">0</td>
+                            <td id="resWrong" class="text-red">0</td>
+                            <td id="resSkipped" class="text-gray">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <button class="btn finish" style="margin: 30px auto 0;" onclick="location.reload()" aria-label="Restart Quiz">🔄 Retake Quiz</button>
+        </section>
+    </main>
+
+    <script>
+        // Quiz Database (30 Questions - SPDF Quantum)
+        const quizData = [
+            { question: "What is the maximum number of electrons that can occupy the 'd' subshell?", options: ["2", "6", "10", "14"], correctIndex: 2, logic: "The azimuthal quantum number for 'd' is l=2. Using formula 2(2l+1), we get 2(2(2)+1) = 2(5) = 10 electrons." },
+            { question: "According to Aufbau Principle, which orbital is filled immediately after 3p?", options: ["3d", "4s", "4p", "4d"], correctIndex: 1, logic: "By the (n+l) rule, 4s (4+0=4) has lower energy than 3d (3+2=5). Hence, 4s is filled before 3d." },
+            { question: "Which element has an exceptional configuration of [Ar] 4s¹ 3d⁵?", options: ["Iron (Fe)", "Copper (Cu)", "Chromium (Cr)", "Manganese (Mn)"], correctIndex: 2, logic: "Chromium (Z=24) shifts one 4s electron to 3d to achieve a half-filled, highly stable d⁵ configuration." },
+            { question: "What does Pauli Exclusion Principle state?", options: ["Electrons fill lower energy levels first", "No two electrons can have same 4 quantum numbers", "Electrons pair only after single occupation", "Uncertainty in position and momentum"], correctIndex: 1, logic: "Pauli Exclusion Principle means an orbital can hold a maximum of 2 electrons, and they must have opposite spins." },
+            { question: "The shape of the 'p' orbital is generally described as:", options: ["Spherical", "Dumbbell-shaped", "Double Dumbbell", "Complex"], correctIndex: 1, logic: "The 's' orbital is spherical, 'p' is dumbbell, and 'd' is double-dumbbell." },
+            { question: "Which of the following subshells does NOT exist?", options: ["3s", "2d", "4f", "5p"], correctIndex: 1, logic: "For n=2, possible 'l' values are 0 (s) and 1 (p). Therefore, l=2 (d subshell) is not possible in the 2nd shell." },
+            { question: "Hund's Rule deals primarily with:", options: ["Electron Spin Pairing in degenerate orbitals", "Maximum capacity of shells", "Shape of orbitals", "Energy of subshells"], correctIndex: 0, logic: "Hund's rule dictates that electrons will occupy degenerate orbitals singly with parallel spins before pairing up." },
+            { question: "What is the configuration of Helium (Z=2)?", options: ["1s¹", "1s²", "1s² 2s¹", "1s² 2p¹"], correctIndex: 1, logic: "Helium has 2 electrons, which completely fill the lowest energy 1s subshell." },
+            { question: "What is the maximum capacity of a principal energy shell 'n'?", options: ["n²", "2n", "2n²", "n+1"], correctIndex: 2, logic: "The formula to find the total number of electrons a main shell can hold is 2n²." },
+            { question: "Why does Copper (Z=29) form a 3d¹⁰ configuration?", options: ["4s has higher energy", "Fully filled d-orbitals provide exceptional stability", "It lacks enough electrons", "Pauli's rule forces it"], correctIndex: 1, logic: "Copper promotes an electron from 4s to 3d to create a fully saturated (d¹⁰) subshell, which is highly stable symmetrically." },
+            { question: "What is the general shape of an 's' orbital?", options: ["Spherical", "Dumbbell", "Double-dumbbell", "Donut-shaped"], correctIndex: 0, logic: "The 's' orbital (l=0) is spherically symmetric around the nucleus." },
+            { question: "The Principal Quantum Number (n) primarily indicates:", options: ["Shape of orbital", "Size and Energy of the main shell", "Spin of the electron", "Magnetic orientation"], correctIndex: 1, logic: "The principal quantum number 'n' determines the major energy level and the average distance of the electron from the nucleus." },
+            { question: "What is the maximum number of electrons that can be accommodated in an 'f' subshell?", options: ["6", "10", "14", "18"], correctIndex: 2, logic: "For an 'f' subshell, l=3. The number of orbitals is (2l+1) = 7. Each holds 2 electrons, so 7 × 2 = 14 electrons." },
+            { question: "What is the value of the azimuthal quantum number (l) for a 'p' orbital?", options: ["0", "1", "2", "3"], correctIndex: 1, logic: "The values of l are assigned as: 0 for 's', 1 for 'p', 2 for 'd', and 3 for 'f'." },
+            { question: "How many degenerate orbitals are present in a 'd' subshell?", options: ["1", "3", "5", "7"], correctIndex: 2, logic: "A 'd' subshell (l=2) has (2l+1) = 5 magnetic quantum number values (-2, -1, 0, +1, +2), which means 5 orbitals." },
+            { question: "Which quantum number determines the spatial orientation of an orbital?", options: ["Principal Quantum Number", "Azimuthal Quantum Number", "Magnetic Quantum Number", "Spin Quantum Number"], correctIndex: 2, logic: "The Magnetic Quantum Number (ml) dictates how the orbital is oriented in 3D space." },
+            { question: "Which noble gas core is used to write the shorthand electron configuration for Sodium (Z=11)?", options: ["[He]", "[Ne]", "[Ar]", "[Kr]"], correctIndex: 1, logic: "Sodium (Z=11) has one more electron than Neon (Z=10). Its configuration is written as [Ne] 3s¹." },
+            { question: "What is the total number of nodes in a 3s orbital?", options: ["0", "1", "2", "3"], correctIndex: 2, logic: "Total nodes = n - 1. For 3s, n=3. Therefore, total nodes = 3 - 1 = 2." },
+            { question: "What is the correct ground-state electronic configuration of Carbon (Z=6)?", options: ["1s² 2s² 2p²", "1s² 2s² 2p³", "1s² 2s² 2p¹", "1s² 2p⁴"], correctIndex: 0, logic: "Carbon has 6 electrons. They fill as 1s (2), 2s (2), and the remaining 2 go into the 2p subshell: 1s² 2s² 2p²." },
+            { question: "Heisenberg's Uncertainty Principle is mathematically represented as:", options: ["Δx · Δp ≥ h/4π", "E = mc²", "F = ma", "λ = h/mv"], correctIndex: 0, logic: "The principle states that the exact position (Δx) and momentum (Δp) of an electron cannot be simultaneously determined." },
+            { question: "The lowest possible energy state of an atom is called:", options: ["Excited state", "Ground state", "Plasma state", "Ionized state"], correctIndex: 1, logic: "When electrons are in the lowest available energy levels, the atom is said to be in its ground state." },
+            { question: "According to the (n+l) rule, which subshell is filled immediately after 4s?", options: ["4p", "3d", "4d", "5s"], correctIndex: 1, logic: "For 4s: n+l = 4+0 = 4. For 3d: n+l = 3+2 = 5. Electrons fill 3d right after 4s." },
+            { question: "What are the allowed values for the spin quantum number (ms)?", options: ["0 and 1", "+½ and -½", "+1 and -1", "1 to n"], correctIndex: 1, logic: "An electron can only have two spin states: spin-up (+½) or spin-down (-½)." },
+            { question: "How many valence electrons are present in an atom of Oxygen (Z=8)?", options: ["2", "4", "6", "8"], correctIndex: 2, logic: "Oxygen configuration is 1s² 2s² 2p⁴. The outermost shell (n=2) has 2 + 4 = 6 electrons." },
+            { question: "How many radial nodes does a 2p orbital have?", options: ["0", "1", "2", "3"], correctIndex: 0, logic: "Radial nodes formula is (n - l - 1). For 2p (n=2, l=1), it is 2 - 1 - 1 = 0." },
+            { question: "Degenerate orbitals are defined as orbitals that have the exact same:", options: ["Size", "Shape", "Energy", "Spatial Orientation"], correctIndex: 2, logic: "Orbitals in the same subshell (like the three 2p orbitals) have the same energy level and are called degenerate." },
+            { question: "Isoelectronic species are atoms/ions that have the identical number of:", options: ["Protons", "Neutrons", "Electrons", "Nucleons"], correctIndex: 2, logic: "Isoelectronic means 'equal electricity/charge', indicating they possess the same number of electrons (e.g., Na⁺ and Ne)." },
+            { question: "What is the total number of orbitals in the third principal shell (n=3)?", options: ["3", "6", "9", "18"], correctIndex: 2, logic: "The total number of orbitals in a principal shell is given by n². For n=3, 3² = 9 orbitals (one 3s, three 3p, five 3d)." },
+            { question: "Which element has the electron configuration [Ne] 3s² 3p³?", options: ["Nitrogen", "Phosphorus", "Sulfur", "Silicon"], correctIndex: 1, logic: "Neon has 10 electrons + 2 (in 3s) + 3 (in 3p) = 15 total electrons. Atomic number 15 corresponds to Phosphorus." },
+            { question: "If an orbital has an azimuthal quantum number of l=3, what type of subshell is it?", options: ["s", "p", "d", "f"], correctIndex: 3, logic: "Quantum number l=0 is 's', l=1 is 'p', l=2 is 'd', and l=3 corresponds to the 'f' subshell." }
+        ];
+
+        // Global Variables
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let skippedAnswers = 0;
+        let hasAttemptedCurrent = false;
+
+        // Element Selectors
+        const qNumberElement = document.getElementById("qNumber");
+        const questionTextElement = document.getElementById("questionText");
+        const optionsContainer = document.getElementById("optionsContainer");
+        const explanationBox = document.getElementById("explanationBox");
+        const logicText = document.getElementById("logicText");
+        const nextBtn = document.getElementById("nextBtn");
+        const scoreDisplay = document.getElementById("scoreDisplay");
+
+        // Start Quiz Logic
+        function startQuiz() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'block';
+            loadQuestion();
+        }
+
+        // Load Question Logic
+        function loadQuestion() {
+            hasAttemptedCurrent = false;
+            explanationBox.style.display = "none";
+            
+            const currentQ = quizData[currentQuestion];
+            qNumberElement.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            questionTextElement.innerText = currentQ.question;
+            
+            optionsContainer.innerHTML = "";
+            
+            // Generate semantic buttons instead of divs
+            currentQ.options.forEach((opt, index) => {
+                const button = document.createElement("button");
+                button.className = "option";
+                button.innerHTML = `<span>${String.fromCharCode(65 + index)}.</span> ${opt}`;
+                button.setAttribute("aria-label", `Option ${String.fromCharCode(65 + index)}: ${opt}`);
+                button.onclick = () => selectOption(button, index);
+                optionsContainer.appendChild(button);
+            });
+
+            if (currentQuestion === quizData.length - 1) {
+                nextBtn.innerHTML = "Finish 🏁";
+                nextBtn.classList.add("finish");
+            } else {
+                nextBtn.innerHTML = "Next ➔";
+                nextBtn.classList.remove("finish");
+            }
+        }
+
+        // Answer Selection Logic
+        function selectOption(selectedBtn, selectedIndex) {
+            if (hasAttemptedCurrent) return; // Prevent multiple clicks
+            hasAttemptedCurrent = true;
+
+            const currentQ = quizData[currentQuestion];
+            const allOptions = optionsContainer.children;
+
+            // LOCK OPTIONS: Add 'disabled' class
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].classList.add("disabled");
+                allOptions[i].disabled = true; // For semantic button lock
+            }
+
+            // Check if correct or wrong
+            if (selectedIndex === currentQ.correctIndex) {
+                selectedBtn.classList.add("correct");
+                correctAnswers++;
+                scoreDisplay.innerText = `Score: ${correctAnswers}`;
+            } else {
+                selectedBtn.classList.add("wrong");
+                wrongAnswers++;
+                // Highlight actual correct answer
+                allOptions[currentQ.correctIndex].classList.add("correct");
+            }
+
+            // SHOW DESCRIPTION
+            logicText.innerText = currentQ.logic;
+            explanationBox.style.display = "block";
+        }
+
+        // Navigation Logic
+        function handleNext() {
+            if (!hasAttemptedCurrent) {
+                skippedAnswers++;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Display Final Results
+        function showResults() {
+            document.getElementById("quizContent").style.display = "none";
+            document.getElementById("resultContent").style.display = "block";
+
+            const total = quizData.length;
+            const attempted = correctAnswers + wrongAnswers;
+
+            document.getElementById("resTotal").innerText = total;
+            document.getElementById("resAttempted").innerText = attempted;
+            document.getElementById("resCorrect").innerText = correctAnswers;
+            document.getElementById("resWrong").innerText = wrongAnswers;
+            document.getElementById("resSkipped").innerText = skippedAnswers;
+        }
+
+    </script>
+</body>
+</html>

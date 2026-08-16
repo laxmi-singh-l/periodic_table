@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Understand Quantum Numbers: Principal (n), Azimuthal (l), Magnetic (ml), Spin (ms) – names, limits, derivation and uses. क्वांटम संख्याएं: n, l, m, s की सम्पूर्ण व्याख्या।">
+    <meta name="keywords" content="quantum numbers, principal quantum number, azimuthal quantum number, magnetic quantum number, spin quantum number, n l m s, electron configuration, orbitals, quantum mechanics, quantum numbers in Hindi, क्वांटम संख्या">
+    <meta name="author" content="QuantumExplainer">
+    <title>Quantum Numbers | Dark Neon Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+        .fade-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .neon-text {
+            color: #fff;
+            text-shadow:
+                0 0 4px #00ffff,
+                0 0 12px #00ffff;
+        }
+        .neon-cyan {
+            color: #00ffff;
+            text-shadow: 0 0 6px #00ffff44;
+        }
+        .neon-magenta {
+            color: #ff00ff;
+            text-shadow: 0 0 6px #ff00ff44;
+        }
+        .neon-green {
+            color: #00ff7f;
+            text-shadow: 0 0 6px #00ff7f44;
+        }
+        .neon-yellow {
+            color: #ffea00;
+            text-shadow: 0 0 6px #ffea0044;
+        }
+        .neon-orange {
+            color: #ff9900;
+            text-shadow: 0 0 6px #ff990044;
+        }
+
+        header,
+        main,
+        footer {
+            width: 100%;
+            max-width: 1000px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 2rem 1rem;
+            border-bottom: 2px solid #00ffff33;
+            box-shadow: 0 0 12px #00ffff18;
+        }
+        h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            word-break: break-word;
+        }
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .nav-btn {
+            background: transparent;
+            color: #aaa;
+            border: 2px solid #00ffff44;
+            border-radius: 40px;
+            padding: 0.6rem 1.5rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 4px transparent;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+        .nav-btn:hover {
+            color: #fff;
+            background: #00ffff18;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px #00ffff66;
+            transform: translateY(-2px);
+        }
+        .nav-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 0 16px #00ffff88;
+        }
+
+        section,
+        article,
+        .interactive {
+            margin: 2rem 0;
+            padding: 1.8rem;
+            border: 1px solid #00ffff22;
+            border-radius: 1.5rem;
+            background: #111111dd;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 10px #00ffff0d;
+            transition: all 0.3s ease;
+        }
+        section:hover,
+        article:hover,
+        .interactive:hover {
+            box-shadow: 0 0 20px #00ffff1a;
+            border-color: #00ffff55;
+            transform: translateY(-3px);
+        }
+        h2 {
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            border-bottom: 2px solid currentColor;
+            padding-bottom: 0.3rem;
+        }
+        .quantum-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .glow-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 1.2rem;
+            flex: 1 1 250px;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        .glow-box:hover {
+            box-shadow: 0 0 14px rgba(255, 0, 255, 0.3);
+            border-color: #ff00ff66;
+            transform: scale(1.01);
+        }
+        .limit-badge {
+            background: #ff00ff18;
+            border-left: 4px solid #ff00ff;
+            padding: 0.6rem 1rem;
+            border-radius: 0 8px 8px 0;
+            font-weight: bold;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 1rem;
+            border-radius: 12px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 500px;
+            background: #00000044;
+        }
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 0.8rem;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        th {
+            background: #00ffff18;
+            color: #00ffff;
+            text-shadow: 0 0 4px #00ffff66;
+        }
+        tbody tr:hover td {
+            background: #00ffff0d;
+        }
+        .interactive {
+            text-align: center;
+        }
+        input,
+        button {
+            background: #0a0a0a;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            margin: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        input[type="number"] {
+            width: 100px;
+            text-align: center;
+        }
+        button {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 8px #00ffff66;
+            border: none;
+        }
+        button:hover {
+            background: #00dddd;
+            box-shadow: 0 0 14px #00ffff99;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        .output {
+            font-size: 1.2rem;
+            margin: 1.5rem auto;
+            color: #ffea00;
+            text-shadow: 0 0 4px #ffea0066;
+            text-align: left;
+            display: inline-block;
+            background: #0d0d0d;
+            padding: 1.2rem 1.8rem;
+            border-radius: 16px;
+            border: 1px solid #ffea0033;
+            width: 100%;
+            max-width: 800px;
+        }
+        .output p {
+            margin: 0.4rem 0;
+        }
+        .short-line {
+            background: #1a1a2e;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border-left: 4px solid #ffea00;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            section,
+            article,
+            .interactive {
+                padding: 1.2rem;
+                margin: 1.5rem 0;
+            }
+            .nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            .output {
+                padding: 0.8rem;
+                font-size: 1rem;
+                word-break: break-word;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="neon-text">Quantum Numbers</h1>
+        <p style="color:#aaa; margin-top:0.5rem;">Names, Limits, Derivation & Uses · Dark Neon Interactive</p>
+        <nav aria-label="Main navigation">
+            <a href="#principal" class="nav-btn">Principal (n)</a>
+            <a href="#azimuthal" class="nav-btn">Azimuthal (l)</a>
+            <a href="#magnetic" class="nav-btn">Magnetic (m<sub>l</sub>)</a>
+            <a href="#spin" class="nav-btn">Spin (m<sub>s</sub>)</a>
+            <a href="#interactive" class="nav-btn">Try It</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="fade-section">
+            <h2 class="neon-cyan">What are Quantum Numbers?</h2>
+            <p>
+                Quantum numbers are a set of four values that completely describe the <strong>energy, position, orbital shape, and spin</strong> of an electron in an atom. They arise from the solution of the <span class="highlight">Schrodinger equation</span> and serve as a unique "address" for every electron's quantum state.
+            </p>
+            <ul style="list-style-type: none; padding-left: 1rem; margin-top:1rem;">
+                <li>- <strong>Principal Quantum Number (n)</strong></li>
+                <li>- <strong>Azimuthal / Orbital Angular Momentum Quantum Number (l)</strong></li>
+                <li>- <strong>Magnetic Quantum Number (m<sub>l</sub>)</strong></li>
+                <li>- <strong>Spin Quantum Number (m<sub>s</sub>)</strong></li>
+            </ul>
+        </section>
+
+        <article id="principal" class="fade-section">
+            <h2 class="neon-cyan">1. Principal Quantum Number (<em>n</em>)</h2>
+            <div class="quantum-card">
+                <div class="glow-box">
+                    <p><strong>Name:</strong> Principal Quantum Number</p>
+                    <p><strong>Value / Limit:</strong> <span class="neon-magenta">n = 1, 2, 3, ... &#8734;</span></p>
+                    <p><strong>Derivation:</strong> Radial wave function; determines energy level and shell size.</p>
+                    <p><strong>Use:</strong> Defines the main shell (K, L, M, N...).</p>
+                    <div class="limit-badge">Limit: n &ge; 1 (integer)</div>
+                </div>
+            </div>
+        </article>
+
+        <article id="azimuthal" class="fade-section">
+            <h2 class="neon-magenta">2. Azimuthal Quantum Number (<em>l</em>)</h2>
+            <div class="quantum-card">
+                <div class="glow-box">
+                    <p><strong>Name:</strong> Azimuthal (Orbital Angular Momentum)</p>
+                    <p><strong>Value / Limit:</strong> <span class="neon-cyan">l = 0, 1, 2, ..., (n-1)</span></p>
+                    <p><strong>Derivation:</strong> Angular part; gives orbital shape (s, p, d, f).</p>
+                    <p><strong>Use:</strong> Subshell designation.</p>
+                    <div class="limit-badge">Limit: 0 &le; l &le; n-1</div>
+                </div>
+            </div>
+        </article>
+
+        <article id="magnetic" class="fade-section">
+            <h2 class="neon-green">3. Magnetic Quantum Number (<em>m<sub>l</sub></em>)</h2>
+            <div class="quantum-card">
+                <div class="glow-box">
+                    <p><strong>Name:</strong> Magnetic Quantum Number</p>
+                    <p><strong>Value / Limit:</strong> <span class="neon-yellow">m<sub>l</sub> = -l ... +l</span></p>
+                    <p><strong>Derivation:</strong> z-component of angular momentum; orientation in magnetic field.</p>
+                    <p><strong>Use:</strong> Orbital orientation (p<sub>x</sub>, p<sub>y</sub>, p<sub>z</sub>).</p>
+                    <div class="limit-badge">Limit: (2l+1) values</div>
+                </div>
+            </div>
+        </article>
+
+        <article id="spin" class="fade-section">
+            <h2 class="neon-orange">4. Spin Quantum Number (<em>m<sub>s</sub></em>)</h2>
+            <div class="quantum-card">
+                <div class="glow-box">
+                    <p><strong>Name:</strong> Spin Quantum Number</p>
+                    <p><strong>Value / Limit:</strong> <span class="neon-cyan">m<sub>s</sub> = +&frac12; or &minus;&frac12;</span></p>
+                    <p><strong>Derivation:</strong> Intrinsic electron spin (Stern-Gerlach).</p>
+                    <p><strong>Use:</strong> Pauli principle - max 2 electrons per orbital.</p>
+                    <div class="limit-badge">Limit: only two values</div>
+                </div>
+            </div>
+        </article>
+
+        <section class="fade-section">
+            <h2 class="neon-yellow">Relationship Among Quantum Numbers</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>n</th>
+                            <th>l (0..n-1)</th>
+                            <th>m<sub>l</sub> (-l..+l)</th>
+                            <th>Orbitals</th>
+                            <th>Max e&minus;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>0 (s)</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>0,1 (s,p)</td>
+                            <td>0; -1,0,1</td>
+                            <td>4</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>0,1,2</td>
+                            <td>-2,-1,0,1,2</td>
+                            <td>9</td>
+                            <td>18</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>0,1,2,3</td>
+                            <td>... (16 values)</td>
+                            <td>16</td>
+                            <td>32</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top:1rem;"><strong>Formulas:</strong> Orbitals = n&sup2;, Electrons = 2n&sup2;</p>
+        </section>
+
+        <section id="interactive" class="interactive fade-section">
+            <h2 class="neon-magenta">Live Interactive: Maximum <em>l</em> State Only</h2>
+            <label for="nInput" style="color:#00ffff;">Principal quantum number (n): </label>
+            <input type="number" id="nInput" min="1" max="8" value="3">
+            <button onclick="updateQuantum()">Show Max Subshell</button>
+            <div id="result" class="output"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Responsive Dark Neon Guide · Smooth Scroll · Fade Animations</p>
+        <p>&copy; 2025 QuantumExplainer – Learn, Understand, Explore</p>
+    </footer>
+
+    <script>
+        const fadeSections = document.querySelectorAll('.fade-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+        fadeSections.forEach(section => observer.observe(section));
+
+        function updateQuantum() {
+            const n = parseInt(document.getElementById('nInput').value);
+            const resultDiv = document.getElementById('result');
+            if (isNaN(n) || n < 1) {
+                resultDiv.innerHTML = '<span style="color:#ff4444;">Please select n &ge; 1</span>';
+                return;
+            }
+            
+            const orbitalLabels = ['s', 'p', 'd', 'f', 'g', 'h', 'i', 'j'];
+            let lineParts = [];
+            let detailParts = [];
+
+            // Calculate ONLY for the maximum value of 'l' (which is n - 1)
+            const l = n - 1; 
+            const orbital = orbitalLabels[l] || '?';
+            const minMl = -l;
+            const maxMl = l;
+            
+            let rangeStr;
+            if (minMl === maxMl) {
+                rangeStr = `0`;
+            } else {
+                rangeStr = `${minMl} to ${maxMl}`;
+            }
+            const count = 2 * l + 1; // Orbitals in this specific subshell
+            
+            // For short one-line display
+            lineParts.push(`l=${l}(${orbital}) ml:${rangeStr}`);
+            
+            // For detailed breakdown
+            detailParts.push(
+                `<span style="display:inline-block; margin-right:1rem; background:#1a1a2e; padding:0.1rem 0.8rem; border-radius:16px;">l=${l}(${orbital})  mₗ = ${rangeStr}  (${count} values)</span>`
+            );
+
+            // Calculating electrons and orbitals ONLY for this max subshell
+            const subshellOrbitals = count;
+            const subshellElectrons = count * 2;
+            
+            // Build compact line
+            const shortLine = `n=${n}  →  ${lineParts[0]}  →  subshell orbitals:${subshellOrbitals}  e⁻:${subshellElectrons}`;
+
+            let fullOutput = `<div style="font-size:1rem; line-height:1.6;">`;
+            fullOutput += `<p><strong>n = ${n} (Max Subshell Only)</strong>  |  Orbitals in this subshell: ${subshellOrbitals}  |  Max electrons: ${subshellElectrons}</p>`;
+            fullOutput += `<div class="short-line">${shortLine}</div>`;
+            fullOutput += `<div style="margin-top:0.8rem; font-size:0.95rem; background:#111; padding:0.6rem 1rem; border-radius:20px;">`;
+            fullOutput += detailParts[0];
+            fullOutput += `</div>`;
+            fullOutput += `</div>`;
+
+            resultDiv.innerHTML = fullOutput;
+        }
+
+        window.onload = updateQuantum;
+    </script>
+</body>
+</html>

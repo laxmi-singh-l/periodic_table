@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="author" content="Elementary Dashboard">
+
+    <!-- ========== MINIMAL SEO META TAGS (NO SOCIAL MEDIA) ========== -->
+    <title>User Login – Chemistry Interactive Portal</title>
+    <meta name="description" content="Secure login to access the interactive periodic table, learning modules, and chemistry quizzes.">
+    <meta name="robots" content="index, follow">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            background-image: radial-gradient(circle at 50% 50%, #1a2235, #0b0f19);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* --- MODERN TOP RIGHT CREATE USER BUTTON --- */
+        .nav-create-user {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 30px;
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-create-user:hover {
+            background: rgba(0, 255, 255, 0.15);
+            color: #ffffff;
+            border-color: #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6), inset 0 0 10px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Back to home button (positioned left) */
+        .nav-back-home {
+            position: absolute;
+            top: 25px;
+            left: 35px;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 30px;
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-back-home:hover {
+            background: rgba(0, 255, 255, 0.15);
+            color: #ffffff;
+            border-color: #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6), inset 0 0 10px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- BACKGROUND DECORATIONS --- */
+        .decor {
+            position: absolute;
+            z-index: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Reusable Atom (Electron Circulation) CSS */
+        .atom {
+            width: 100px;
+            height: 100px;
+        }
+        .nucleus {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px; height: 15px;
+            background: #ff3366;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ff3366;
+        }
+        .orbit {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: spin infinite linear;
+        }
+        .orbit::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: 50%;
+            width: 6px; height: 6px;
+            background: #00ffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        .orbit1 { animation-duration: 4s; }
+        .orbit2 { animation-duration: 5s; transform: rotateX(60deg) rotateY(45deg); animation-name: spin2; }
+        .orbit3 { animation-duration: 3s; transform: rotateX(60deg) rotateY(-45deg); animation-name: spin3; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin2 { 100% { transform: rotateX(60deg) rotateY(45deg) rotateZ(360deg); } }
+        @keyframes spin3 { 100% { transform: rotateX(60deg) rotateY(-45deg) rotateZ(360deg); } }
+
+        /* Positioning for Atoms */
+        .top-left { top: 50px; left: 50px; }
+        .bot-right { bottom: 50px; right: 50px; }
+
+        /* Top Right: Chemical Formulas */
+        .top-right {
+            top: 85px;
+            right: 40px;
+            text-align: right;
+            font-size: 1.3rem;
+            color: #4facfe;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+            font-weight: 600;
+        }
+
+        /* Mid Left & Right: Flasks */
+        .mid-left {
+            top: 50%;
+            left: 80px;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            color: #00ff88;
+            filter: drop-shadow(0 0 15px #00ff88);
+            animation: float 3s ease-in-out infinite;
+        }
+        .mid-right {
+            top: 50%;
+            right: 80px;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            color: #ff00ff;
+            filter: drop-shadow(0 0 15px #ff00ff);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-60%) rotate(5deg); }
+            100% { transform: translateY(-50%) rotate(0deg); }
+        }
+
+        /* Bottom Left: Reacting Flask */
+        .bot-left {
+            bottom: 50px;
+            left: 50px;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .reacting-flask {
+            font-size: 3.5rem;
+            color: #ff9900;
+            filter: drop-shadow(0 0 15px #ff9900);
+            animation: flask-shake 1s infinite ease-in-out alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        .bubbles-container {
+            position: absolute;
+            top: -20px;
+            width: 100%;
+            height: 50px;
+            z-index: 1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            height: 8px;
+            background: #ff9900;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff9900;
+            opacity: 0;
+        }
+
+        /* Bubble Animations */
+        .bubble:nth-child(1) { left: 20%; animation: rise 1.5s infinite ease-in; }
+        .bubble:nth-child(2) { left: 50%; animation: rise 1.2s infinite ease-in 0.4s; }
+        .bubble:nth-child(3) { left: 80%; animation: rise 1.8s infinite ease-in 0.8s; }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-60px) scale(1.5); opacity: 0; }
+        }
+
+        @keyframes flask-shake {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        /* --- GLASSMORPHISM FORM --- */
+        .glass-form {
+            position: relative;
+            z-index: 10;
+            width: 90%; 
+            max-width: 400px;
+            padding: 40px 30px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            
+            /* 7px Glassy Gel Shine Border */
+            border: 7px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1); 
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Gel Shine Highlight Effect on Top */
+        .glass-form::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 40%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+
+        .glass-form h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: none; 
+            outline: none; 
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Focus state */
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15); 
+            outline: none; 
+            border: none;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Error message style */
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+            text-align: left;
+        }
+
+        /* ========== REGISTRATION PROMPT ========== */
+        .register-prompt {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+        .register-prompt a {
+            color: #00ffff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-left: 5px;
+        }
+        .register-prompt a:hover {
+            text-shadow: 0 0 10px #00ffff;
+            text-decoration: underline;
+        }
+
+        /* ========================================= */
+        /* MEDIA QUERIES FOR RESPONSIVE DESIGN       */
+        /* ========================================= */
+        @media (max-width: 900px) {
+            .mid-left { left: 40px; font-size: 3rem; }
+            .mid-right { right: 40px; font-size: 3rem; }
+            .top-left { top: 30px; left: 30px; transform: scale(0.8); }
+            .bot-right { bottom: 30px; right: 30px; transform: scale(0.8); }
+            .bot-left { bottom: 30px; left: 30px; transform: scale(0.8); }
+            .top-right { top: 70px; right: 25px; font-size: 1.1rem; }
+            .nav-create-user, .nav-back-home { top: 20px; padding: 8px 16px; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 600px) {
+            .nav-create-user, .nav-back-home { top: 15px; padding: 7px 14px; font-size: 0.8rem; }
+            .top-right { top: 60px; right: 15px; font-size: 0.9rem; }
+            .mid-left, .mid-right { 
+                opacity: 0.2; 
+                font-size: 2.5rem;
+                z-index: 0;
+            }
+            .mid-left { left: 10px; }
+            .mid-right { right: 10px; }
+            
+            .top-left { top: 10px; left: 10px; transform: scale(0.6); }
+            .bot-right { bottom: 10px; right: 10px; transform: scale(0.6); }
+            .bot-left { bottom: 10px; left: 10px; transform: scale(0.6); }
+            
+            .glass-form {
+                padding: 30px 20px;
+                border-width: 5px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP RIGHT CREATE USER BUTTON -->
+    <a href="/create-user" class="nav-create-user" aria-label="Create New User Account">
+        <i class="fa-solid fa-user-plus"></i> Create User
+    </a>
+
+    <!-- BACK TO HOME BUTTON (TOP LEFT) -->
+    <a href="/home" class="nav-back-home" aria-label="Back to Home Dashboard">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Top Left: Electron Atom -->
+    <div class="decor atom top-left" aria-hidden="true">
+        <div class="nucleus"></div>
+        <div class="orbit orbit1"></div>
+        <div class="orbit orbit2"></div>
+        <div class="orbit orbit3"></div>
+    </div>
+
+    <!-- Top Right: Formulas -->
+    <div class="decor top-right" aria-hidden="true">
+        <div>H<sub>2</sub>SO<sub>4</sub></div>
+        <div>C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></div>
+    </div>
+
+    <!-- Mid Left & Right: Flasks -->
+    <div class="decor mid-left" aria-hidden="true">
+        <i class="fa-solid fa-flask"></i>
+    </div>
+    <div class="decor mid-right" aria-hidden="true">
+        <i class="fa-solid fa-flask-vial"></i>
+    </div>
+
+    <!-- Bottom Left: Reacting Flask -->
+    <div class="decor bot-left" aria-hidden="true">
+        <div class="bubbles-container">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+        <i class="fa-solid fa-vial reacting-flask"></i>
+    </div>
+
+    <!-- Bottom Right: Electron Atom -->
+    <div class="decor atom bot-right" aria-hidden="true">
+        <div class="nucleus"></div>
+        <div class="orbit orbit1"></div>
+        <div class="orbit orbit2"></div>
+        <div class="orbit orbit3"></div>
+    </div>
+
+    <!-- MAIN FORM (Semantic HTML) -->
+    <main class="glass-form" aria-labelledby="login-heading">
+        <h1 id="login-heading">Login User</h1>
+        <form id="loginForm" action="/login" method="POST" aria-label="Login form">
+            
+            <div class="input-group">
+                <i class="fa-solid fa-user" aria-hidden="true"></i>
+                <input type="text" name="username" id="username" placeholder="Username" required aria-label="Username">
+            </div>
+            
+            <div class="input-group">
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
+                <input type="password" name="password" id="password" placeholder="Password" required aria-label="Password">
+                <!-- Error message appears here -->
+                <p id="loginError" class="error-msg" role="alert"></p>
+            </div>
+            
+            <!-- Registration prompt -->
+            <div class="register-prompt">
+                Not a user? <a href="/create-user">Sign up</a>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Submit Form
+            </button>
+            
+        </form>
+    </main>
+
+    <!-- AJAX SCRIPT FOR ERROR HANDLING (unchanged) -->
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            loginError.style.display = 'none';
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = data.redirect || '/home';
+                } else {
+                    loginError.textContent = data.error;
+                    loginError.style.display = 'block';
+                }
+            } catch (err) {
+                loginError.textContent = 'Network error, please try again.';
+                loginError.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

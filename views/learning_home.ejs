@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- ========== SEO META TAGS ========== -->
+    <title>ASR Periodic Table Learning Dashboard</title>
+    <meta name="title" content="ASR Periodic Table Learning Dashboard – Master Atomic Structure">
+    <meta name="description" content="Interactive chemistry dashboard covering SPDF configuration, Bohr Bury model, atomic components, position tricks, isotopes, and more.">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="ASR periodic table, atomic structure learning, SPDF, Bohr Bury, isotopes, isobars, atomic position trick, chemistry dashboard">
+    <meta name="author" content="Elementary Education">
+    <meta name="theme-color" content="#05060a">
+    <link rel="canonical" href="https://www.yourdomain.com/asr-dashboard">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ASR Periodic Table Learning Dashboard">
+    <meta property="og:description" content="Interactive chemistry dashboard covering SPDF configuration, Bohr Bury model, atomic components, position tricks, isotopes, and more.">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="ASR Chemistry Learning">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ASR Periodic Table Learning Dashboard">
+    <meta name="twitter:description" content="Interactive chemistry dashboard covering SPDF configuration, Bohr Bury model, atomic components, position tricks, isotopes, and more.">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LearningResource",
+            "name": "ASR Periodic Table Learning Dashboard",
+            "url": "https://www.yourdomain.com/asr-dashboard",
+            "description": "Interactive chemistry dashboard covering SPDF configuration, Bohr Bury model, atomic components, atomic position tricks, isotopes, isobars, and quantum numbers.",
+            "inLanguage": "en-US",
+            "educationalLevel": ["Beginner", "Intermediate"],
+            "learningResourceType": "Interactive Dashboard",
+            "teaches": ["Atomic Structure", "Electron Configuration", "Isotopes", "Isobars", "Periodic Trends"]
+        }
+    </script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #05060a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bohr-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            perspective: 1000px;
+            pointer-events: none;
+        }
+
+        .nucleus {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ff4081, #b388ff);
+            border-radius: 50%;
+            box-shadow: 0 0 40px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        .orbit {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: 50%;
+            transform-style: preserve-3d;
+            animation: spin var(--speed) linear infinite;
+        }
+
+        .orbit-1 { width: 400px; height: 400px; --ry: 0deg; --speed: 15s; }
+        .orbit-2 { width: 600px; height: 600px; --ry: 60deg; --speed: 25s; }
+        .orbit-3 { width: 800px; height: 800px; --ry: 120deg; --speed: 35s; }
+        .orbit-4 { width: 1000px; height: 1000px; --ry: 180deg; --speed: 45s; }
+
+        .electron {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            width: 15px;
+            height: 15px;
+            background-color: #00e5ff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px 8px rgba(0, 229, 255, 0.6), inset 0 0 5px #fff;
+        }
+
+        @keyframes spin {
+            0% { transform: rotateY(var(--ry)) rotateX(75deg) rotateZ(0deg); }
+            100% { transform: rotateY(var(--ry)) rotateX(75deg) rotateZ(360deg); }
+        }
+
+        /* ========== TOP LEFT BACK LINK ========== */
+        .back-link {
+            position: fixed;
+            top: 22px;
+            left: 22px;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            border-radius: 30px;
+            color: #00e5ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 229, 255, 0.2);
+            white-space: nowrap;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .back-link:hover {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: #00e5ff;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.5), inset 0 0 12px rgba(0, 229, 255, 0.2);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* ========== TOP RIGHT LOGOUT BUTTON ========== */
+        .logout-link {
+            position: fixed;
+            top: 22px;
+            right: 22px;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            border-radius: 30px;
+            color: #ff5050;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 80, 80, 0.2);
+            white-space: nowrap;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .logout-link:hover {
+            background: rgba(255, 80, 80, 0.15);
+            border-color: #ff5050;
+            box-shadow: 0 0 25px rgba(255, 80, 80, 0.6), inset 0 0 12px rgba(255, 80, 80, 0.3);
+            transform: translateY(-1px);
+            color: #fff;
+        }
+
+        .logout-link svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        /* Adjust for small screens */
+        @media (max-width: 540px) {
+            .back-link, .logout-link {
+                top: 12px;
+                padding: 8px 14px;
+                font-size: 0.75rem;
+                gap: 5px;
+            }
+            .back-link { left: 12px; }
+            .logout-link { right: 12px; }
+            .back-link svg, .logout-link svg { width: 14px; height: 14px; }
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(30, 32, 47, 0.7), rgba(15, 17, 26, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 55px 50px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            z-index: 10;
+            width: 900px;
+            max-width: 95%;
+            box-sizing: border-box;
+            transition: padding 0.3s ease;
+
+            max-height: 85vh;
+            overflow-y: auto;
+
+            scrollbar-width: thin;
+            scrollbar-color: #2a2f45 transparent;
+        }
+
+        .glass-card::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .glass-card::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+        }
+
+        .glass-card::-webkit-scrollbar-thumb {
+            background: #2a2f45;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            box-shadow: inset 0 0 6px rgba(0, 229, 255, 0.3);
+        }
+
+        .glass-card::-webkit-scrollbar-thumb:hover {
+            background: #3a4055;
+        }
+
+        h1 {
+            letter-spacing: 3px;
+            font-size: 24px;
+            margin-bottom: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .start-btn {
+            background: transparent;
+            color: #00e5ff;
+            border: 1px solid #00e5ff;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1);
+            text-transform: uppercase;
+            margin-bottom: 45px;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            background: rgba(0, 229, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4), inset 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+
+        /* ========== 3 COLUMNS → 2 NEW ITEMS GO BELOW ========== */
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px 18px;
+            justify-items: center;
+            align-items: start;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            width: 100%;
+        }
+
+        .highlight-nav {
+            transform: scale(1.04);
+            filter: drop-shadow(0 0 18px rgba(0, 229, 255, 0.45));
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease, background 0.3s ease;
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 14px;
+            -webkit-tap-highlight-color: transparent;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid transparent;
+            width: 100%;
+            box-sizing: border-box;
+            min-width: 0;
+        }
+
+        .action-item:hover {
+            transform: scale(1.04);
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.35));
+            background: rgba(0, 229, 255, 0.04);
+            border: 1px solid rgba(0, 229, 255, 0.12);
+        }
+
+        .icon-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.6));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.1), 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .icon-circle::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #00e5ff;
+            opacity: 0.5;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            pointer-events: none;
+        }
+
+        .icon-circle svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #00e5ff;
+            stroke-width: 2;
+            z-index: 1;
+        }
+
+        .module-number {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-right: 2px;
+            line-height: 1;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+            flex-shrink: 0;
+        }
+
+        .action-text {
+            font-size: 13px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            text-align: left;
+            line-height: 1.5;
+            white-space: nowrap;
+            min-width: 0;
+            flex-shrink: 1;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 960px) {
+            .glass-card { padding: 48px 40px; width: 100%; }
+            .button-container { grid-template-columns: repeat(2, 1fr); gap: 18px 14px; }
+            .action-item { padding: 8px 10px; gap: 8px; }
+            .icon-circle { width: 50px; height: 50px; }
+            .icon-circle::before { width: 36px; height: 36px; }
+            .icon-circle svg { width: 20px; height: 20px; }
+            .module-number { font-size: 14px; }
+            .action-text { font-size: 11px; letter-spacing: 0.7px; }
+        }
+
+        @media (max-width: 640px) {
+            .glass-card { padding: 36px 24px; max-height: 85vh; }
+            .button-container { grid-template-columns: 1fr; gap: 16px; justify-items: center; width: 100%; max-width: 320px; margin: 0 auto; }
+            .action-item { justify-content: flex-start; padding: 10px 16px; gap: 10px; width: 100%; max-width: 280px; }
+            .icon-circle { width: 44px; height: 44px; }
+            .icon-circle::before { width: 30px; height: 30px; }
+            .icon-circle svg { width: 17px; height: 17px; }
+            .module-number { font-size: 12px; }
+            .action-text { font-size: 10px; letter-spacing: 0.5px; }
+            .start-btn { margin-bottom: 30px; font-size: 10px; padding: 8px 18px; }
+            h1 { font-size: 17px; letter-spacing: 2px; }
+        }
+
+        @media (max-width: 480px) {
+            .glass-card { padding: 30px 16px; }
+            .button-container { gap: 14px; }
+            .action-item { padding: 8px 12px; gap: 8px; max-width: 250px; }
+            .icon-circle { width: 40px; height: 40px; }
+            .icon-circle::before { width: 28px; height: 28px; }
+            .icon-circle svg { width: 16px; height: 16px; }
+            .module-number { font-size: 11px; }
+            .action-text { font-size: 9px; letter-spacing: 0.4px; }
+            h1 { font-size: 14px; }
+            .orbit-1 { width: 240px; height: 240px; }
+            .orbit-2 { width: 320px; height: 320px; }
+            .orbit-3 { width: 420px; height: 420px; }
+            .orbit-4 { width: 520px; height: 520px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back link (top left) -->
+    <a href="/home" class="back-link" title="Back to Home" aria-label="Go back to Home dashboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+    </a>
+
+    <!-- Logout button (top right) -->
+    <a href="/logout" class="logout-link" title="Logout" aria-label="Logout from dashboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Logout
+    </a>
+
+    <div class="bohr-background" aria-hidden="true" role="presentation">
+        <div class="nucleus"></div>
+        <div class="orbit orbit-1"><div class="electron"></div></div>
+        <div class="orbit orbit-2"><div class="electron"></div></div>
+        <div class="orbit orbit-3"><div class="electron"></div></div>
+        <div class="orbit orbit-4"><div class="electron"></div></div>
+    </div>
+
+    <main class="glass-card" role="main" aria-labelledby="dashboardHeading">
+        <header>
+            <h1 id="dashboardHeading">ASR PERIODIC TABLE LEARNING</h1>
+            <button class="start-btn" id="startBtn" aria-label="Start Learning Sequence" aria-controls="navContainer">START EXPLORING</button>
+        </header>
+
+        <nav id="navContainer" aria-label="Chemistry Modules Navigation">
+            <div class="button-container" role="list">
+
+                <!-- 1. SPDF Configuration -->
+                <a href="/spdf" class="action-item" role="listitem" title="Learn SPDF Configuration" aria-label="Module 1: SPDF Electronic Configuration">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/></svg>
+                    </div>
+                    <span class="module-number">1.</span><span class="action-text">SPDF<br>Configuration</span>
+                </a>
+
+                <!-- 2. Bohr Bury Configuration -->
+                <a href="/bohr" class="action-item" role="listitem" title="Learn Bohr Bury Configuration" aria-label="Module 2: Bohr Bury Electronic Configuration Model">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
+                    </div>
+                    <span class="module-number">2.</span><span class="action-text">Bohr Bury<br>Configuration</span>
+                </a>
+
+                <!-- 3. Atomic Components -->
+                <a href="/components_atom" class="action-item" role="listitem" title="Learn Atomic Components" aria-label="Module 3: Atomic Components like Protons, Neutrons, and Electrons">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="2.5"/><circle cx="9.5" cy="14" r="2.5"/><circle cx="14.5" cy="14" r="2.5"/></svg>
+                    </div>
+                    <span class="module-number">3.</span><span class="action-text">Atomic<br>Components</span>
+                </a>
+
+                <!-- 4. Atomic Position -->
+                <a href="/atomic-position" class="action-item" role="listitem" title="Learn Atomic Position in Periodic Table" aria-label="Module 4: Atomic Position - Group and Period">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><line x1="5" y1="7" x2="19" y2="7" stroke-width="0.8" opacity="0.55"/><line x1="5" y1="12" x2="19" y2="12" stroke-width="0.8" opacity="0.55"/><line x1="5" y1="17" x2="19" y2="17" stroke-width="0.8" opacity="0.55"/><line x1="9" y1="5" x2="9" y2="19" stroke-width="0.8" opacity="0.55"/><line x1="14" y1="5" x2="14" y2="19" stroke-width="0.8" opacity="0.55"/><circle cx="14" cy="12" r="3.2" fill="#00e5ff" stroke="none" opacity="0.75"/><circle cx="14" cy="12" r="1.4" fill="#fff" stroke="none"/></svg>
+                    </div>
+                    <span class="module-number">4.</span><span class="action-text">Atomic<br>Position</span>
+                </a>
+
+                <!-- 5. Quantum Numbers -->
+                <a href="/quantum" class="action-item" role="listitem" title="Learn Quantum Numbers" aria-label="Module 5: Quantum Numbers in Atomic Structure">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="#00e5ff" stroke="none"/><circle cx="12" cy="12" r="5.5" stroke-dasharray="2.5 2.5"/><circle cx="12" cy="12" r="9.5"/><line x1="12" y1="2.5" x2="12" y2="6.5" stroke-width="1.5"/><line x1="12" y1="17.5" x2="12" y2="21.5" stroke-width="1.5"/><line x1="2.5" y1="12" x2="6.5" y2="12" stroke-width="1.5"/></svg>
+                    </div>
+                    <span class="module-number">5.</span><span class="action-text">Quantum<br>Numbers</span>
+                </a>
+
+                <!-- 6. Atomic Trends -->
+                <a href="/atomic-trends" class="action-item" role="listitem" title="Learn Atomic Trends" aria-label="Module 6: Atomic Trends in the Periodic Table">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><line x1="5.5" y1="17" x2="15" y2="7.5" stroke-width="1.8"/><polyline points="10.5,7.5 15,7.5 15,12" fill="none" stroke-width="1.8"/><line x1="5.5" y1="7" x2="15" y2="16.5" stroke-width="1.8"/><polyline points="10.5,16.5 15,16.5 15,12" fill="none" stroke-width="1.8"/><circle cx="5.5" cy="12" r="2.8"/><circle cx="5.5" cy="12" r="1.1" fill="#00e5ff" stroke="none"/></svg>
+                    </div>
+                    <span class="module-number">6.</span><span class="action-text">Atomic<br>Trends</span>
+                </a>
+
+                <!-- 7. Atomic Position Trick (NEW) -->
+                <a href="/tricks_learn" class="action-item" role="listitem" title="Learn Atomic Position Trick" aria-label="Module 7: Atomic Position Trick for remembering group and period">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v8M12 14v8M2 12h8M14 12h8"/></svg>
+                    </div>
+                    <span class="module-number">7.</span><span class="action-text">Atomic Position<br>Trick</span>
+                </a>
+
+                <!-- 8. Isotopes and Isobars (NEW) -->
+                <a href="/isotopes" class="action-item" role="listitem" title="Learn Isotopes and Isobars" aria-label="Module 8: Isotopes and Isobars explained">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+                    </div>
+                    <span class="module-number">8.</span><span class="action-text">Isotopes &<br>Isobars</span>
+                </a>
+
+            </div>
+        </nav>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const startBtn = document.getElementById("startBtn");
+            const navContainer = document.getElementById("navContainer");
+
+            startBtn.addEventListener("click", () => {
+                navContainer.classList.add("highlight-nav");
+                const firstLink = navContainer.querySelector(".action-item");
+                if (firstLink) {
+                    setTimeout(() => {
+                        firstLink.focus({ preventScroll: true });
+                    }, 150);
+                }
+                setTimeout(() => {
+                    navContainer.classList.remove("highlight-nav");
+                }, 450);
+            });
+
+            startBtn.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    startBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

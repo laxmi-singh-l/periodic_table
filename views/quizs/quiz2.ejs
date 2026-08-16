@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Semantic Meta Tags -->
+    <title>Orbit Explorer | SPDF Atomic Quantities & Quantum Numbers Quiz</title>
+    <meta name="description" content="Explore SPDF atomic quantities, quantum numbers, orbital shapes, principles, rules, and electron configurations with an interactive orbit explorer and quiz.">
+    <meta name="keywords" content="Quantum Numbers, Orbital Shapes, Aufbau Principle, Electron Configuration, SPDF, Chemistry Quiz, Atomic Structure">
+    <meta name="author" content="Orbit Explorer">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Type-2: Orbit Explorer - Atomic Quantities Quiz">
+    <meta property="og:description" content="Master quantum numbers, orbital shapes, and electron configurations through an interactive, engaging orbit-based quiz platform.">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Type-2: Orbit Explorer">
+    <meta name="twitter:description" content="Interactive SPDF atomic quantities explorer and quiz platform for chemistry students.">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        :root {
+            --neon-blue: #00f2fe;
+            --neon-glow: 0 0 15px rgba(0, 242, 254, 0.7), 0 0 30px rgba(0, 242, 254, 0.4), inset 0 0 15px rgba(0, 242, 254, 0.3);
+            --bg-dark: #0b0f19;
+            --glass-bg: rgba(20, 25, 40, 0.45);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body {
+            min-height: 100vh; display: flex; justify-content: center; align-items: center; 
+            color: #fff; background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 85% 30%, rgba(217, 70, 239, 0.15), transparent 25%); 
+            background-attachment: fixed; padding: 20px;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); width: 100%; max-width: 800px; padding: 40px; position: relative;
+        }
+
+        .close-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; color: var(--neon-blue); font-size: 2rem; transition: 0.2s; z-index: 10; line-height: 1; background: none; border: none; }
+        .close-btn:hover { color: #fff; transform: scale(1.1); text-shadow: 0 0 10px var(--neon-blue); }
+
+        /* --- Orbit Logic & Fixes (No Center Jumping & Upright Text) --- */
+        .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 450px; }
+        
+        .orbit-container { 
+            position: relative; width: 360px; height: 360px; 
+            display: flex; align-items: center; justify-content: center; 
+            animation: spin 35s linear infinite; margin-top: 20px; 
+            border-radius: 50%; border: 1px dashed rgba(0, 242, 254, 0.15);
+        }
+        
+        /* Pause container and anti-spin on hover */
+        .orbit-container:hover, .orbit-container:hover .orbit-counter { 
+            animation-play-state: paused; 
+        }
+
+        /* Position Wrapper */
+        .orbit-pos {
+            position: absolute; top: 50%; left: 50%;
+            width: 0; height: 0;
+        }
+
+        .orbit-pos:nth-child(1) { transform: rotate(0deg) translateY(-160px) rotate(0deg); }
+        .orbit-pos:nth-child(2) { transform: rotate(72deg) translateY(-160px) rotate(-72deg); }
+        .orbit-pos:nth-child(3) { transform: rotate(144deg) translateY(-160px) rotate(-144deg); }
+        .orbit-pos:nth-child(4) { transform: rotate(216deg) translateY(-160px) rotate(-216deg); }
+        .orbit-pos:nth-child(5) { transform: rotate(288deg) translateY(-160px) rotate(-288deg); }
+
+        /* Counter-Rotation Wrapper (Keeps text straight) */
+        .orbit-counter {
+            position: absolute; top: -55px; left: -55px;
+            width: 110px; height: 110px;
+            animation: counter-spin 35s linear infinite;
+        }
+
+        .orbit-btn { 
+            width: 100%; height: 100%;
+            background: rgba(10, 15, 25, 0.85); border: 2px solid var(--neon-blue); border-radius: 50%; 
+            color: var(--neon-blue); display: flex; align-items: center; justify-content: center; 
+            text-align: center; font-size: 0.75rem; cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: bold; 
+            padding: 10px; box-shadow: 0 0 15px rgba(0, 242, 254, 0.2); 
+        }
+
+        .orbit-btn:hover { 
+            background: rgba(0, 242, 254, 0.2); color: #fff; 
+            transform: scale(1.15); border-color: #fff;
+            box-shadow: var(--neon-glow); text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes counter-spin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* Panel Modal Styles */
+        #panel { 
+            display: none; position: fixed; inset: 20px; 
+            background: rgba(10,15,28,0.98); border: 1px solid rgba(0, 242, 254, 0.3); 
+            border-radius: 20px; padding: 30px; z-index: 1000; overflow-y: auto; 
+            backdrop-filter: blur(25px); box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+        }
+        
+        .panel-container { max-width: 750px; margin: 0 auto; display: flex; flex-direction: column; min-height: 100%; position: relative; }
+        
+        .header-info { color: var(--neon-blue); font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; margin-bottom: 25px; }
+        .question-block { margin-bottom: 30px; }
+        .question-text { font-size: 1.15rem; font-weight: 600; margin-bottom: 15px; line-height: 1.5; }
+        
+        .options-container { display: grid; gap: 12px; }
+        .option { 
+            background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(255, 255, 255, 0.1); 
+            padding: 14px 18px; border-radius: 12px; cursor: pointer; font-size: 0.95rem; 
+            transition: 0.2s; text-align: left; color: #fff;
+        }
+        .option:hover:not(.disabled) { background: rgba(255, 255, 255, 0.08); border-color: var(--neon-blue); }
+        .option.disabled { pointer-events: none; opacity: 0.85; }
+        .option.correct { background: rgba(16, 185, 129, 0.15) !important; border-color: #10b981 !important; color: #10b981 !important; }
+        .option.wrong { background: rgba(239, 68, 68, 0.15) !important; border-color: #ef4444 !important; color: #ef4444 !important; }
+        
+        .explanation { 
+            margin-top: 15px; background: rgba(0, 242, 254, 0.05); border-left: 4px solid var(--neon-blue); 
+            padding: 15px; border-radius: 0 12px 12px 0; color: #d1d5db; display: none; line-height: 1.5; font-size: 0.9rem; 
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .glass-panel { padding: 20px 10px; }
+            .hero h1 { font-size: 1.4rem; text-align: center; }
+            .orbit-container { width: 260px; height: 260px; margin-top: 20px; }
+            .orbit-pos:nth-child(1) { transform: rotate(0deg) translateY(-120px) rotate(0deg); }
+            .orbit-pos:nth-child(2) { transform: rotate(72deg) translateY(-120px) rotate(-72deg); }
+            .orbit-pos:nth-child(3) { transform: rotate(144deg) translateY(-120px) rotate(-144deg); }
+            .orbit-pos:nth-child(4) { transform: rotate(216deg) translateY(-120px) rotate(-216deg); }
+            .orbit-pos:nth-child(5) { transform: rotate(288deg) translateY(-120px) rotate(-288deg); }
+            
+            .orbit-counter { width: 85px; height: 85px; top: -42px; left: -42px; }
+            .orbit-btn { font-size: 0.65rem; padding: 5px; }
+            
+            #panel { inset: 10px; padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .option { padding: 10px 12px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="glass-panel">
+        <!-- Changed: now navigates to /quiz instead of index.html -->
+        <button class="close-btn" onclick="window.location.href='/quiz'" aria-label="Go to Quiz Inventory">&times;</button>
+        <section class="hero">
+            <h1 style="color: var(--neon-blue); margin-bottom: 20px; text-align: center; font-size: 1.8rem; text-shadow: 0 0 10px rgba(0,242,254,0.4);">SPDF Atomic Quantities Explorer</h1>
+            
+            <nav class="orbit-container" aria-label="Orbit Topics Navigation">
+                <div class="orbit-pos">
+                    <div class="orbit-counter">
+                        <button class="orbit-btn" onclick="openTopic('quantum')">Quantum<br>Numbers</button>
+                    </div>
+                </div>
+                <div class="orbit-pos">
+                    <div class="orbit-counter">
+                        <button class="orbit-btn" onclick="openTopic('shapes')">Orbital<br>Shapes</button>
+                    </div>
+                </div>
+                <div class="orbit-pos">
+                    <div class="orbit-counter">
+                        <button class="orbit-btn" onclick="openTopic('rules')">Principles<br>& Rules</button>
+                    </div>
+                </div>
+                <div class="orbit-pos">
+                    <div class="orbit-counter">
+                        <button class="orbit-btn" onclick="openTopic('config')">Configurations</button>
+                    </div>
+                </div>
+                <div class="orbit-pos">
+                    <div class="orbit-counter">
+                        <button class="orbit-btn" onclick="openTopic('aufbau')">Aufbau &<br>Exceptions</button>
+                    </div>
+                </div>
+            </nav>
+        </section>
+    </main>
+
+    <article id="panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="panel-container">
+            <button class="close-btn" onclick="closePanel()" aria-label="Close Panel">&times;</button>
+            <div id="content-area" style="width: 100%;"></div>
+        </div>
+    </article>
+
+    <script>
+        const quizData = {
+            "quantum": {
+                title: "Quantum Numbers", 
+                theory: "Quantum numbers specify the energy level, orbital shape, orientation, and spin direction of an electron.",
+                questions: [
+                    {q: "The Principal Quantum Number (n) primarily indicates:", opt: ["Shape of orbital", "Size and Energy of the main shell", "Spin of the electron", "Magnetic orientation"], ans: 1, desc: "n defines the main energy shell and size." },
+                    {q: "What is the value of the azimuthal quantum number (l) for a 'p' orbital?", opt: ["0", "1", "2", "3"], ans: 1, desc: "l values: s=0, p=1, d=2, f=3." },
+                    {q: "How many sub-orbitals exist for a subshell with l = 2?", opt: ["1", "3", "5", "7"], ans: 2, desc: "For l = 2 (d subshell), total orbitals = (2l + 1) = 5." },
+                    {q: "Which quantum number describes the direction of electron rotation?", opt: ["Principal (n)", "Azimuthal (l)", "Magnetic (ml)", "Spin (ms)"], ans: 3, desc: "Spin quantum number (ms) defines rotation (+1/2 or -1/2)." },
+                    {q: "What are the allowed values of ml for l = 1?", opt: ["0 only", "-1, 0, +1", "1, 2, 3", "-2, -1, 0, +1, +2"], ans: 1, desc: "ml ranges from -l to +l. For l=1, values are -1, 0, +1." },
+                    {q: "What is the maximum number of electrons in a shell with n = 4?", opt: ["8", "18", "32", "64"], ans: 2, desc: "Maximum electrons = 2n² = 2(16) = 32." },
+                    {q: "If n=3, what are the possible values for l?", opt: ["0, 1, 2", "1, 2, 3", "0, 1, 2, 3", "3 only"], ans: 0, desc: "l can range from 0 to (n-1). For n=3, l=0, 1, 2." },
+                    {q: "Which quantum number cannot be derived from Schrödinger's wave equation?", opt: ["Principal", "Azimuthal", "Magnetic", "Spin"], ans: 3, desc: "Spin quantum number was introduced later based on experimental data, not Schrödinger's equation." },
+                    {q: "Which set of quantum numbers (n, l, ml, ms) is INVALID?", opt: ["3, 2, -1, +1/2", "2, 2, 0, -1/2", "4, 3, +3, +1/2", "1, 0, 0, -1/2"], ans: 1, desc: "l must be less than n. n=2, l=2 is invalid." },
+                    {q: "What does the azimuthal quantum number (l) determine?", opt: ["Shell size", "Orbital shape", "Orbital orientation", "Electron spin"], ans: 1, desc: "l defines the subshell and the 3D shape of the orbital." },
+                    {q: "How many electrons can have the quantum numbers n=4, l=1?", opt: ["2", "6", "10", "14"], ans: 1, desc: "n=4, l=1 refers to the 4p subshell, which holds 6 electrons." },
+                    {q: "For an electron in a 4d orbital, what is the value of n and l?", opt: ["n=4, l=1", "n=4, l=2", "n=3, l=2", "n=4, l=3"], ans: 1, desc: "4d means n=4 and l=2." },
+                    {q: "The number of values for ml is given by the formula:", opt: ["2n²", "2l + 1", "n - 1", "2l - 1"], ans: 1, desc: "Total magnetic quantum numbers = 2l + 1." },
+                    {q: "Which subshell has l = 3?", opt: ["s", "p", "d", "f"], ans: 3, desc: "The f subshell corresponds to l = 3." },
+                    {q: "Can two electrons in the same atom have n=1, l=0, ml=0, ms=+1/2?", opt: ["Yes", "No", "Depends on the atom", "Only in excited states"], ans: 1, desc: "No, per Pauli's Exclusion Principle." },
+                    {q: "What is the orbital angular momentum of an s-electron?", opt: ["h/2π", "0", "h/π", "√2 h/2π"], ans: 1, desc: "Momentum = √[l(l+1)] (h/2π). For s, l=0, so it's 0." },
+                    {q: "If an orbital has ml = -2, what is the minimum possible value of n?", opt: ["1", "2", "3", "4"], ans: 2, desc: "If ml=-2, l must be at least 2. If l=2, minimum n is 3." },
+                    {q: "Which principal shell has s, p, d, and f subshells?", opt: ["n=1", "n=2", "n=3", "n=4"], ans: 3, desc: "n=4 is the first shell to have l=3 (f subshell)." },
+                    {q: "What does the magnetic quantum number (ml) describe?", opt: ["Shape", "Size", "Spatial orientation", "Spin"], ans: 2, desc: "ml determines how the orbital is oriented in 3D space." },
+                    {q: "Which of the following is a valid value for ms?", opt: ["0", "1", "-1", "-1/2"], ans: 3, desc: "ms can only be +1/2 or -1/2." },
+                    {q: "How many electrons in an atom can have the quantum numbers n=3, l=2, ml=+1?", opt: ["1", "2", "6", "10"], ans: 1, desc: "This specifies one specific orbital (3d, ml=+1), holding max 2 electrons." },
+                    {q: "The n=2 shell can hold a maximum of how many electrons?", opt: ["2", "4", "8", "18"], ans: 2, desc: "2n² = 2(2²) = 8." },
+                    {q: "For the 5f subshell, what are the values of n and l?", opt: ["n=5, l=2", "n=5, l=3", "n=4, l=3", "n=5, l=4"], ans: 1, desc: "5 means n=5. f means l=3." },
+                    {q: "What are the allowed values of l when n=1?", opt: ["0 only", "1 only", "0 and 1", "0, 1, 2"], ans: 0, desc: "l ranges from 0 to n-1. For n=1, l=0." },
+                    {q: "The principal quantum number n represents:", opt: ["Sublevel", "Energy Level", "Orbital", "Spin state"], ans: 1, desc: "n represents the main energy level or shell." },
+                    {q: "Which subshell does not exist?", opt: ["2s", "2p", "2d", "3d"], ans: 2, desc: "For n=2, l can only be 0 or 1. So 2d (l=2) is impossible." },
+                    {q: "How many orbitals are in the n=3 shell?", opt: ["3", "6", "9", "18"], ans: 2, desc: "Total orbitals in a shell = n². 3² = 9 orbitals." },
+                    {q: "An electron with n=3, l=1 is in which subshell?", opt: ["3s", "3p", "3d", "4p"], ans: 1, desc: "n=3, l=1 corresponds to the 3p subshell." },
+                    {q: "What is the ml value for the only orbital in an s subshell?", opt: ["1", "0", "-1", "+1/2"], ans: 1, desc: "For s, l=0. So ml can only be 0." },
+                    {q: "Quantum numbers are derived from which famous equation?", opt: ["Einstein's E=mc²", "Schrödinger Wave Equation", "Newton's Second Law", "Planck's Equation"], ans: 1, desc: "n, l, and ml arise from solving the Schrödinger Wave Equation." }
+                ]
+            },
+            "shapes": {
+                title: "Orbital Shapes & Nodes", 
+                theory: "Each subshell has a unique 3D shape. Regions with zero probability of finding an electron are called nodes.",
+                questions: [
+                    {q: "What is the general shape of an 's' orbital?", opt: ["Spherical", "Dumbbell", "Double-dumbbell", "Complex"], ans: 0, desc: "s orbitals are spherically symmetrical." },
+                    {q: "How many angular nodes does a 'd' orbital possess?", opt: ["0", "1", "2", "3"], ans: 2, desc: "Angular nodes = l. For d-orbitals, l=2." },
+                    {q: "Which orbital shape is a dumbbell with a donut ring in the center?", opt: ["d(xy)", "d(x²-y²)", "d(z²)", "p(z)"], ans: 2, desc: "The d(z²) orbital has a dumbbell shape with a donut-like ring." },
+                    {q: "Formula for total number of nodes in an orbital?", opt: ["n - 1", "l - 1", "n - l - 1", "2l + 1"], ans: 0, desc: "Total nodes = n - 1." },
+                    {q: "How many radial nodes does a 3s orbital have?", opt: ["0", "1", "2", "3"], ans: 2, desc: "Radial nodes = n - l - 1. For 3s: 3 - 0 - 1 = 2." },
+                    {q: "The shape of a 'p' orbital is:", opt: ["Spherical", "Dumbbell", "Cloverleaf", "Donut"], ans: 1, desc: "p orbitals have a dumbbell shape." },
+                    {q: "Which p orbital lies along the x-axis?", opt: ["py", "px", "pz", "pxy"], ans: 1, desc: "The px orbital aligns along the x-axis." },
+                    {q: "How many total nodes are in a 4p orbital?", opt: ["1", "2", "3", "4"], ans: 2, desc: "Total nodes = n - 1 = 4 - 1 = 3." },
+                    {q: "A 2p orbital has how many radial nodes?", opt: ["0", "1", "2", "3"], ans: 0, desc: "Radial nodes = n - l - 1 = 2 - 1 - 1 = 0." },
+                    {q: "What is an angular node?", opt: ["A spherical node", "A planar or conical region of zero electron density", "The nucleus", "Electron cloud outer limit"], ans: 1, desc: "Angular nodes are planes or cones where probability is zero." },
+                    {q: "How many d orbitals exist in a given shell?", opt: ["3", "4", "5", "7"], ans: 2, desc: "There are 5 d orbitals (dxy, dyz, dxz, dx2-y2, dz2)." },
+                    {q: "The dx2-y2 orbital lies:", opt: ["Between the axes", "Along the x and y axes", "Along the z axis", "In a spherical shape"], ans: 1, desc: "The dx2-y2 lobes lie directly on the x and y axes." },
+                    {q: "Which d orbital has lobes pointing between the axes?", opt: ["dx2-y2", "dz2", "dxy", "All of them"], ans: 2, desc: "dxy, dyz, and dxz have lobes located between the coordinate axes." },
+                    {q: "How many f orbitals are there?", opt: ["3", "5", "7", "9"], ans: 2, desc: "l=3, so 2(3)+1 = 7 orbitals." },
+                    {q: "The nucleus of an atom always represents a node.", opt: ["True", "False", "Only for s orbitals", "Only for p orbitals"], ans: 0, desc: "The nucleus is a point of zero probability for most orbitals, except s orbitals which have some density at the nucleus." },
+                    {q: "Probability of finding an electron at a node is:", opt: ["100%", "50%", "10%", "0%"], ans: 3, desc: "Nodes are defined as regions of zero probability." },
+                    {q: "Number of angular nodes for a 4f orbital?", opt: ["1", "2", "3", "4"], ans: 2, desc: "Angular nodes = l. For f, l=3." },
+                    {q: "Number of radial nodes for a 4f orbital?", opt: ["0", "1", "2", "3"], ans: 0, desc: "n-l-1 = 4-3-1 = 0." },
+                    {q: "What is the shape of an f orbital?", opt: ["Spherical", "Dumbbell", "Double-dumbbell", "Complex multi-lobed"], ans: 3, desc: "f orbitals have complex multi-lobed shapes." },
+                    {q: "Which of the following orbitals has no spherical (radial) nodes?", opt: ["2s", "3p", "1s", "4d"], ans: 2, desc: "For 1s, n-l-1 = 1-0-1 = 0." },
+                    {q: "The nodal plane of the pz orbital is:", opt: ["xy plane", "xz plane", "yz plane", "xyz plane"], ans: 0, desc: "The pz orbital is oriented on the z-axis, making the xy plane a node." },
+                    {q: "The dxy orbital has nodal planes in:", opt: ["xy and xz", "xz and yz", "xy and yz", "None"], ans: 1, desc: "The xz and yz planes are nodal planes for dxy." },
+                    {q: "How many radial nodes in a 5d orbital?", opt: ["0", "1", "2", "3"], ans: 2, desc: "5 - 2 - 1 = 2 radial nodes." },
+                    {q: "Which orbital is non-directional?", opt: ["s", "p", "d", "f"], ans: 0, desc: "s orbitals are spherical and thus non-directional." },
+                    {q: "The boundary surface diagram of an orbital encloses a region where probability is roughly:", opt: ["10%", "50%", "90%", "100%"], ans: 2, desc: "Boundary diagrams typically enclose ~90% probability." },
+                    {q: "Which principal quantum number introduces the d shape?", opt: ["n=1", "n=2", "n=3", "n=4"], ans: 2, desc: "d orbitals (l=2) first appear when n=3." },
+                    {q: "How many angular nodes does a 1s orbital have?", opt: ["0", "1", "2", "3"], ans: 0, desc: "l=0, so angular nodes = 0." },
+                    {q: "Which d orbital is not a double-dumbbell shape?", opt: ["dxy", "dxz", "dx2-y2", "dz2"], ans: 3, desc: "dz2 is a dumbbell with a donut ring." },
+                    {q: "What is the total number of nodes for 5p?", opt: ["3", "4", "5", "6"], ans: 1, desc: "n - 1 = 5 - 1 = 4." },
+                    {q: "If an orbital has 1 angular node and 1 radial node, what is it?", opt: ["2p", "3p", "3d", "2s"], ans: 1, desc: "Angular=1 means p. Radial=1 means n-1-1=1 -> n=3. So 3p." }
+                ]
+            },
+            "rules": {
+                title: "Principles & Rules", 
+                theory: "Electron filling follows Aufbau Principle, Pauli Exclusion Principle, and Hund's Rule.",
+                questions: [
+                    {q: "What does the Pauli Exclusion Principle state?", opt: ["Electrons fill lowest energy first", "No two electrons have 4 identical quantum numbers", "Orbitals fill singly first", "Electrons continuously radiate energy"], ans: 1, desc: "An orbital holds max 2 electrons with opposite spins." },
+                    {q: "According to Hund's Rule, degenerate orbitals are filled:", opt: ["In pairs immediately", "Singly with parallel spins first", "By skipping every other orbital", "With opposite spins immediately"], ans: 1, desc: "Hund's rule minimizes repulsion by filling orbitals singly first." },
+                    {q: "Which rule uses (n + l) values?", opt: ["Heisenberg Principle", "Aufbau Principle", "Bohr Postulate", "Hund's Rule"], ans: 1, desc: "Aufbau dictates that lower (n + l) values fill first." },
+                    {q: "If two orbitals have the same (n + l), which fills first?", opt: ["Higher n", "Lower n", "Higher l", "Randomly"], ans: 1, desc: "The orbital with the lower n has lower energy." },
+                    {q: "Maximum capacity of a single orbital?", opt: ["1 electron", "2 electrons", "6 electrons", "10 electrons"], ans: 1, desc: "Any single orbital can hold a maximum of 2 electrons." },
+                    {q: "Which principle forbids an orbital from holding 3 electrons?", opt: ["Aufbau", "Hund's", "Pauli", "Heisenberg"], ans: 2, desc: "Pauli Exclusion Principle restricts an orbital to 2 electrons." },
+                    {q: "Which orbital fills after 3p?", opt: ["3d", "4s", "4p", "4d"], ans: 1, desc: "4s (n+l=4) fills before 3d (n+l=5)." },
+                    {q: "What does 'degenerate orbitals' mean?", opt: ["Orbitals of different shapes", "Orbitals with the same energy", "Empty orbitals", "Full orbitals"], ans: 1, desc: "Degenerate orbitals (like the three p orbitals) have identical energy." },
+                    {q: "Hund's rule of maximum multiplicity deals with:", opt: ["Principal quantum number", "Pairing of electrons", "Filling of shells", "Nuclear spin"], ans: 1, desc: "It dictates how electrons pair in degenerate orbitals." },
+                    {q: "Which electron transition violates the Aufbau principle?", opt: ["Filling 4s before 3d", "Filling 3d before 4p", "Filling 3p before 3s", "Filling 2s after 1s"], ans: 2, desc: "3s must be filled before 3p." },
+                    {q: "What is the (n+l) value for 4d?", opt: ["4", "5", "6", "7"], ans: 2, desc: "n=4, l=2. Sum is 6." },
+                    {q: "Which fills first: 5s or 4d?", opt: ["5s", "4d", "They fill simultaneously", "Depends on the atom"], ans: 0, desc: "5s (n+l=5) fills before 4d (n+l=6)." },
+                    {q: "What prevents 1s³?", opt: ["Aufbau", "Hund", "Pauli Exclusion", "Bohr Model"], ans: 2, desc: "Pauli's principle limits capacity to 2 electrons per orbital." },
+                    {q: "In a p-subshell with 3 electrons, what are their spins according to Hund's Rule?", opt: ["All parallel", "Two parallel, one opposite", "All opposite", "Random"], ans: 0, desc: "They remain unpaired with parallel spins." },
+                    {q: "Which principle relies on minimizing electron-electron repulsion?", opt: ["Aufbau", "Pauli", "Hund's", "Heisenberg"], ans: 2, desc: "Hund's rule keeps electrons in separate orbitals to minimize repulsion." },
+                    {q: "Which of the following breaks Hund's rule?", opt: ["px1, py1, pz1", "px2, py0, pz0", "px2, py1, pz1", "px2, py2, pz1"], ans: 1, desc: "Putting 2 electrons in px while py and pz are empty breaks Hund's rule." },
+                    {q: "What is the lowest energy subshell?", opt: ["2s", "1s", "1p", "2p"], ans: 1, desc: "1s has the lowest (n+l) value of 1." },
+                    {q: "Can two electrons have identical spins in the same orbital?", opt: ["Yes", "No", "Only in excited states", "Only in heavy elements"], ans: 1, desc: "No, their spin quantum numbers must be opposite (+1/2, -1/2)." },
+                    {q: "Between 4p and 5s, which has higher energy?", opt: ["4p", "5s", "Equal", "None"], ans: 1, desc: "Both have n+l=5, but 5s has higher n, so it has higher energy." },
+                    {q: "Which orbital fills immediately after 6s?", opt: ["6p", "5d", "4f", "7s"], ans: 2, desc: "Following the Aufbau chart, 4f fills after 6s." }
+                ]
+            },
+            "config": {
+                title: "Electron Configurations", 
+                theory: "Electron configuration describes the arrangement of electrons in energy levels and subshells.",
+                questions: [
+                    {q: "Correct configuration of Nitrogen (Z=7)?", opt: ["1s² 2s² 2p³", "1s² 2s¹ 2p⁴", "1s² 2s³ 2p²", "1s² 2p⁵"], ans: 0, desc: "1s² (2), 2s² (2), 2p³ (3)." },
+                    {q: "Element with noble gas core [Ne] 3s² 3p⁴?", opt: ["Oxygen", "Silicon", "Sulfur", "Chlorine"], ans: 2, desc: "Ne (10) + 6 = 16 (Sulfur)." },
+                    {q: "Total electron capacity of n = 3 shell?", opt: ["8", "18", "32", "10"], ans: 1, desc: "2(3)² = 18 electrons." },
+                    {q: "Valence electrons in Aluminium (Z=13)?", opt: ["1", "2", "3", "8"], ans: 2, desc: "[Ne] 3s² 3p¹. Outermost shell has 3." },
+                    {q: "Subshell filled after 3d?", opt: ["4s", "4p", "4d", "5s"], ans: 1, desc: "4p fills after 3d." },
+                    {q: "Electron configuration of Carbon (Z=6)?", opt: ["1s² 2s² 2p²", "1s² 2s² 2p⁴", "1s² 2p⁴", "1s² 2s¹ 2p³"], ans: 0, desc: "Carbon has 6 electrons: 1s² 2s² 2p²." },
+                    {q: "Which element is 1s² 2s² 2p⁶ 3s¹?", opt: ["Lithium", "Sodium", "Potassium", "Magnesium"], ans: 1, desc: "Total electrons = 11, which is Sodium (Na)." },
+                    {q: "What is the noble gas core for Potassium (Z=19)?", opt: ["[He]", "[Ne]", "[Ar]", "[Kr]"], ans: 2, desc: "Argon (18) is the preceding noble gas. K is [Ar] 4s¹." },
+                    {q: "Configuration of the Chloride ion (Cl⁻)?", opt: ["[Ne] 3s² 3p⁵", "[Ne] 3s² 3p⁶", "[Ar] 4s¹", "[Ar] 3d¹⁰"], ans: 1, desc: "Cl (17) gains 1 e⁻ to become Cl⁻ (18), same as [Ne] 3s² 3p⁶." },
+                    {q: "How many valence electrons does Phosphorus (Z=15) have?", opt: ["3", "5", "15", "8"], ans: 1, desc: "[Ne] 3s² 3p³ -> 2+3 = 5 valence electrons." },
+                    {q: "Which element's ground state configuration ends in 3p⁶?", opt: ["Neon", "Argon", "Krypton", "Chlorine"], ans: 1, desc: "Argon ends in 3p⁶." },
+                    {q: "How many unpaired electrons in Oxygen (Z=8)?", opt: ["0", "1", "2", "3"], ans: 2, desc: "2p⁴ configuration: 2 paired, 2 unpaired." },
+                    {q: "Electron configuration of Calcium (Z=20)?", opt: ["[Ar] 4s²", "[Ne] 3s² 3p⁶ 4s²", "1s² 2s² 2p⁶ 3s² 3p⁶ 4s²", "All of the above"], ans: 3, desc: "All are valid ways to write Calcium's configuration." },
+                    {q: "What is the block of an element with config [Kr] 5s² 4d¹⁰ 5p²?", opt: ["s-block", "p-block", "d-block", "f-block"], ans: 1, desc: "The last electron goes into a p-orbital (5p), so it's a p-block element (Tin)." },
+                    {q: "Which block does Iron (Fe) belong to?", opt: ["s-block", "p-block", "d-block", "f-block"], ans: 2, desc: "Transition metals like Iron belong to the d-block." },
+                    {q: "Configuration of the Oxide ion (O²⁻)?", opt: ["1s² 2s² 2p⁴", "1s² 2s² 2p⁶", "1s² 2s² 2p²", "[Ne] 3s²"], ans: 1, desc: "O (8) gains 2 e⁻ to reach 10 e⁻ (Neon configuration)." },
+                    {q: "Which ion is isoelectronic with Neon?", opt: ["Na⁺", "Mg²⁺", "F⁻", "All of the above"], ans: 3, desc: "All these ions have 10 electrons, same as Neon." },
+                    {q: "Number of full orbitals in a Nitrogen atom?", opt: ["1", "2", "3", "4"], ans: 1, desc: "1s² (full), 2s² (full), 2p³ (three half-full). Total 2 full orbitals." },
+                    {q: "Identify the element: [Ar] 4s² 3d⁷", opt: ["Iron", "Cobalt", "Nickel", "Copper"], ans: 1, desc: "18 + 2 + 7 = 27 (Cobalt)." },
+                    {q: "How many s-electrons are present in a Calcium atom (Z=20)?", opt: ["2", "4", "6", "8"], ans: 3, desc: "Calcium (1s² 2s² 2p⁶ 3s² 3p⁶ 4s²) has 2+2+2+2 = 8 s-electrons." }
+                ]
+            },
+            "aufbau": {
+                title: "Aufbau & Exceptions", 
+                theory: "Exceptions to the Aufbau principle occur due to extra stability associated with half-filled and completely filled subshells.",
+                questions: [
+                    {q: "What is the actual ground state electron configuration of Chromium (Cr, Z=24)?", opt: ["[Ar] 4s² 3d⁴", "[Ar] 4s¹ 3d⁵", "[Ar] 4s² 3d⁵", "[Ar] 3d⁶"], ans: 1, desc: "Chromium shifts an electron from 4s to 3d to achieve a stable half-filled 3d⁵ configuration." },
+                    {q: "What is the actual ground state electron configuration of Copper (Cu, Z=29)?", opt: ["[Ar] 4s² 3d⁹", "[Ar] 4s¹ 3d¹⁰", "[Ar] 4s² 3d¹⁰", "[Ar] 3d¹¹"], ans: 1, desc: "Copper shifts an electron from 4s to 3d to achieve a stable fully-filled 3d¹⁰ configuration." },
+                    {q: "Why do half-filled and fully-filled subshells have lower energy?", opt: ["Symmetrical distribution and high exchange energy", "Fewer electrons", "Higher nuclear charge", "Larger atomic radius"], ans: 0, desc: "Symmetrical charge distribution and maximum exchange energy provide extra stability." },
+                    {q: "Which rule determines the filling order based on (n + l)?", opt: ["Hund's Rule", "Aufbau Principle", "Pauli Exclusion Principle", "Heisenberg Uncertainty Principle"], ans: 1, desc: "The Aufbau principle uses (n + l) values to determine sequential filling." }
+                ]
+            }
+        };
+
+        function openTopic(topicKey) {
+            const panel = document.getElementById('panel');
+            const content = document.getElementById('content-area');
+            const data = quizData[topicKey];
+            
+            let html = `
+                <header class="header-info">
+                    <h2 id="modal-title" style="font-size:1.8rem">${data.title}</h2>
+                    <p style="margin-top:8px;">${data.theory}</p>
+                </header>
+                <div>
+            `;
+            
+            data.questions.forEach((q, index) => {
+                html += `
+                    <div class="question-block">
+                        <div class="question-text">${index + 1}. ${q.q}</div>
+                        <div class="options-container" id="opts-${topicKey}-${index}">
+                `;
+                
+                q.opt.forEach((optionText, optIndex) => {
+                    html += `<button class="option" onclick="checkAnswer('${topicKey}', ${index}, ${optIndex}, this)">${optionText}</button>`;
+                });
+                
+                html += `
+                        </div>
+                        <div class="explanation" id="exp-${topicKey}-${index}"><strong>Explanation:</strong> ${q.desc}</div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            content.innerHTML = html;
+            panel.style.display = 'block';
+        }
+
+        function closePanel() {
+            document.getElementById('panel').style.display = 'none';
+        }
+
+        function checkAnswer(topicKey, qIndex, selectedOptIndex, btnElement) {
+            const data = quizData[topicKey];
+            const correctIndex = data.questions[qIndex].ans;
+            const optionsContainer = document.getElementById(`opts-${topicKey}-${qIndex}`);
+            const explanation = document.getElementById(`exp-${topicKey}-${qIndex}`);
+            
+            const buttons = optionsContainer.getElementsByClassName('option');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('disabled');
+                if (i === correctIndex) {
+                    buttons[i].classList.add('correct');
+                } else if (i === selectedOptIndex) {
+                    buttons[i].classList.add('wrong');
+                }
+            }
+            explanation.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Find Position of Elements in Periodic Table | Electronic Configuration Method</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn how to determine the position of any element in the periodic table using atomic number, electronic configuration, period, group, and block calculation.">
+  <meta name="keywords" content="Find element position, Electronic configuration calculator, Periodic table group and period finder, s block p block d block f block, chemistry calculator, आवर्त सारणी में तत्व की स्थिति, इलेक्ट्रॉनिक विन्यास, परमाणु संख्या से तत्व की स्थिति, समूह और आवर्त ज्ञात करना, आवर्त सारणी का स्थान, तत्वों की स्थिति कैसे ज्ञात करें">
+  <meta name="author" content="Chemistry Learning">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="How to Find Position of Elements in Periodic Table | Electronic Configuration Method">
+  <meta property="og:description" content="Master how to find the group, period, and block of elements from 1 to 118 using electronic configuration with our interactive dark neon tool.">
+  <meta property="og:type" content="website">
+
+  <!-- Structured Data JSON-LD Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalWebPage",
+    "name": "How to Find Position of Elements in Periodic Table",
+    "description": "Learn how to determine the position of any element in the periodic table using atomic number, electronic configuration, period, group, and block calculation.",
+    "about": {
+      "@type": "Thing",
+      "name": "Chemistry - Periodic Table Element Position"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Chemistry Learning"
+    },
+    "keywords": "Find element position, Electronic configuration calculator, Periodic table group and period finder, आवर्त सारणी में तत्व की स्थिति, इलेक्ट्रॉनिक विन्यास, परमाणु संख्या से तत्व की स्थिति, समूह और आवर्त ज्ञात करना, आवर्त सारणी का स्थान, तत्वों की स्थिति कैसे ज्ञात करें"
+  }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       DARK NEON DESIGN SYSTEM
+       ========================================================================== */
+    :root {
+      --bg-dark: #080b12;
+      --bg-card: rgba(18, 24, 38, 0.85);
+      --bg-card-hover: rgba(26, 35, 56, 0.9);
+      --bg-input: #0d1322;
+      
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff007f;
+      --neon-purple: #a855f7;
+      --neon-green: #00ff66;
+      --neon-amber: #f59e0b;
+      
+      --glow-cyan: 0 0 15px rgba(0, 243, 255, 0.4), 0 0 30px rgba(0, 243, 255, 0.2);
+      --glow-pink: 0 0 15px rgba(ff, 0, 127, 0.4), 0 0 30px rgba(ff, 0, 127, 0.2);
+      --glow-purple: 0 0 15px rgba(168, 85, 247, 0.4);
+      --glow-green: 0 0 15px rgba(0, 255, 102, 0.4);
+      
+      --text-main: #f0f6fc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --border-subtle: rgba(0, 243, 255, 0.2);
+      --border-pink: rgba(255, 0, 127, 0.3);
+      --border-purple: rgba(168, 85, 247, 0.3);
+      --border-green: rgba(0, 255, 102, 0.3);
+      
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      
+      --transition-fast: 0.25s ease;
+      --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(0, 243, 255, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 60%, rgba(255, 0, 127, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+
+    /* Layout Containers */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header & Navigation */
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(8, 11, 18, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-dark);
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: var(--glow-cyan);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #ffffff, var(--neon-cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tag-badge {
+      background: rgba(0, 243, 255, 0.1);
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Section Styling */
+    section {
+      margin-top: 60px;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-subtitle {
+      color: var(--neon-cyan);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      padding: 60px 0 20px 0;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 70%, var(--neon-pink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+    }
+
+    .hero-intro {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 40px auto;
+    }
+
+    /* Key Theory Highlights Grid (Hero) */
+    .theory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .theory-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: left;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .theory-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .theory-card-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0, 243, 255, 0.1);
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    .theory-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .theory-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Detailed Theory Section */
+    .detailed-theory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .block-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .block-card.s-block { border-top: 4px solid var(--neon-cyan); }
+    .block-card.p-block { border-top: 4px solid var(--neon-pink); }
+    .block-card.d-block { border-top: 4px solid var(--neon-purple); }
+    .block-card.f-block { border-top: 4px solid var(--neon-green); }
+
+    .block-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+    }
+
+    .block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .block-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .block-badge {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .s-block .block-badge { background: rgba(0, 243, 255, 0.15); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
+    .p-block .block-badge { background: rgba(255, 0, 127, 0.15); color: var(--neon-pink); border: 1px solid var(--neon-pink); }
+    .d-block .block-badge { background: rgba(168, 85, 247, 0.15); color: var(--neon-purple); border: 1px solid var(--neon-purple); }
+    .f-block .block-badge { background: rgba(0, 255, 102, 0.15); color: var(--neon-green); border: 1px solid var(--neon-green); }
+
+    .block-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .formula-box {
+      background: rgba(8, 11, 18, 0.7);
+      border: 1px dashed var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+    }
+
+    .formula-title {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .formula-code {
+      font-family: monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+    }
+
+    .example-list {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .example-list li {
+      margin-bottom: 6px;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .example-list li::before {
+      content: "➔";
+      position: absolute;
+      left: 0;
+      color: var(--neon-pink);
+      font-size: 0.8rem;
+    }
+
+    /* Calculator Section */
+    .calculator-container {
+      background: linear-gradient(180deg, rgba(18, 24, 38, 0.95), rgba(13, 19, 34, 0.95));
+      border: 1px solid var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .calculator-form {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .input-wrapper {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .calc-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      outline: none;
+      transition: var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .calc-input:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    }
+
+    .btn {
+      padding: 16px 28px;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-cyan), #00a8ff);
+      color: var(--bg-dark);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .quick-chips {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .chip-label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .chip:hover {
+      border-color: var(--neon-pink);
+      color: var(--neon-pink);
+      background: rgba(255, 0, 127, 0.1);
+    }
+
+    .error-msg {
+      background: rgba(255, 0, 127, 0.15);
+      border: 1px solid var(--neon-pink);
+      color: #ff80bf;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      display: none;
+    }
+
+    /* Calculation Result Box */
+    .result-container {
+      display: none;
+      animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: rgba(8, 11, 18, 0.6);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+    }
+
+    .element-symbol-box {
+      width: 90px;
+      height: 90px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(0, 243, 255, 0.15), rgba(255, 0, 127, 0.15));
+      border: 2px solid var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .symbol-number {
+      font-size: 0.8rem;
+      color: var(--neon-cyan);
+      font-weight: 700;
+    }
+
+    .symbol-text {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .element-info-text h3 {
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .element-info-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: rgba(8, 11, 18, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--neon-cyan);
+    }
+
+    .metric-card.pink .metric-value { color: var(--neon-pink); }
+    .metric-card.purple .metric-value { color: var(--neon-purple); }
+    .metric-card.green .metric-value { color: var(--neon-green); }
+
+    .result-details-card {
+      background: rgba(8, 11, 18, 0.6);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .details-title {
+      font-size: 1rem;
+      color: var(--neon-cyan);
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .config-code-box {
+      background: #05070c;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      font-family: monospace;
+      font-size: 1.1rem;
+      color: var(--neon-green);
+      margin-bottom: 20px;
+      word-break: break-all;
+    }
+
+    .explanation-text {
+      color: var(--text-main);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 16px;
+      border-left: 3px solid var(--neon-cyan);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    /* Summary Section: Quick Method */
+    .summary-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      position: relative;
+    }
+
+    .step-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid var(--neon-purple);
+      color: var(--neon-purple);
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 12px;
+      margin-bottom: 14px;
+    }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 80px;
+      padding: 40px 0;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      margin-bottom: 8px;
+    }
+
+    /* Hidden SEO Area for Search Engines */
+    .seo-hidden-container {
+      display: none !important;
+      visibility: hidden;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .detailed-theory-grid {
+        grid-template-columns: 1fr;
+      }
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      .calculator-container {
+        padding: 24px 16px;
+      }
+      .calculator-form {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+      .result-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .metrics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden SEO Keywords Container (Hindi SEO indexing without visual interface impact) -->
+  <div class="seo-hidden-container" aria-hidden="true">
+    <p>
+      आवर्त सारणी में तत्व की स्थिति कैसे ज्ञात करें। इलेक्ट्रॉनिक विन्यास द्वारा तत्व का समूह, आवर्त और ब्लॉक निकालना। 
+      परमाणु संख्या से तत्व की स्थिति ज्ञात करने का आसान तरीका।
+      समूह और आवर्त ज्ञात करना, आवर्त सारणी का स्थान, तत्वों की स्थिति कैसे ज्ञात करें।
+    </p>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="container header-content">
+      <a href="#" class="brand">
+        <div class="brand-icon">Pt</div>
+        <span class="brand-title">Periodic Positioning</span>
+      </a>
+      <span class="tag-badge">Chemistry Guide</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero-section">
+      <h1>How to Find the Position of an Element in the Periodic Table</h1>
+      <p class="hero-intro">
+        The exact position of any element in the periodic table—its Period, Block, and Group—can be easily determined using its atomic number and full SPDF electronic configuration.
+      </p>
+
+      <div class="theory-grid">
+        <div class="theory-card">
+          <div class="theory-card-num">1</div>
+          <h3>Electronic Configuration</h3>
+          <p>Write the SPDF configuration according to the atomic number using the Aufbau principle.</p>
+        </div>
+
+        <div class="theory-card">
+          <div class="theory-card-num">2</div>
+          <h3>Period Number</h3>
+          <p>The highest principal quantum number (n) in the electronic configuration gives the period number.</p>
+        </div>
+
+        <div class="theory-card">
+          <div class="theory-card-num">3</div>
+          <h3>Block Identification</h3>
+          <p>The subshell (s, p, d, or f) that receives the last entering electron determines the block.</p>
+        </div>
+
+        <div class="theory-card">
+          <div class="theory-card-num">4</div>
+          <h3>Group Number</h3>
+          <p>Calculate the group number using specific rules for s, p, d, and f subshell electrons.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DETAILED THEORY SECTION -->
+    <section>
+      <div class="section-title-wrap">
+        <span class="section-subtitle">Core Concepts</span>
+        <h2>How to Determine Period, Group and Block from Electronic Configuration</h2>
+      </div>
+
+      <div class="detailed-theory-grid">
+
+        <!-- s-Block Card -->
+        <div class="block-card s-block">
+          <div class="block-header">
+            <h3 class="block-title">A) s-Block Elements</h3>
+            <span class="block-badge">s-Block</span>
+          </div>
+          <p class="block-desc">
+            Elements in which the last electron enters the outermost <strong>s-subshell</strong> belong to the s-block.
+          </p>
+          <div class="formula-box">
+            <div class="formula-title">Group Calculation Formula</div>
+            <div class="formula-code">Group = Number of valence s-electrons</div>
+          </div>
+          <ul class="example-list">
+            <li><strong>Sodium (Na, Z=11):</strong> 1s² 2s² 2p⁶ 3s¹ → Last e⁻ in 3s¹ → Period 3, Group 1</li>
+            <li><strong>Magnesium (Mg, Z=12):</strong> 1s² 2s² 2p⁶ 3s² → Last e⁻ in 3s² → Period 3, Group 2</li>
+          </ul>
+        </div>
+
+        <!-- p-Block Card -->
+        <div class="block-card p-block">
+          <div class="block-header">
+            <h3 class="block-title">B) p-Block Elements</h3>
+            <span class="block-badge">p-Block</span>
+          </div>
+          <p class="block-desc">
+            Elements in which the last electron enters the outermost <strong>p-subshell</strong> belong to the p-block.
+          </p>
+          <div class="formula-box">
+            <div class="formula-title">Group Calculation Formula</div>
+            <div class="formula-code">Group = 12 + Number of p-electrons</div>
+          </div>
+          <ul class="example-list">
+            <li><strong>Chlorine (Cl, Z=17):</strong> [Ne] 3s² 3p⁵ → 12 + 5 = Group 17 (Period 3)</li>
+            <li><strong>Neon (Ne, Z=10):</strong> 1s² 2s² 2p⁶ → 12 + 6 = Group 18 (Period 2)</li>
+          </ul>
+        </div>
+
+        <!-- d-Block Card -->
+        <div class="block-card d-block">
+          <div class="block-header">
+            <h3 class="block-title">C) d-Block Elements</h3>
+            <span class="block-badge">d-Block</span>
+          </div>
+          <p class="block-desc">
+            Elements in which the last electron enters the inner <strong>(n-1)d subshell</strong> belong to the d-block.
+          </p>
+          <div class="formula-box">
+            <div class="formula-title">Group Calculation Formula</div>
+            <div class="formula-code">Group = Electrons in (n-1)d + ns subshells</div>
+          </div>
+          <ul class="example-list">
+            <li><strong>Iron (Fe, Z=26):</strong> [Ar] 3d⁶ 4s² → 6 + 2 = Group 8 (Period 4)</li>
+            <li><strong>Copper (Cu, Z=29):</strong> [Ar] 3d¹⁰ 4s¹ → 10 + 1 = Group 11 (Period 4)</li>
+            <li><strong>Zinc (Zn, Z=30):</strong> [Ar] 3d¹⁰ 4s² → 10 + 2 = Group 12 (Period 4)</li>
+          </ul>
+        </div>
+
+        <!-- f-Block Card -->
+        <div class="block-card f-block">
+          <div class="block-header">
+            <h3 class="block-title">D) f-Block Elements</h3>
+            <span class="block-badge">f-Block</span>
+          </div>
+          <p class="block-desc">
+            Elements in which the last electron enters the anti-penultimate <strong>(n-2)f subshell</strong> belong to the f-block (Inner Transition Elements).
+          </p>
+          <div class="formula-box">
+            <div class="formula-title">Group Calculation Rule</div>
+            <div class="formula-code">Group = Always Group 3</div>
+          </div>
+          <ul class="example-list">
+            <li><strong>Lanthanides (Z=57 to 71):</strong> Belong to Period 6, Group 3</li>
+            <li><strong>Actinides (Z=89 to 103):</strong> Belong to Period 7, Group 3</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. INTERACTIVE CALCULATOR SECTION -->
+    <section>
+      <div class="section-title-wrap">
+        <span class="section-subtitle">Interactive Tool</span>
+        <h2>Find Element Position Using Atomic Number</h2>
+      </div>
+
+      <div class="calculator-container">
+        <form class="calculator-form" id="calcForm" onsubmit="return false;">
+          <div class="input-wrapper">
+            <input 
+              type="number" 
+              id="atomicInput" 
+              class="calc-input" 
+              placeholder="Enter Atomic Number (1 - 118)" 
+              min="1" 
+              max="118" 
+              required
+            >
+          </div>
+          <button type="submit" class="btn btn-primary" id="calcBtn">
+            <span>Calculate Position</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="clearBtn">
+            <span>Clear</span>
+          </button>
+        </form>
+
+        <div class="quick-chips">
+          <span class="chip-label">Quick Try:</span>
+          <span class="chip" onclick="quickCalculate(11)">Sodium (11)</span>
+          <span class="chip" onclick="quickCalculate(17)">Chlorine (17)</span>
+          <span class="chip" onclick="quickCalculate(26)">Iron (26)</span>
+          <span class="chip" onclick="quickCalculate(79)">Gold (79)</span>
+          <span class="chip" onclick="quickCalculate(92)">Uranium (92)</span>
+        </div>
+
+        <div class="error-msg" id="errorBox">
+          Please enter a valid atomic number between 1 and 118.
+        </div>
+
+        <!-- Output Result Area -->
+        <div class="result-container" id="resultBox">
+          <div class="result-header">
+            <div class="element-symbol-box">
+              <span class="symbol-number" id="resAtomicNum">Z=11</span>
+              <span class="symbol-text" id="resSymbol">Na</span>
+            </div>
+            <div class="element-info-text">
+              <h3 id="resName">Sodium</h3>
+              <p id="resCategory">s-block element • Alkali Metal</p>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-label">Block</div>
+              <div class="metric-value" id="resBlock">s</div>
+            </div>
+            <div class="metric-card pink">
+              <div class="metric-label">Period</div>
+              <div class="metric-value" id="resPeriod">3</div>
+            </div>
+            <div class="metric-card purple">
+              <div class="metric-label">Group</div>
+              <div class="metric-value" id="resGroup">1</div>
+            </div>
+            <div class="metric-card green">
+              <div class="metric-label">Valence e⁻</div>
+              <div class="metric-value" id="resValence">1</div>
+            </div>
+          </div>
+
+          <div class="result-details-card">
+            <div class="details-title">Electronic Configuration (SPDF Notation)</div>
+            <div class="config-code-box" id="resConfig">1s² 2s² 2p⁶ 3s¹</div>
+
+            <div class="details-title">Automatic Position Analysis</div>
+            <div class="explanation-text" id="resExplanation">
+              Loading position explanation...
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. FINAL SUMMARY SECTION -->
+    <section>
+      <div class="section-title-wrap">
+        <span class="section-subtitle">Summary Guide</span>
+        <h2>Quick Method to Find Position</h2>
+      </div>
+
+      <div class="summary-steps">
+        <div class="step-card">
+          <span class="step-badge">Step 1</span>
+          <h3>Write Configuration</h3>
+          <p>Determine the atomic number and write its full electronic configuration in SPDF subshell order.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">Step 2</span>
+          <h3>Find Period</h3>
+          <p>Identify the maximum principal quantum number (n) present in the electronic configuration.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">Step 3</span>
+          <h3>Identify Block</h3>
+          <p>Find which subshell (s, p, d, or f) receives the last entering electron in Aufbau sequence.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">Step 4</span>
+          <h3>Calculate Group</h3>
+          <p>Apply specific group formula depending on whether the element is in s, p, d, or f block.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Chemistry Learning. All Rights Reserved.</p>
+      <p>Educational interactive periodic table position calculator.</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT DATABASE (Elements 1 to 118) & CALCULATOR LOGIC -->
+  <script>
+    // Complete JS Database for Elements 1 to 118
+    const elementsDB = [
+      { z: 1, name: "Hydrogen", symbol: "H", config: "1s¹", block: "s", period: 1, group: "1", valence: 1 },
+      { z: 2, name: "Helium", symbol: "He", config: "1s²", block: "s", period: 1, group: "18", valence: 2 },
+      { z: 3, name: "Lithium", symbol: "Li", config: "1s² 2s¹", block: "s", period: 2, group: "1", valence: 1 },
+      { z: 4, name: "Beryllium", symbol: "Be", config: "1s² 2s²", block: "s", period: 2, group: "2", valence: 2 },
+      { z: 5, name: "Boron", symbol: "B", config: "1s² 2s² 2p¹", block: "p", period: 2, group: "13", valence: 3 },
+      { z: 6, name: "Carbon", symbol: "C", config: "1s² 2s² 2p²", block: "p", period: 2, group: "14", valence: 4 },
+      { z: 7, name: "Nitrogen", symbol: "N", config: "1s² 2s² 2p³", block: "p", period: 2, group: "15", valence: 5 },
+      { z: 8, name: "Oxygen", symbol: "O", config: "1s² 2s² 2p⁴", block: "p", period: 2, group: "16", valence: 6 },
+      { z: 9, name: "Fluorine", symbol: "F", config: "1s² 2s² 2p⁵", block: "p", period: 2, group: "17", valence: 7 },
+      { z: 10, name: "Neon", symbol: "Ne", config: "1s² 2s² 2p⁶", block: "p", period: 2, group: "18", valence: 8 },
+      { z: 11, name: "Sodium", symbol: "Na", config: "1s² 2s² 2p⁶ 3s¹", block: "s", period: 3, group: "1", valence: 1 },
+      { z: 12, name: "Magnesium", symbol: "Mg", config: "1s² 2s² 2p⁶ 3s²", block: "s", period: 3, group: "2", valence: 2 },
+      { z: 13, name: "Aluminium", symbol: "Al", config: "1s² 2s² 2p⁶ 3s² 3p¹", block: "p", period: 3, group: "13", valence: 3 },
+      { z: 14, name: "Silicon", symbol: "Si", config: "1s² 2s² 2p⁶ 3s² 3p²", block: "p", period: 3, group: "14", valence: 4 },
+      { z: 15, name: "Phosphorus", symbol: "P", config: "1s² 2s² 2p⁶ 3s² 3p³", block: "p", period: 3, group: "15", valence: 5 },
+      { z: 16, name: "Sulfur", symbol: "S", config: "1s² 2s² 2p⁶ 3s² 3p⁴", block: "p", period: 3, group: "16", valence: 6 },
+      { z: 17, name: "Chlorine", symbol: "Cl", config: "1s² 2s² 2p⁶ 3s² 3p⁵", block: "p", period: 3, group: "17", valence: 7 },
+      { z: 18, name: "Argon", symbol: "Ar", config: "1s² 2s² 2p⁶ 3s² 3p⁶", block: "p", period: 3, group: "18", valence: 8 },
+      { z: 19, name: "Potassium", symbol: "K", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 4s¹", block: "s", period: 4, group: "1", valence: 1 },
+      { z: 20, name: "Calcium", symbol: "Ca", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 4s²", block: "s", period: 4, group: "2", valence: 2 },
+      { z: 21, name: "Scandium", symbol: "Sc", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d¹ 4s²", block: "d", period: 4, group: "3", valence: 2 },
+      { z: 22, name: "Titanium", symbol: "Ti", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d² 4s²", block: "d", period: 4, group: "4", valence: 2 },
+      { z: 23, name: "Vanadium", symbol: "V", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d³ 4s²", block: "d", period: 4, group: "5", valence: 2 },
+      { z: 24, name: "Chromium", symbol: "Cr", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁵ 4s¹", block: "d", period: 4, group: "6", valence: 1 },
+      { z: 25, name: "Manganese", symbol: "Mn", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁵ 4s²", block: "d", period: 4, group: "7", valence: 2 },
+      { z: 26, name: "Iron", symbol: "Fe", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁶ 4s²", block: "d", period: 4, group: "8", valence: 2 },
+      { z: 27, name: "Cobalt", symbol: "Co", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁷ 4s²", block: "d", period: 4, group: "9", valence: 2 },
+      { z: 28, name: "Nickel", symbol: "Ni", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁸ 4s²", block: "d", period: 4, group: "10", valence: 2 },
+      { z: 29, name: "Copper", symbol: "Cu", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d¹⁰ 4s¹", block: "d", period: 4, group: "11", valence: 1 },
+      { z: 30, name: "Zinc", symbol: "Zn", config: "1s² 2s² 2p⁶ 3s² 3p⁶ 3d¹⁰ 4s²", block: "d", period: 4, group: "12", valence: 2 },
+      { z: 31, name: "Gallium", symbol: "Ga", config: "[Ar] 3d¹⁰ 4s² 4p¹", block: "p", period: 4, group: "13", valence: 3 },
+      { z: 32, name: "Germanium", symbol: "Ge", config: "[Ar] 3d¹⁰ 4s² 4p²", block: "p", period: 4, group: "14", valence: 4 },
+      { z: 33, name: "Arsenic", symbol: "As", config: "[Ar] 3d¹⁰ 4s² 4p³", block: "p", period: 4, group: "15", valence: 5 },
+      { z: 34, name: "Selenium", symbol: "Se", config: "[Ar] 3d¹⁰ 4s² 4p⁴", block: "p", period: 4, group: "16", valence: 6 },
+      { z: 35, name: "Bromine", symbol: "Br", config: "[Ar] 3d¹⁰ 4s² 4p⁵", block: "p", period: 4, group: "17", valence: 7 },
+      { z: 36, name: "Krypton", symbol: "Kr", config: "[Ar] 3d¹⁰ 4s² 4p⁶", block: "p", period: 4, group: "18", valence: 8 },
+      { z: 37, name: "Rubidium", symbol: "Rb", config: "[Kr] 5s¹", block: "s", period: 5, group: "1", valence: 1 },
+      { z: 38, name: "Strontium", symbol: "Sr", config: "[Kr] 5s²", block: "s", period: 5, group: "2", valence: 2 },
+      { z: 39, name: "Yttrium", symbol: "Y", config: "[Kr] 4d¹ 5s²", block: "d", period: 5, group: "3", valence: 2 },
+      { z: 40, name: "Zirconium", symbol: "Zr", config: "[Kr] 4d² 5s²", block: "d", period: 5, group: "4", valence: 2 },
+      { z: 41, name: "Niobium", symbol: "Nb", config: "[Kr] 4d⁴ 5s¹", block: "d", period: 5, group: "5", valence: 1 },
+      { z: 42, name: "Molybdenum", symbol: "Mo", config: "[Kr] 4d⁵ 5s¹", block: "d", period: 5, group: "6", valence: 1 },
+      { z: 43, name: "Technetium", symbol: "Tc", config: "[Kr] 4d⁵ 5s²", block: "d", period: 5, group: "7", valence: 2 },
+      { z: 44, name: "Ruthenium", symbol: "Ru", config: "[Kr] 4d⁷ 5s¹", block: "d", period: 5, group: "8", valence: 1 },
+      { z: 45, name: "Rhodium", symbol: "Rh", config: "[Kr] 4d⁸ 5s¹", block: "d", period: 5, group: "9", valence: 1 },
+      { z: 46, name: "Palladium", symbol: "Pd", config: "[Kr] 4d¹⁰", block: "d", period: 5, group: "10", valence: 0 },
+      { z: 47, name: "Silver", symbol: "Ag", config: "[Kr] 4d¹⁰ 5s¹", block: "d", period: 5, group: "11", valence: 1 },
+      { z: 48, name: "Cadmium", symbol: "Cd", config: "[Kr] 4d¹⁰ 5s²", block: "d", period: 5, group: "12", valence: 2 },
+      { z: 49, name: "Indium", symbol: "In", config: "[Kr] 4d¹⁰ 5s² 5p¹", block: "p", period: 5, group: "13", valence: 3 },
+      { z: 50, name: "Tin", symbol: "Sn", config: "[Kr] 4d¹⁰ 5s² 5p²", block: "p", period: 5, group: "14", valence: 4 },
+      { z: 51, name: "Antimony", symbol: "Sb", config: "[Kr] 4d¹⁰ 5s² 5p³", block: "p", period: 5, group: "15", valence: 5 },
+      { z: 52, name: "Tellurium", symbol: "Te", config: "[Kr] 4d¹⁰ 5s² 5p⁴", block: "p", period: 5, group: "16", valence: 6 },
+      { z: 53, name: "Iodine", symbol: "I", config: "[Kr] 4d¹⁰ 5s² 5p⁵", block: "p", period: 5, group: "17", valence: 7 },
+      { z: 54, name: "Xenon", symbol: "Xe", config: "[Kr] 4d¹⁰ 5s² 5p⁶", block: "p", period: 5, group: "18", valence: 8 },
+      { z: 55, name: "Caesium", symbol: "Cs", config: "[Xe] 6s¹", block: "s", period: 6, group: "1", valence: 1 },
+      { z: 56, name: "Barium", symbol: "Ba", config: "[Xe] 6s²", block: "s", period: 6, group: "2", valence: 2 },
+      { z: 57, name: "Lanthanum", symbol: "La", config: "[Xe] 5d¹ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 58, name: "Cerium", symbol: "Ce", config: "[Xe] 4f¹ 5d¹ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 59, name: "Praseodymium", symbol: "Pr", config: "[Xe] 4f³ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 60, name: "Neodymium", symbol: "Nd", config: "[Xe] 4f⁴ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 61, name: "Promethium", symbol: "Pm", config: "[Xe] 4f⁵ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 62, name: "Samarium", symbol: "Sm", config: "[Xe] 4f⁶ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 63, name: "Europium", symbol: "Eu", config: "[Xe] 4f⁷ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 64, name: "Gadolinium", symbol: "Gd", config: "[Xe] 4f⁷ 5d¹ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 65, name: "Terbium", symbol: "Tb", config: "[Xe] 4f⁹ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 66, name: "Dysprosium", symbol: "Dy", config: "[Xe] 4f¹⁰ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 67, name: "Holmium", symbol: "Ho", config: "[Xe] 4f¹¹ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 68, name: "Erbium", symbol: "Er", config: "[Xe] 4f¹² 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 69, name: "Thulium", symbol: "Tm", config: "[Xe] 4f¹³ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 70, name: "Ytterbium", symbol: "Yb", config: "[Xe] 4f¹⁴ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 71, name: "Lutetium", symbol: "Lu", config: "[Xe] 4f¹⁴ 5d¹ 6s²", block: "f", period: 6, group: "3", valence: 2 },
+      { z: 72, name: "Hafnium", symbol: "Hf", config: "[Xe] 4f¹⁴ 5d² 6s²", block: "d", period: 6, group: "4", valence: 2 },
+      { z: 73, name: "Tantalum", symbol: "Ta", config: "[Xe] 4f¹⁴ 5d³ 6s²", block: "d", period: 6, group: "5", valence: 2 },
+      { z: 74, name: "Tungsten", symbol: "W", config: "[Xe] 4f¹⁴ 5d⁴ 6s²", block: "d", period: 6, group: "6", valence: 2 },
+      { z: 75, name: "Rhenium", symbol: "Re", config: "[Xe] 4f¹⁴ 5d⁵ 6s²", block: "d", period: 6, group: "7", valence: 2 },
+      { z: 76, name: "Osmium", symbol: "Os", config: "[Xe] 4f¹⁴ 5d⁶ 6s²", block: "d", period: 6, group: "8", valence: 2 },
+      { z: 77, name: "Iridium", symbol: "Ir", config: "[Xe] 4f¹⁴ 5d⁷ 6s²", block: "d", period: 6, group: "9", valence: 2 },
+      { z: 78, name: "Platinum", symbol: "Pt", config: "[Xe] 4f¹⁴ 5d⁹ 6s¹", block: "d", period: 6, group: "10", valence: 1 },
+      { z: 79, name: "Gold", symbol: "Au", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s¹", block: "d", period: 6, group: "11", valence: 1 },
+      { z: 80, name: "Mercury", symbol: "Hg", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s²", block: "d", period: 6, group: "12", valence: 2 },
+      { z: 81, name: "Thallium", symbol: "Tl", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹", block: "p", period: 6, group: "13", valence: 3 },
+      { z: 82, name: "Lead", symbol: "Pb", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²", block: "p", period: 6, group: "14", valence: 4 },
+      { z: 83, name: "Bismuth", symbol: "Bi", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³", block: "p", period: 6, group: "15", valence: 5 },
+      { z: 84, name: "Polonium", symbol: "Po", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴", block: "p", period: 6, group: "16", valence: 6 },
+      { z: 85, name: "Astatine", symbol: "At", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵", block: "p", period: 6, group: "17", valence: 7 },
+      { z: 86, name: "Radon", symbol: "Rn", config: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶", block: "p", period: 6, group: "18", valence: 8 },
+      { z: 87, name: "Francium", symbol: "Fr", config: "[Rn] 7s¹", block: "s", period: 7, group: "1", valence: 1 },
+      { z: 88, name: "Radium", symbol: "Ra", config: "[Rn] 7s²", block: "s", period: 7, group: "2", valence: 2 },
+      { z: 89, name: "Actinium", symbol: "Ac", config: "[Rn] 6d¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 90, name: "Thorium", symbol: "Th", config: "[Rn] 6d² 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 91, name: "Protactinium", symbol: "Pa", config: "[Rn] 5f² 6d¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 92, name: "Uranium", symbol: "U", config: "[Rn] 5f³ 6d¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 93, name: "Neptunium", symbol: "Np", config: "[Rn] 5f⁴ 6d¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 94, name: "Plutonium", symbol: "Pu", config: "[Rn] 5f⁶ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 95, name: "Americium", symbol: "Am", config: "[Rn] 5f⁷ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 96, name: "Curium", symbol: "Cm", config: "[Rn] 5f⁷ 6d¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 97, name: "Berkelium", symbol: "Bk", config: "[Rn] 5f⁹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 98, name: "Californium", symbol: "Cf", config: "[Rn] 5f¹⁰ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 99, name: "Einsteinium", symbol: "Es", config: "[Rn] 5f¹¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 100, name: "Fermium", symbol: "Fm", config: "[Rn] 5f¹² 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 101, name: "Mendelevium", symbol: "Md", config: "[Rn] 5f¹³ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 102, name: "Nobelium", symbol: "No", config: "[Rn] 5f¹⁴ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 103, name: "Lawrencium", symbol: "Lr", config: "[Rn] 5f¹⁴ 6d¹ 7s²", block: "f", period: 7, group: "3", valence: 2 },
+      { z: 104, name: "Rutherfordium", symbol: "Rf", config: "[Rn] 5f¹⁴ 6d² 7s²", block: "d", period: 7, group: "4", valence: 2 },
+      { z: 105, name: "Dubnium", symbol: "Db", config: "[Rn] 5f¹⁴ 6d³ 7s²", block: "d", period: 7, group: "5", valence: 2 },
+      { z: 106, name: "Seaborgium", symbol: "Sg", config: "[Rn] 5f¹⁴ 6d⁴ 7s²", block: "d", period: 7, group: "6", valence: 2 },
+      { z: 107, name: "Bohrium", symbol: "Bh", config: "[Rn] 5f¹⁴ 6d⁵ 7s²", block: "d", period: 7, group: "7", valence: 2 },
+      { z: 108, name: "Hassium", symbol: "Hs", config: "[Rn] 5f¹⁴ 6d⁶ 7s²", block: "d", period: 7, group: "8", valence: 2 },
+      { z: 109, name: "Meitnerium", symbol: "Mt", config: "[Rn] 5f¹⁴ 6d⁷ 7s²", block: "d", period: 7, group: "9", valence: 2 },
+      { z: 110, name: "Darmstadtium", symbol: "Ds", config: "[Rn] 5f¹⁴ 6d⁸ 7s²", block: "d", period: 7, group: "10", valence: 2 },
+      { z: 111, name: "Roentgenium", symbol: "Rg", config: "[Rn] 5f¹⁴ 6d⁹ 7s²", block: "d", period: 7, group: "11", valence: 2 },
+      { z: 112, name: "Copernicium", symbol: "Cn", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s²", block: "d", period: 7, group: "12", valence: 2 },
+      { z: 113, name: "Nihonium", symbol: "Nh", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹", block: "p", period: 7, group: "13", valence: 3 },
+      { z: 114, name: "Flerovium", symbol: "Fl", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²", block: "p", period: 7, group: "14", valence: 4 },
+      { z: 115, name: "Moscovium", symbol: "Mc", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³", block: "p", period: 7, group: "15", valence: 5 },
+      { z: 116, name: "Livermorium", symbol: "Lv", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴", block: "p", period: 7, group: "16", valence: 6 },
+      { z: 117, name: "Tennessine", symbol: "Ts", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵", block: "p", period: 7, group: "17", valence: 7 },
+      { z: 118, name: "Oganesson", symbol: "Og", config: "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", block: "p", period: 7, group: "18", valence: 8 }
+    ];
+
+    // DOM Elements
+    const calcForm = document.getElementById('calcForm');
+    const atomicInput = document.getElementById('atomicInput');
+    const errorBox = document.getElementById('errorBox');
+    const resultBox = document.getElementById('resultBox');
+    const clearBtn = document.getElementById('clearBtn');
+
+    // Result Nodes
+    const resAtomicNum = document.getElementById('resAtomicNum');
+    const resSymbol = document.getElementById('resSymbol');
+    const resName = document.getElementById('resName');
+    const resCategory = document.getElementById('resCategory');
+    const resBlock = document.getElementById('resBlock');
+    const resPeriod = document.getElementById('resPeriod');
+    const resGroup = document.getElementById('resGroup');
+    const resValence = document.getElementById('resValence');
+    const resConfig = document.getElementById('resConfig');
+    const resExplanation = document.getElementById('resExplanation');
+
+    // Handle Form Submit
+    calcForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      calculatePosition();
+    });
+
+    // Handle Clear Button
+    clearBtn.addEventListener('click', function() {
+      atomicInput.value = '';
+      errorBox.style.display = 'none';
+      resultBox.style.display = 'none';
+      atomicInput.focus();
+    });
+
+    // Quick Calculate Chip Action
+    function quickCalculate(num) {
+      atomicInput.value = num;
+      calculatePosition();
+    }
+
+    // Calculation Logic
+    function calculatePosition() {
+      const num = parseInt(atomicInput.value, 10);
+
+      // Validation
+      if (isNaN(num) || num < 1 || num > 118) {
+        errorBox.style.display = 'block';
+        resultBox.style.display = 'none';
+        return;
+      }
+
+      errorBox.style.display = 'none';
+
+      // Find Element in DB
+      const element = elementsDB.find(el => el.z === num);
+
+      if (!element) {
+        errorBox.textContent = 'Element data not found.';
+        errorBox.style.display = 'block';
+        resultBox.style.display = 'none';
+        return;
+      }
+
+      // Populate Data
+      resAtomicNum.textContent = `Z = ${element.z}`;
+      resSymbol.textContent = element.symbol;
+      resName.textContent = element.name;
+      resCategory.textContent = `${element.block.toUpperCase()}-Block Element`;
+      resBlock.textContent = `${element.block}-block`;
+      resPeriod.textContent = element.period;
+      resGroup.textContent = element.group;
+      resValence.textContent = element.valence;
+      resConfig.textContent = element.config;
+
+      // Generate Explanation Text
+      let explanation = "";
+
+      if (element.block === "s") {
+        if (element.z === 2) {
+          explanation = `Helium (He) has the electronic configuration <strong>1s²</strong>. Even though the last electron enters the 1s subshell (s-block), Helium is placed in <strong>Group 18</strong> because its outermost shell is completely filled (duplet rule), behaving like a noble gas in Period 1.`;
+        } else {
+          explanation = `The last electron enters the <strong>${element.period}s</strong> subshell. Therefore, ${element.name} belongs to the <strong>s-block</strong>. The highest principal quantum number is <strong>n = ${element.period}</strong> (Period ${element.period}). Since there are <strong>${element.valence}</strong> electron(s) in the outermost s-subshell, the Group number is <strong>Group ${element.group}</strong>.`;
+        }
+      } else if (element.block === "p") {
+        explanation = `The last electron enters the <strong>${element.period}p</strong> subshell. Therefore, ${element.name} belongs to the <strong>p-block</strong>. The highest principal quantum number is <strong>n = ${element.period}</strong> (Period ${element.period}). According to p-block rules: Group = 12 + valence p-electrons = <strong>Group ${element.group}</strong>.`;
+      } else if (element.block === "d") {
+        explanation = `The last electron enters the inner <strong>(n-1)d</strong> subshell. Therefore, ${element.name} belongs to the <strong>d-block</strong> (Transition Element). The highest outer principal quantum number is <strong>n = ${element.period}</strong> (Period ${element.period}). Group = (n-1)d electrons + ns electrons = <strong>Group ${element.group}</strong>.`;
+      } else if (element.block === "f") {
+        const series = element.period === 6 ? "Lanthanide" : "Actinide";
+        explanation = `The last electron enters the inner <strong>(n-2)f</strong> subshell. Therefore, ${element.name} belongs to the <strong>f-block</strong> (${series} inner transition series). The highest outer quantum shell is <strong>n = ${element.period}</strong> (Period ${element.period}). All f-block elements are placed in <strong>Group 3</strong> of the periodic table.`;
+      }
+
+      resExplanation.innerHTML = explanation;
+
+      // Display with smooth animation
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>

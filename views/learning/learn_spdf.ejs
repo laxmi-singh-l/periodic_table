@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="ASR" content="QuantumSPDF Masterclass">
+  <meta name="keywords" content="Electronic Configuration, Aufbau Principle, SPDF Orbitals, Quantum Chemistry, Hund's Rule, Pauli Exclusion Principle">
+  
+  <style>
+    /* Premium Typography & Variable Definitions */
+    :root {
+      --bg-dark: #0a0c10;
+      --bg-card: rgba(20, 24, 35, 0.6);
+      --border-glow: rgba(0, 242, 254, 0.15);
+      --cyan: #00f2fe;
+      --blue: #4facfe;
+      --purple: #d946ef;
+      --purple-dark: #7f00ff;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --success: #10b981;
+      --danger: #ef4444;
+      --transition-speed: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(217, 70, 239, 0.05) 0%, transparent 40%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-bottom: 60px;
+    }
+
+    /* Scroll Progress Bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      width: 0%;
+      z-index: 1000;
+      transition: width 0.1s ease-out;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--cyan);
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 12, 16, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      font-size: 1.8rem;
+      background: linear-gradient(45deg, var(--cyan), var(--purple));
+      -webkit-text-fill-color: transparent;
+      animation: pulse 2s infinite alternate;
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;          /* ← replaced -webkit-text-fill-color */
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    /* Custom Premium Buttons */
+    .btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #000;
+      border-color: transparent;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-purple {
+      background: rgba(217, 70, 239, 0.1);
+      border: 1px solid rgba(217, 70, 239, 0.2);
+    }
+
+    .btn-purple:hover {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 0 15px rgba(217, 70, 239, 0.4);
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(20, 24, 35, 0.95);
+      border: 1px solid var(--cyan);
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+      padding: 12px 24px;
+      border-radius: 50px;
+      z-index: 1000;
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Layout Containers */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px 0;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(0, 242, 254, 0.08);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      border-radius: 50px;
+      color: var(--cyan);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 30%, var(--cyan) 70%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;          /* ← replaced -webkit-text-fill-color */
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 35px auto;
+    }
+
+    /* Cards & Glassmorphism Grid */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-glow);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      opacity: 0.5;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(0, 242, 254, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* Neon Section Titles */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .section-title span {
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;          /* ← replaced -webkit-text-fill-color */
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    /* Info Badge / Highlight Text */
+    .highlight-card {
+      background: rgba(217, 70, 239, 0.03);
+      border-left: 4px solid var(--purple);
+      padding: 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 20px 0;
+    }
+
+    .highlight-card h4 {
+      color: var(--purple);
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Orbitals Table */
+    .premium-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .premium-table th {
+      background: rgba(0, 242, 254, 0.05);
+      border-bottom: 2px solid rgba(0, 242, 254, 0.2);
+      padding: 12px 16px;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .premium-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .premium-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Orbital Box Fillings (Visualizer) */
+    .orbital-visualizer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .subshell-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .subshell-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .orbital-boxes {
+      display: flex;
+      gap: 4px;
+    }
+
+    .orbital-box {
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(0, 242, 254, 0.3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 242, 254, 0.03);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--cyan);
+      transition: all 0.3s;
+    }
+
+    .orbital-box.filled {
+      border-color: var(--cyan);
+      background: rgba(0, 242, 254, 0.15);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+    }
+
+    .orbital-box.half-filled {
+      border-color: var(--purple);
+      background: rgba(217, 70, 239, 0.15);
+      color: var(--purple);
+      box-shadow: 0 0 10px rgba(217, 70, 239, 0.2);
+    }
+
+    /* Aufbau SVG Diagram Layout */
+    .diagram-section {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .diagram-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .svg-wrapper {
+      background: rgba(13, 16, 23, 0.8);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 0 20px rgba(0, 242, 254, 0.05);
+    }
+
+    /* Solved Examples Grid & Expanders */
+    .example-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .example-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--cyan);
+    }
+
+    .example-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .example-element {
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .element-symbol {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #000;
+      font-weight: 800;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+
+    .element-symbol.exceptional {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: #fff;
+      box-shadow: 0 0 10px rgba(217, 70, 239, 0.3);
+    }
+
+    .example-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+      padding-top: 0;
+    }
+
+    .example-card.expanded .example-body {
+      max-height: 500px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 15px;
+    }
+
+    .toggle-icon {
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+
+    .example-card.expanded .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Interactive MCQ Quiz styling */
+    .quiz-section {
+      background: rgba(13, 16, 23, 0.7);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.05);
+    }
+
+    .quiz-question-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-label {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .option-label:hover {
+      background: rgba(0, 242, 254, 0.05);
+      border-color: var(--cyan);
+    }
+
+    .option-label input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--text-muted);
+      border-radius: 50%;
+      outline: none;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .option-label input[type="radio"]:checked {
+      border-color: var(--cyan);
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .option-label input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Scorecard Styling */
+    .scorecard {
+      display: none;
+      background: rgba(20, 24, 35, 0.95);
+      border: 2px solid var(--cyan);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.15);
+      animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, transparent 80%);
+      border: 4px dashed var(--cyan);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .scorecard h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .scorecard p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-num {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .stat-num.correct { color: var(--success); }
+    .stat-num.wrong { color: var(--danger); }
+
+    /* Evaluation styles */
+    .option-label.correct-selected {
+      background: rgba(16, 185, 129, 0.1) !important;
+      border-color: var(--success) !important;
+      color: var(--success) !important;
+    }
+
+    .option-label.incorrect-selected {
+      background: rgba(239, 68, 68, 0.1) !important;
+      border-color: var(--danger) !important;
+      color: var(--danger) !important;
+    }
+
+    .option-label.correct-not-selected {
+      border: 2px dashed var(--success) !important;
+      color: var(--success) !important;
+      background: rgba(16, 185, 129, 0.03);
+    }
+
+    /* Floating Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(20, 24, 35, 0.8);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+      z-index: 99;
+      box-shadow: 0 4px 20px rgba(0, 242, 254, 0.25);
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: var(--cyan);
+      color: #000;
+      transform: translateY(-5px);
+    }
+
+    /* Sequential reveal steps styling */
+    .step-list {
+      list-style: none;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: var(--cyan);
+      color: #000;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .step-content h4 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .step-content p {
+      color: var(--text-muted);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0% { filter: drop-shadow(0 0 2px rgba(0, 242, 254, 0.5)); }
+      100% { filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.8)); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .reveal-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Print-Only Style Override */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      header, .btn, .back-to-top, #scrollProgress, .quiz-section, .hero-badge, .nav-actions {
+        display: none !important;
+      }
+      .glass-card {
+        background: none !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+      }
+      .section-title span, .logo-text, .hero h1 {
+        color: #000 !important;
+        background: none !important;
+        -webkit-text-fill-color: initial !important;
+      }
+      .orbital-box {
+        border-color: #000 !important;
+        color: #000 !important;
+      }
+      .orbital-box.filled, .orbital-box.half-filled {
+        background: none !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+
+<!-- Essential SEO Meta Tags -->
+<% 
+  const pageTitle = typeof title !== 'undefined' ? title : 'Quantum SPDF Configuration & Aufbau Rule Masterclass';
+  const pageDesc = typeof description !== 'undefined' ? description : 'Master electronic configurations, spdf subshells, Aufbau rule, Hunds law, and Pauli principles with interactive visuals.';
+%>
+<title><%= pageTitle %></title>
+<meta name="title" content="<%= pageTitle %>">
+<meta name="description" content="<%= pageDesc %>">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="og:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="og:image" content="<%= image %>"><% } %>
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary">
+<meta property="twitter:title" content="<%= pageTitle %>">
+<meta property="twitter:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="twitter:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="twitter:image" content="<%= image %>"><% } %>
+
+</head>
+<body>
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scrollProgress"></div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="logo-container">
+      <span class="logo-icon">⚛️</span>
+      <span class="logo-text">QuantumSPDF</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn" onclick="copyConfigNotes()">
+        <span>📋</span> Copy Notes
+      </button>
+      <button class="btn btn-purple" onclick="printPage()">
+        <span>🖨️</span> Print Masterclass
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <span class="hero-badge">Deep Dive Chemistry</span>
+      <h1>Mastering Electronic Configuration</h1>
+      <p>A comprehensive masterclass on how electrons arrange themselves inside atomic subshells ($s, p, d, f$) using the Aufbau rule, Hund's law, and Pauli's principles.</p>
+      <a href="#quiz" class="btn">🚀 Challenge Yourself: 10-Question MCQ Quiz</a>
+    </section>
+    <div style="text-align: center; margin: 25px 0;">
+      <a href="/bohr" target="_blank">How to change spdf configuration into Bohr Bury electronic configuration</a>
+    </div>
+
+    <!-- Section: Intro -->
+    <section class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>01.</span> Introduction to Electronic Configuration</h2>
+      <p>
+        In quantum chemistry, <strong>Electronic Configuration</strong> is the distribution of electrons of an atom or molecule in atomic or molecular orbitals. Rather than orbiting the nucleus in neat, planetary pathways, electrons exist in high-probability regional clouds called <strong>orbitals</strong>.
+      </p>
+      <p style="margin-top: 15px;">
+        Understanding how these configurations form is crucial because the electron arrangement in the outermost shell (valence electrons) directly determines an element's reactivity, bonding properties, and position in the periodic table.
+      </p>
+    </section>
+
+    <!-- Section: SPDF Orbitals -->
+    <section class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>02.</span> SPDF Subshells & Orbitals</h2>
+      <p>
+        The main energy levels (shells, defined by quantum number $n$) are split into subshells ($l = 0, 1, 2, 3$). These subshells are named <strong>s</strong> (sharp), <strong>p</strong> (principal), <strong>d</strong> (diffuse), and <strong>f</strong> (fundamental). Each subshell holds a maximum capacity of electrons determined by the number of individual spatial orbitals it possesses.
+      </p>
+
+      <table class="premium-table">
+        <thead>
+          <tr>
+            <th>Subshell</th>
+            <th>Azimuthal Quantum Number ($l$)</th>
+            <th>No. of Orbitals ($2l + 1$)</th>
+            <th>Maximum Electrons ($2(2l + 1)$)</th>
+            <th>Orbital Shape</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>s</strong></td>
+            <td>0</td>
+            <td>1</td>
+            <td><strong>2</strong></td>
+            <td>Spherical</td>
+          </tr>
+          <tr>
+            <td><strong>p</strong></td>
+            <td>1</td>
+            <td>3</td>
+            <td><strong>6</strong></td>
+            <td>Dumbbell-shaped</td>
+          </tr>
+          <tr>
+            <td><strong>d</strong></td>
+            <td>2</td>
+            <td>5</td>
+            <td><strong>10</strong></td>
+            <td>Double Dumbbell</td>
+          </tr>
+          <tr>
+            <td><strong>f</strong></td>
+            <td>3</td>
+            <td>7</td>
+            <td><strong>14</strong></td>
+            <td>Highly Complex</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-card">
+        <h4>💡 Key Rule: The $2n^2$ Capacity</h4>
+        <p>The maximum number of electrons that can occupy any principal energy shell $n$ is calculated using the formula <strong>$2n^2$</strong>. For example, for $n = 3$, the capacity is $2(3)^2 = 18$ electrons ($2$ in $s$, $6$ in $p$, and $10$ in $d$).</p>
+      </div>
+    </section>
+
+    <!-- Section: Core Principles -->
+    <section class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>03.</span> The Trio of Governing Quantum Laws</h2>
+      <p style="margin-bottom: 25px;">To accurately assign electrons to orbitals, three fundamental principles of quantum mechanics must be followed strictly:</p>
+      
+      <div class="grid-3">
+        <article class="glass-card" style="margin-bottom: 0;">
+          <h3 style="color: var(--cyan); margin-bottom: 12px;">1. Aufbau Principle</h3>
+          <p style="font-size: 0.95rem; color: var(--text-muted);">
+            Derived from the German word <em>Aufbauen</em> (to build up). It dictates that electrons must fill atomic orbitals of the <strong>lowest energy levels first</strong> before moving to higher ones. 
+          </p>
+          <p style="font-size: 0.9rem; margin-top: 10px; color: var(--cyan);">Order of energy: $1s < 2s < 2p < 3s$... </p>
+        </article>
+
+        <article class="glass-card" style="margin-bottom: 0;">
+          <h3 style="color: var(--cyan); margin-bottom: 12px;">2. Pauli Exclusion</h3>
+          <p style="font-size: 0.95rem; color: var(--text-muted);">
+            Formulated by Wolfgang Pauli. It states that no two electrons in an atom can share the exact same four quantum numbers. Pragmatically: <strong>an orbital can hold at most 2 electrons</strong>, and they must have <strong>opposite spins</strong> ($\uparrow\downarrow$).
+          </p>
+        </article>
+
+        <article class="glass-card" style="margin-bottom: 0;">
+          <h3 style="color: var(--purple); margin-bottom: 12px;">3. Hund's Rule</h3>
+          <p style="font-size: 0.95rem; color: var(--text-muted);">
+            For degenerate orbitals (orbitals with the same energy, like the three $p$ orbitals), electrons will <strong>occupy empty orbitals singly with parallel spins first</strong> before pairing up. This minimizes electron-electron repulsion.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section: SPDF Diagonal Rule / SVG Diagram -->
+    <section class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>04.</span> The SPDF Diagonal Rule (Aufbau Diagram)</h2>
+      <p style="margin-bottom: 30px;">
+        Sometimes, orbitals in a higher principal shell have lower energy than those in a lower shell (e.g., $4s$ is filled before $3d$ because $4s$ is at a lower energy state). The <strong>Diagonal Rule</strong> (also known as the Madelung or $(n+l)$ rule) is a handy geometric visualizer used to determine the exact order of orbital filling.
+      </p>
+
+      <div class="diagram-section">
+        <!-- SVG Graphic -->
+        <div class="svg-wrapper">
+          <svg viewBox="0 0 620 540" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="neon-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              <filter id="neon-purple" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00f2fe" />
+              </marker>
+            </defs>
+
+            <style>
+              .node-bg { fill: #131722; stroke: rgba(0, 242, 254, 0.4); stroke-width: 2; transition: all 0.3s; }
+              .node-text { fill: #f3f4f6; font-family: system-ui; font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; }
+              .node-bg.s { stroke: #00f2fe; }
+              .node-bg.p { stroke: #38bdf8; }
+              .node-bg.d { stroke: #a855f7; }
+              .node-bg.f { stroke: #ec4899; }
+              .diag-line { stroke: rgba(0, 242, 254, 0.65); stroke-width: 3; stroke-dasharray: 8 5; stroke-linecap: round; marker-end: url(#arrow); animation: dashflow 1.5s linear infinite; }
+              @keyframes dashflow {
+                to { stroke-dashoffset: -26; }
+              }
+              .row-label { fill: rgba(255, 255, 255, 0.3); font-size: 11px; font-weight: bold; }
+            </style>
+
+            <!-- Row labels on the left -->
+            <text x="30" y="75" class="row-label">Shell 1 (K)</text>
+            <text x="30" y="135" class="row-label">Shell 2 (L)</text>
+            <text x="30" y="195" class="row-label">Shell 3 (M)</text>
+            <text x="30" y="255" class="row-label">Shell 4 (N)</text>
+            <text x="30" y="315" class="row-label">Shell 5 (O)</text>
+            <text x="30" y="375" class="row-label">Shell 6 (P)</text>
+            <text x="30" y="435" class="row-label">Shell 7 (Q)</text>
+
+            <!-- Diagonal Arrows (Drawn to cut through nodes) -->
+            <line x1="210" y1="35" x2="105" y2="105" class="diag-line" />
+            <line x1="210" y1="95" x2="105" y2="165" class="diag-line" />
+            <line x1="315" y1="95" x2="105" y2="235" class="diag-line" />
+            <line x1="315" y1="155" x2="105" y2="295" class="diag-line" />
+            <line x1="420" y1="155" x2="105" y2="365" class="diag-line" />
+            <line x1="420" y1="215" x2="105" y2="435" class="diag-line" />
+            <line x1="525" y1="215" x2="105" y2="495" class="diag-line" />
+            
+            <!-- Grid of Nodes (Circles) -->
+            <g transform="translate(140, 75)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">1s</text>
+            </g>
+
+            <g transform="translate(140, 135)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">2s</text>
+            </g>
+            <g transform="translate(245, 135)">
+              <circle r="22" class="node-bg p" />
+              <text class="node-text">2p</text>
+            </g>
+
+            <g transform="translate(140, 195)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">3s</text>
+            </g>
+            <g transform="translate(245, 195)">
+              <circle r="22" class="node-bg p" />
+              <text class="node-text">3p</text>
+            </g>
+            <g transform="translate(350, 195)">
+              <circle r="22" class="node-bg d" />
+              <text class="node-text">3d</text>
+            </g>
+
+            <g transform="translate(140, 255)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">4s</text>
+            </g>
+            <g transform="translate(245, 255)">
+              <circle r="22" class="node-bg p" />
+              <text class="node-text">4p</text>
+            </g>
+            <g transform="translate(350, 255)">
+              <circle r="22" class="node-bg d" />
+              <text class="node-text">4d</text>
+            </g>
+            <g transform="translate(455, 255)">
+              <circle r="22" class="node-bg f" />
+              <text class="node-text">4f</text>
+            </g>
+
+            <g transform="translate(140, 315)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">5s</text>
+            </g>
+            <g transform="translate(245, 315)">
+              <circle r="22" class="node-bg p" />
+              <text class="node-text">5p</text>
+            </g>
+            <g transform="translate(350, 315)">
+              <circle r="22" class="node-bg d" />
+              <text class="node-text">5d</text>
+            </g>
+            <g transform="translate(455, 315)">
+              <circle r="22" class="node-bg f" />
+              <text class="node-text">5f</text>
+            </g>
+
+            <g transform="translate(140, 375)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">6s</text>
+            </g>
+            <g transform="translate(245, 375)">
+              <circle r="22" class="node-bg p" />
+              <text class="node-text">6p</text>
+            </g>
+            <g transform="translate(350, 375)">
+              <circle r="22" class="node-bg d" />
+              <text class="node-text">6d</text>
+            </g>
+
+            <g transform="translate(140, 435)">
+              <circle r="22" class="node-bg s" />
+              <text class="node-text">7s</text>
+            </g>
+            <g transform="translate(245, 435)">
+              <circle r="22" class="node-bg p" />
+              <text class="node-text">7p</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Step by Step Guide -->
+        <div>
+          <h3 style="color: var(--cyan); margin-bottom: 15px;">How to Draw and Read It:</h3>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>List Subshells Horizontally</h4>
+                <p>Arrange shells vertically ($n = 1$ to $7$) and draw their subshells as horizontal columns ($s, p, d, f$). Note that $1$ has only $s$, $2$ has $s, p$, etc.</p>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Draw Parallel Diagonal Arrows</h4>
+                <p>Draw parallel arrows pointing downwards from top-right to bottom-left through the subshells.</p>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Follow the Arrows in Sequence</h4>
+                <p>Read the diagram by following each arrow from its tail to its head, starting at the top: $1s \rightarrow 2s \rightarrow 2p \rightarrow 3s \rightarrow 3p \rightarrow 4s \rightarrow 3d \dots$</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Solved Examples -->
+    <section class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>05.</span> Interactive Solved Examples</h2>
+      <p style="margin-bottom: 25px;">Tap on any card below to expand and view the full electron distribution details and orbital filling diagrams.</p>
+
+      <div class="grid-2">
+        <!-- Example H -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">H</span>
+              <div>Hydrogen (Z = 1)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $1s^1$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">Hydrogen has only one electron, which fills the lowest-energy $1s$ orbital.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">1s</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box half-filled">↑</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example He -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">He</span>
+              <div>Helium (Z = 2)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $1s^2$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">The $1s$ orbital holds up to two electrons with paired spins (Pauli Exclusion Principle).</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">1s</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Li -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">Li</span>
+              <div>Lithium (Z = 3)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $1s^2 2s^1$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">The first two electrons completely fill $1s$. The third enters the $2s$ subshell.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">1s</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">2s</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box half-filled">↑</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Na -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">Na</span>
+              <div>Sodium (Z = 11)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $1s^2 2s^2 2p^6 3s^1$ (or $[Ne] 3s^1$)</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">With 11 electrons, Neon core $[Ne]$ is completely filled, and the remaining electron enters $3s^1$.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">1s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">2s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">2p</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">3s</div>
+                <div class="orbital-boxes"><div class="orbital-box half-filled">↑</div></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Mg -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">Mg</span>
+              <div>Magnesium (Z = 12)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $1s^2 2s^2 2p^6 3s^2$ (or $[Ne] 3s^2$)</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">The $3s$ subshell is now fully filled with two paired electrons.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">1s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">2s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">2p</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">3s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Ca -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">Ca</span>
+              <div>Calcium (Z = 20)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $1s^2 2s^2 2p^6 3s^2 3p^6 4s^2$ (or $[Ar] 4s^2$)</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">Even though the $3d$ subshell is technically empty, the $4s$ subshell is filled first because it is at a lower energy level.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">3p</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">4s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Cr (Exception) -->
+        <article class="example-card" style="border-color: rgba(217, 70, 239, 0.3);" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol exceptional">Cr</span>
+              <div>Chromium (Z = 24) <strong style="color: var(--purple); font-size: 0.8rem;">🚨 EXCEPTION</strong></div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Expected:</strong> $[Ar] 4s^2 3d^4$ | <strong>Actual:</strong> $[Ar] 4s^1 3d^5$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">
+              An electron jumps from $4s$ to $3d$ because a <strong>half-filled d-subshell ($d^5$)</strong> has extra stability due to symmetry and exchange energy.
+            </p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">4s</div>
+                <div class="orbital-boxes"><div class="orbital-box half-filled">↑</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">3d</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Cu (Exception) -->
+        <article class="example-card" style="border-color: rgba(217, 70, 239, 0.3);" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol exceptional">Cu</span>
+              <div>Copper (Z = 29) <strong style="color: var(--purple); font-size: 0.8rem;">🚨 EXCEPTION</strong></div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Expected:</strong> $[Ar] 4s^2 3d^9$ | <strong>Actual:</strong> $[Ar] 4s^1 3d^{10}$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">
+              Similar to Chromium, promoting an electron from $4s$ to $3d$ creates a <strong>completely filled d-subshell ($3d^{10}$)</strong>, which provides exceptional stability.
+            </p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">4s</div>
+                <div class="orbital-boxes"><div class="orbital-box half-filled">↑</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">3d</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Fe -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">Fe</span>
+              <div>Iron (Z = 26)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $[Ar] 4s^2 3d^6$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">Once $4s$ is full, the remaining 6 electrons go to $3d$. Hund's rule is beautifully visualized here: 1 box is paired, while 4 boxes remain singly filled.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">4s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">3d</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                  <div class="orbital-box half-filled">↑</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Example Zn -->
+        <article class="example-card" onclick="toggleExample(this)">
+          <div class="example-header">
+            <div class="example-element">
+              <span class="element-symbol">Zn</span>
+              <div>Zinc (Z = 30)</div>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="example-body">
+            <p><strong>Configuration:</strong> $[Ar] 4s^2 3d^{10}$</p>
+            <p style="margin: 10px 0; color: var(--text-muted);">Zinc fully saturates both the $4s$ and the $3d$ subshells, ending the first row of transition metals.</p>
+            <div class="orbital-visualizer">
+              <div class="subshell-container">
+                <div class="subshell-title">4s</div>
+                <div class="orbital-boxes"><div class="orbital-box filled">↑↓</div></div>
+              </div>
+              <div class="subshell-container">
+                <div class="subshell-title">3d</div>
+                <div class="orbital-boxes">
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                  <div class="orbital-box filled">↑↓</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section: Notes & Pitfalls -->
+    <section id="notesSection" class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>06.</span> Important Notes & Common Mistakes</h2>
+      
+      <div class="grid-2">
+        <div>
+          <h3 style="color: var(--cyan); margin-bottom: 12px;">🌟 Key Notes (Why Cr & Cu are Exceptions)</h3>
+          <ul style="padding-left: 20px; color: var(--text-muted);">
+            <li style="margin-bottom: 10px;">
+              <strong style="color: #fff;">Symmetrical Distribution:</strong> Completely half-filled ($d^5$) and fully filled ($d^{10}$) orbitals have highly symmetrical charge clouds, minimizing repulsions.
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong style="color: #fff;">Exchange Energy:</strong> Electrons in degenerate subshells can swap positions. The number of possible exchanges is highest in half-filled and fully filled configurations, releasing stabilizing "exchange energy".
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong style="color: #fff;">Ionization Order:</strong> When transition metals (like Fe) lose electrons to form positive ions, electrons are lost from the outer <strong>4s orbital first</strong>, then 3d (even though 3d was filled last!).
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="color: var(--danger); margin-bottom: 12px;">⚠️ Avoid These Common Mistakes</h3>
+          <ul style="padding-left: 20px; color: var(--text-muted);">
+            <li style="margin-bottom: 10px;">
+              <strong style="color: #fff;">Skipping the Aufbau order:</strong> Do not fill $3d$ before $4s$ unless you are dealing with Chromium or Copper!
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong style="color: #fff;">Spin Pairing Prematurely:</strong> Don't pair electrons in a subshell unless each orbital has at least one electron. (Violation of Hund's Rule).
+            </li>
+            <li style="margin-bottom: 10px;">
+              <strong style="color: #fff;">Ignoring Quantum Capacities:</strong> Never write a subshell exceeding capacity (e.g., $p^7$ or $d^{11}$ are completely impossible).
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Revision Sheet -->
+    <section class="glass-card reveal-on-scroll">
+      <h2 class="section-title"><span>07.</span> Quick Revision Sheet</h2>
+      <div class="grid-3" style="font-size: 0.95rem;">
+        <div style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">
+          <h4 style="color: var(--cyan); margin-bottom: 5px;">Azimuthal (l) Key</h4>
+          <p style="color: var(--text-muted);">$s \rightarrow 0$ | $p \rightarrow 1$ | $d \rightarrow 2$ | $f \rightarrow 3$</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">
+          <h4 style="color: var(--cyan); margin-bottom: 5px;">Electron Capacities</h4>
+          <p style="color: var(--text-muted);">$s$: 2 | $p$: 6 | $d$: 10 | $f$: 14</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px;">
+          <h4 style="color: var(--purple); margin-bottom: 5px;">Madelung Rule Formula</h4>
+          <p style="color: var(--text-muted);">Fill orbitals by increasing value of $(n + l)$.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Interactive MCQ Quiz -->
+    <section id="quiz" class="glass-card quiz-section reveal-on-scroll">
+      <h2 class="section-title"><span>08.</span> The Ultimate SPDF Practice Quiz</h2>
+      <p style="color: var(--text-muted); margin-bottom: 30px;">Test your quantum configuration skills. Select one correct option per question. Your work won't be evaluated until you tap the check button!</p>
+
+      <div id="quizContainer">
+        <!-- Question 1 -->
+        <div class="quiz-question-card" data-correct="B">
+          <div class="question-text">Q1. What is the correct order of filling orbitals according to the Aufbau Principle?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q1" value="A"> A) 1s, 2s, 2p, 3s, 3p, 3d, 4s</label>
+            <label class="option-label"><input type="radio" name="q1" value="B"> B) 1s, 2s, 2p, 3s, 3p, 4s, 3d</label>
+            <label class="option-label"><input type="radio" name="q1" value="C"> C) 1s, 2s, 3s, 3p, 4s, 3d, 4p</label>
+            <label class="option-label"><input type="radio" name="q1" value="D"> D) 1s, 2s, 2p, 3s, 4s, 3p, 3d</label>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question-card" data-correct="C">
+          <div class="question-text">Q2. Which rule states that "no two electrons in an atom can have the same four quantum numbers"?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q2" value="A"> A) Hund's Rule</label>
+            <label class="option-label"><input type="radio" name="q2" value="B"> B) Aufbau Principle</label>
+            <label class="option-label"><input type="radio" name="q2" value="C"> C) Pauli Exclusion Principle</label>
+            <label class="option-label"><input type="radio" name="q2" value="D"> D) Heisenberg Principle</label>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question-card" data-correct="B">
+          <div class="question-text">Q3. What is the correct ground-state electronic configuration of Chromium (Z = 24)?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q3" value="A"> A) [Ar] 4s² 3d⁴</label>
+            <label class="option-label"><input type="radio" name="q3" value="B"> B) [Ar] 4s¹ 3d⁵</label>
+            <label class="option-label"><input type="radio" name="q3" value="C"> C) [Ar] 4s⁰ 3d⁶</label>
+            <label class="option-label"><input type="radio" name="q3" value="D"> D) [Ar] 4s² 3d⁵</label>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="quiz-question-card" data-correct="A">
+          <div class="question-text">Q4. Why is the actual electronic configuration of Copper (Z = 29) [Ar] 4s¹ 3d¹⁰ instead of [Ar] 4s² 3d⁹?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q4" value="A"> A) Completely filled d-subshells (d¹⁰) have extra stability due to symmetry and high exchange energy.</label>
+            <label class="option-label"><input type="radio" name="q4" value="B"> B) The 4s orbital has a higher energy level than the 3d orbital in Copper.</label>
+            <label class="option-label"><input type="radio" name="q4" value="C"> C) Copper is a lanthanide element.</label>
+            <label class="option-label"><input type="radio" name="q4" value="D"> D) Pauli exclusion rules strictly forbid d⁹ configurations.</label>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="quiz-question-card" data-correct="C">
+          <div class="question-text">Q5. According to Hund's Rule, when electrons enter degenerate orbitals (like three p-orbitals):</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q5" value="A"> A) They pair up immediately to conserve shell volume.</label>
+            <label class="option-label"><input type="radio" name="q5" value="B"> B) They singly occupy empty orbitals with opposite spins first.</label>
+            <label class="option-label"><input type="radio" name="q5" value="C"> C) They singly occupy empty orbitals with parallel spins first.</label>
+            <label class="option-label"><input type="radio" name="q5" value="D"> D) They avoid p-orbitals and cascade directly into d-orbitals.</label>
+          </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="quiz-question-card" data-correct="C">
+          <div class="question-text">Q6. What is the maximum number of electrons that can be accommodated in the "d" subshell?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q6" value="A"> A) 2</label>
+            <label class="option-label"><input type="radio" name="q6" value="B"> B) 6</label>
+            <label class="option-label"><input type="radio" name="q6" value="C"> C) 10</label>
+            <label class="option-label"><input type="radio" name="q6" value="D"> D) 14</label>
+          </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="quiz-question-card" data-correct="B">
+          <div class="question-text">Q7. For a given principal quantum number n = 3, what are the allowed values of the azimuthal quantum number (l)?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q7" value="A"> A) 1, 2, 3</label>
+            <label class="option-label"><input type="radio" name="q7" value="B"> B) 0, 1, 2</label>
+            <label class="option-label"><input type="radio" name="q7" value="C"> C) -1, 0, +1</label>
+            <label class="option-label"><input type="radio" name="q7" value="D"> D) 0, 1, 2, 3</label>
+          </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="quiz-question-card" data-correct="B">
+          <div class="question-text">Q8. What is the correct ground-state configuration of a Zinc ion (Zn²⁺, Z = 30)?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q8" value="A"> A) [Ar] 4s² 3d⁸</label>
+            <label class="option-label"><input type="radio" name="q8" value="B"> B) [Ar] 4s⁰ 3d¹⁰</label>
+            <label class="option-label"><input type="radio" name="q8" value="C"> C) [Ar] 4s¹ 3d⁹</label>
+            <label class="option-label"><input type="radio" name="q8" value="D"> D) [Ar] 4s² 3d¹⁰</label>
+          </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="quiz-question-card" data-correct="A">
+          <div class="question-text">Q9. Which of the following subshells does NOT exist in quantum mechanical systems?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q9" value="A"> A) 2d</label>
+            <label class="option-label"><input type="radio" name="q9" value="B"> B) 3p</label>
+            <label class="option-label"><input type="radio" name="q9" value="C"> C) 4f</label>
+            <label class="option-label"><input type="radio" name="q9" value="D"> D) 5s</label>
+          </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="quiz-question-card" data-correct="B">
+          <div class="question-text">Q10. What rule is violated in a carbon atom diagram showing 1s² 2s² 2px² 2py⁰ 2pz⁰?</div>
+          <div class="options-grid">
+            <label class="option-label"><input type="radio" name="q10" value="A"> A) Aufbau Principle</label>
+            <label class="option-label"><input type="radio" name="q10" value="B"> B) Hund's Rule of Maximum Multiplicity</label>
+            <label class="option-label"><input type="radio" name="q10" value="C"> C) Pauli Exclusion Principle</label>
+            <label class="option-label"><input type="radio" name="q10" value="D"> D) Heisenberg Principle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Area -->
+      <div style="margin-top: 30px; text-align: center;">
+        <button id="checkQuizBtn" class="btn btn-purple" onclick="evaluateQuiz()">🏆 Evaluate & Check Solutions</button>
+      </div>
+
+      <!-- Result Scorecard -->
+      <div id="scorecard" class="scorecard">
+        <div class="score-circle" id="scoreCircle">0/10</div>
+        <h3 id="resultHeading">Keep Practicing!</h3>
+        <p id="resultMessage">You can always review the diagonal rules above and try again!</p>
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num correct" id="correctCount">0</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Correct</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num wrong" id="wrongCount">0</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Incorrect</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" id="percentageScore" style="color: var(--cyan);">0%</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Percentage</div>
+          </div>
+        </div>
+        <button class="btn" onclick="resetQuiz()">🔄 Restart Quiz</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer SEO Landmark -->
+  <footer style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem;">
+    <p>&copy; 2026 QuantumSPDF Configuration & Aufbau Rule Masterclass. All rights reserved.</p>
+  </footer>
+
+  <!-- Floating Toast Notification -->
+  <div id="toast">📋 Notes copied to clipboard!</div>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" onclick="scrollToTop()">▲</button>
+
+  <script>
+    // Scroll Progress logic
+    window.addEventListener('scroll', () => {
+      const scrollProgress = document.getElementById('scrollProgress');
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      scrollProgress.style.width = scrolled + '%';
+
+      // Back to Top trigger
+      const btt = document.getElementById('backToTop');
+      if (winScroll > 300) {
+        btt.classList.add('show');
+      } else {
+        btt.classList.remove('show');
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Scroll reveal mechanism
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.05 });
+
+    revealElements.forEach(el => observer.observe(el));
+    // Solved Examples Toggles
+    function toggleExample(cardElement) {
+      cardElement.classList.toggle('expanded');
+    }
+    // Copy Notes Action
+    function copyConfigNotes() {
+      const notes = `--- QUANTUM SPDF ELECTRONIC CONFIGURATION KEY SCHEME ---
+Rules Summary:
+1. Aufbau Principle: Electrons fill lowest energy orbitals first. 
+Energy Order: 1s -> 2s -> 2p -> 3s -> 3p -> 4s -> 3d -> 4p -> 5s -> 4d...
+2. Pauli Exclusion Principle: Max 2 electrons per orbital with opposite spins.
+3. Hund's Rule: Occupy degenerate orbitals singly first with parallel spins.
+
+Important Subshell capacities:
+- s (l=0) holds max 2 electrons (1 orbital)
+- p (l=1) holds max 6 electrons (3 orbitals)
+- d (l=2) holds max 10 electrons (5 orbitals)
+- f (l=3) holds max 14 electrons (7 orbitals)
+
+Exceptional Cases:
+- Chromium (Z=24): [Ar] 4s¹ 3d⁵ (half-filled d-orbital stability)
+- Copper (Z=29): [Ar] 4s¹ 3d¹⁰ (fully-filled d-orbital stability)
+------------------------------------------------------`;
+      navigator.clipboard.writeText(notes).then(() => {
+        showToast('📋 Core configuration notes copied!');
+      }).catch(err => {
+        showToast('❌ Copy failed. Check permissions.');
+      });
+    }
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    function printPage() {
+      window.print();
+    }
+    // Interactive MCQ Quiz Core Engine
+    function evaluateQuiz() {
+      const questions = document.querySelectorAll('.quiz-question-card');
+      let score = 0;
+      let unansweredCount = 0;
+      // Ensure that all questions have at least one selection
+      questions.forEach((q, index) => {
+        const selected = q.querySelector('input[type="radio"]:checked');
+        if (!selected) {
+          unansweredCount++;
+        }
+      });
+      if (unansweredCount > 0) {
+        alert(`You have left ${unansweredCount} question(s) unanswered! Please select options for all questions before evaluating.`);
+        return;
+      }
+      // Perform evaluation
+      questions.forEach((q, index) => {
+        const correctAnswer = q.getAttribute('data-correct');
+        const selectedOption = q.querySelector('input[type="radio"]:checked');
+        const selectedValue = selectedOption ? selectedOption.value : null;
+        const labels = q.querySelectorAll('.option-label');
+        labels.forEach(label => {
+          const radioInput = label.querySelector('input');
+          const value = radioInput.value;
+          // Clear previous states
+          label.classList.remove('correct-selected', 'incorrect-selected', 'correct-not-selected');
+          // Disable inputs so user cannot edit answers after evaluation
+          radioInput.disabled = true;
+          if (value === correctAnswer) {
+            if (selectedValue === correctAnswer) {
+              label.classList.add('correct-selected'); // Green highlight
+            } else {
+              label.classList.add('correct-not-selected'); // Dotted green highlight for correct answers
+            }
+          } else if (value === selectedValue) {
+            label.classList.add('incorrect-selected'); // Red highlight
+          }
+        });
+        if (selectedValue === correctAnswer) {
+          score++;
+        }
+      });
+      // Scorecard generation logic
+      const totalQuestions = questions.length;
+      const incorrectScore = totalQuestions - score;
+      const percentage = Math.round((score / totalQuestions) * 100);
+      document.getElementById('scoreCircle').innerText = `${score}/${totalQuestions}`;
+      document.getElementById('correctCount').innerText = score;
+      document.getElementById('wrongCount').innerText = incorrectScore;
+      document.getElementById('percentageScore').innerText = `${percentage}%`;
+      // Custom performance messages
+      let heading = "";
+      let message = "";
+      if (percentage === 100) {
+        heading = "Mind-Blown! Absolute Perfection!";
+        message = "You've completely mastered quantum electronic configurations, Master! Outstanding job.";
+      } else if (percentage >= 70) {
+        heading = "Brilliant Performance!";
+        message = "Your quantum fundamentals are rock solid. A little more practice and you'll be completely unstoppable.";
+      } else {
+        heading = "Keep Pushing Forward!";
+        message = "Quantum chemistry takes time to sink in. Review the diagonal rule and conquer it again!";
+      }
+      document.getElementById('resultHeading').innerText = heading;
+      document.getElementById('resultMessage').innerText = message;
+      document.getElementById('scorecard').style.display = 'block';
+      document.getElementById('checkQuizBtn').style.display = 'none';
+    }
+    // Function to completely reset the quiz state
+    function resetQuiz() {
+      const questions = document.querySelectorAll('.quiz-question-card');
+      questions.forEach(q => {
+        const labels = q.querySelectorAll('.option-label');
+        labels.forEach(label => {
+          const radioInput = label.querySelector('input');
+          radioInput.disabled = false;
+          radioInput.checked = false;
+          // Clean up all evaluation utility classes
+          label.classList.remove('correct-selected', 'incorrect-selected', 'correct-not-selected');
+        });
+      });
+      // Toggle UI visibility back to default state
+      document.getElementById('scorecard').style.display = 'none';
+      document.getElementById('checkQuizBtn').style.display = 'inline-block';
+      // Smoothly scroll the Master back to the top of the quiz section
+      document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

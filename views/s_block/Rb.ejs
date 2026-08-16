@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Neon Element Card</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle at center, #111 0%, #000 100%);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            text-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Atom Visualizer Left Panel */
+        .atom-panel {
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 40px 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            min-height: 400px;
+        }
+
+        /* Atom CSS */
+        .atom-container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nucleus {
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            color: #000;
+            box-shadow: 0 0 15px #fff, 0 0 30px #fff;
+            z-index: 5;
+            position: absolute;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin linear infinite;
+        }
+
+        .electron {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+        }
+
+        @keyframes spin {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Data Panel */
+        .data-panel {
+            flex: 2 1 600px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(15, 15, 15, 0.9);
+            border: 1px solid var(--clr);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.8);
+            cursor: pointer;
+            min-height: 120px;
+            height: auto;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 20px var(--clr), inset 0 0 15px var(--clr);
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 15px;
+            color: #aaa;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            line-height: 1.4;
+        }
+        
+        .card-title span {
+            font-size: 12px;
+            color: #777;
+            text-transform: none;
+        }
+
+        .card:hover .card-title, .card:hover .card-title span {
+            color: #fff;
+        }
+
+        .card-value {
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--clr);
+            text-shadow: 0 0 5px var(--clr), 0 0 10px var(--clr);
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .main-symbol {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .atom-container {
+                width: 280px;
+                height: 280px;
+            }
+            .data-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .data-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<!-- Essential SEO Meta Tags -->
+<% 
+  const pageTitle = typeof title !== 'undefined' ? title : 'My Website';
+  const pageDesc = typeof description !== 'undefined' ? description : 'Welcome to our website';
+%>
+<title><%= pageTitle %></title>
+<meta name="title" content="<%= pageTitle %>">
+<meta name="description" content="<%= pageDesc %>">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="og:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="og:image" content="<%= image %>"><% } %>
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary">
+<meta property="twitter:title" content="<%= pageTitle %>">
+<meta property="twitter:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="twitter:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="twitter:image" content="<%= image %>"><% } %>
+
+</head>
+<body>
+
+    <h1 id="mainHeading">Element Data & Visualization</h1>
+
+    <div class="container">
+        
+        <!-- Automated Atom Simulation -->
+        <div class="atom-panel">
+            <div class="atom-container" id="atomContainer">
+                <!-- Javascript will automatically render orbits here -->
+            </div>
+        </div>
+
+        <!-- Element Data Panel (Auto Injected via JS) -->
+        <div class="data-panel" id="dataPanel">
+            <!-- Cards will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        const neonColors = ['#00ffff', '#ff00ff', '#00ffaa', '#ffaa00', '#ff3333', '#a020f0', '#ffff00'];
+
+        // Automatic SPDF and Orbit Shell Calculator based on Atomic Number
+        function calculateElectronData(atomicNumber) {
+            const orbitals = [
+                { shell: 1, type: 's', max: 2 }, { shell: 2, type: 's', max: 2 }, { shell: 2, type: 'p', max: 6 },
+                { shell: 3, type: 's', max: 2 }, { shell: 3, type: 'p', max: 6 }, { shell: 4, type: 's', max: 2 },
+                { shell: 3, type: 'd', max: 10 }, { shell: 4, type: 'p', max: 6 }, { shell: 5, type: 's', max: 2 },
+                { shell: 4, type: 'd', max: 10 }, { shell: 5, type: 'p', max: 6 }, { shell: 6, type: 's', max: 2 },
+                { shell: 4, type: 'f', max: 14 }, { shell: 5, type: 'd', max: 10 }, { shell: 6, type: 'p', max: 6 },
+                { shell: 7, type: 's', max: 2 }, { shell: 5, type: 'f', max: 14 }, { shell: 6, type: 'd', max: 10 },
+                { shell: 7, type: 'p', max: 6 }
+            ];
+
+            let remaining = atomicNumber;
+            let configStrings = [];
+            let shellCounts = {};
+
+            for (let orb of orbitals) {
+                if (remaining <= 0) break;
+                let electrons = Math.min(remaining, orb.max);
+                configStrings.push(`${orb.shell}${orb.type}<sup>${electrons}</sup>`);
+                
+                // Track electrons per shell for visualizer
+                if (!shellCounts[orb.shell]) shellCounts[orb.shell] = 0;
+                shellCounts[orb.shell] += electrons;
+
+                remaining -= electrons;
+            }
+
+            let maxShell = Math.max(...Object.keys(shellCounts).map(Number));
+            let shellArray = [];
+            for (let i = 1; i <= maxShell; i++) {
+                shellArray.push(shellCounts[i] || 0);
+            }
+
+            return {
+                spdf: configStrings.join(' '),
+                shells: shellArray
+            };
+        }
+
+        // Function to render Atom visually
+        function renderAtom(num, symbol, shells) {
+            const container = document.getElementById('atomContainer');
+            container.innerHTML = ''; 
+            
+            if(isNaN(num) || num < 1) return;
+
+            const nucleus = document.createElement('div');
+            nucleus.className = 'nucleus';
+            nucleus.innerText = symbol;
+            nucleus.style.boxShadow = `0 0 15px ${neonColors[0]}, 0 0 30px ${neonColors[0]}`;
+            container.appendChild(nucleus);
+
+            const baseRadius = 35; 
+            const gap = 25; 
+
+            shells.forEach((electronCount, index) => {
+                const orbit = document.createElement('div');
+                orbit.className = 'orbit';
+                const currentRadius = baseRadius + (index * gap);
+                orbit.style.width = (currentRadius * 2) + 'px';
+                orbit.style.height = (currentRadius * 2) + 'px';
+                
+                const duration = (index + 2) * 3; 
+                orbit.style.animationDuration = duration + 's';
+                
+                const color = neonColors[index % neonColors.length];
+                orbit.style.borderColor = color;
+                orbit.style.boxShadow = `0 0 5px ${color} inset, 0 0 5px ${color}`;
+
+                for (let i = 0; i < electronCount; i++) {
+                    const electron = document.createElement('div');
+                    electron.className = 'electron';
+                    
+                    const angle = (360 / electronCount) * i;
+                    electron.style.transform = `rotate(${angle}deg) translate(${currentRadius}px)`;
+                    
+                    electron.style.backgroundColor = '#fff';
+                    electron.style.boxShadow = `0 0 8px ${color}, 0 0 15px ${color}`;
+                    
+                    orbit.appendChild(electron);
+                }
+                container.appendChild(orbit);
+            });
+        }
+
+        // Main function to generate the UI based on data provided
+        function initializeElement(data) {
+            document.getElementById('mainHeading').innerText = `${data.name} (${data.symbol}) Data & Visualization`;
+            
+            const atomData = calculateElectronData(data.atomicNumber);
+            
+            // Build the cards
+            const cardsInfo = [
+                { title: "Atomic Number", hindi: "(परमाणु संख्या)", val: data.atomicNumber, color: "#00ffff" },
+                { title: "Symbol & Name", hindi: "(प्रतीक और नाम)", val: `<span class="main-symbol">${data.symbol}</span><br><span style="font-size: 16px;">${data.name}</span>`, color: "#ff00ff" },
+                { title: "Atomic Weight", hindi: "(परमाणु भार)", val: data.atomicWeight, color: "#00ffaa" },
+                { title: "Valency", hindi: "(संयोजकता)", val: data.valency, color: "#ffaa00" },
+                { title: "Density", hindi: "(घनत्व (g/ml))", val: data.density, color: "#a020f0" },
+                { title: "Atomic Radius", hindi: "(परमाणु त्रिज्या)", val: data.atomicRadius, color: "#ff3333" },
+                { title: "Melting Point", hindi: "(गलनांक)", val: data.meltingPoint, color: "#ffff00" },
+                { title: "Boiling Point", hindi: "(क्वथनांक)", val: data.boilingPoint, color: "#0088ff" },
+                { title: "Electronic Configuration", hindi: "(इलेक्ट्रॉनिक विन्यास)", val: atomData.spdf, color: "#ff0077" },
+                { title: "Electronegativity", hindi: "(विद्युतीय ऋणात्मकता)", val: data.electronegativity, color: "#33ff33" },
+                { title: "1st Ionisation Energy", hindi: "(प्रथम आयनीकरण ऊर्जा)", val: data.ionisationEnergy, color: "#ff5500" },
+                { title: "Oxidation State", hindi: "(ऑक्सीकरण अवस्था)", val: data.oxidationState, color: "#cc00ff" },
+                { title: "Year of Discovery", hindi: "(खोज का वर्ष)", val: data.discoveryYear, color: "#ff99cc" }
+            ];
+
+            const panel = document.getElementById('dataPanel');
+            panel.innerHTML = ''; // Clear existing cards
+
+            cardsInfo.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.setProperty('--clr', item.color);
+                
+                card.innerHTML = `
+                    <div class="card-title">
+                        ${item.title}<br>
+                        <span>${item.hindi}</span>
+                    </div>
+                    <div class="card-value">${item.val}</div>
+                `;
+                panel.appendChild(card);
+            });
+
+            // Call atom visualizer
+            renderAtom(data.atomicNumber, data.symbol, atomData.shells);
+        }
+
+        // ==========================================
+        // YAHAN APNA DATA DAALEIN (JS CONTROLLER)
+        // ==========================================
+        
+        const elementData = {
+            atomicNumber: 39,
+            symbol: 'Rb',
+            name: 'RUBIDIUM',
+            atomicWeight: '85.468',
+            valency: '+1',
+            density: '1.532',
+            atomicRadius: '248 pm',
+            meltingPoint: '38.89 °C',
+            boilingPoint: '688 °C',
+            electronegativity: '0.82',
+            ionisationEnergy: '403 kJ/mol',
+            oxidationState: '+1',
+            discoveryYear: '1861'
+        };
+
+        // Initialize UI with the data
+        initializeElement(elementData);
+
+    </script>
+</body>
+</html>

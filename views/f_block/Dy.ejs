@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Premium Element Card</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle at center, #0c0f12 0%, #020203 100%);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            /* Sophisticated, balanced soft-glow */
+            text-shadow: 0 0 8px rgba(79, 195, 247, 0.6), 0 0 20px rgba(79, 195, 247, 0.3);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Atom Visualizer */
+        .atom-panel {
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(8, 10, 12, 0.85);
+            border: 1px solid #1e252b;
+            border-radius: 15px;
+            padding: 40px 20px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            min-height: 400px;
+        }
+
+        .atom-container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nucleus {
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            color: #000;
+            z-index: 5;
+            position: absolute;
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin linear infinite;
+        }
+
+        .electron {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+        }
+
+        @keyframes spin {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Data Panel */
+        .data-panel {
+            flex: 2 1 600px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(10, 12, 15, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 3px solid var(--clr); /* Elegant color accent bar */
+            border-radius: 8px;
+            padding: 18px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+            min-height: 125px;
+            height: auto;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--clr);
+            box-shadow: 0 0 15px rgba(var(--clr-rgb), 0.3), inset 0 0 8px rgba(var(--clr-rgb), 0.2);
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: #8a99a6;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s;
+            line-height: 1.4;
+        }
+        
+        .card-title span {
+            font-size: 12px;
+            color: #546574;
+            text-transform: none;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .card:hover .card-title {
+            color: #fff;
+        }
+        
+        .card:hover .card-title span {
+            color: #8a99a6;
+        }
+
+        .card-value {
+            font-size: 21px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--clr);
+            text-shadow: 0 0 8px rgba(var(--clr-rgb), 0.4);
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .main-symbol {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .atom-container {
+                width: 280px;
+                height: 280px;
+            }
+            .data-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .data-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<!-- Essential SEO Meta Tags -->
+<% 
+  const pageTitle = typeof title !== 'undefined' ? title : 'My Website';
+  const pageDesc = typeof description !== 'undefined' ? description : 'Welcome to our website';
+%>
+<title><%= pageTitle %></title>
+<meta name="title" content="<%= pageTitle %>">
+<meta name="description" content="<%= pageDesc %>">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= pageTitle %>">
+<meta property="og:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="og:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="og:image" content="<%= image %>"><% } %>
+
+<!-- Twitter Card -->
+<meta property="twitter:card" content="summary">
+<meta property="twitter:title" content="<%= pageTitle %>">
+<meta property="twitter:description" content="<%= pageDesc %>">
+<% if (typeof url !== 'undefined') { %><meta property="twitter:url" content="<%= url %>"><% } %>
+<% if (typeof image !== 'undefined') { %><meta property="twitter:image" content="<%= image %>"><% } %>
+
+</head>
+<body>
+
+    <h1 id="mainHeading">Element Data & Visualization</h1>
+
+    <div class="container">
+        <!-- Automated Atom Simulation -->
+        <div class="atom-panel">
+            <div class="atom-container" id="atomContainer"></div>
+        </div>
+
+        <!-- Element Data Panel -->
+        <div class="data-panel" id="dataPanel"></div>
+    </div>
+
+    <script>
+        // Muted tech palette tailored perfectly for premium dark UI contrast
+        const neonColors = [
+            '#4fc3f7', // Electric Ice Blue
+            '#00e676', // Neo Mint / Emerald
+            '#ffb74d', // Cyber Amber / Gold
+            '#ba68c8', // Soft Muted Purple
+            '#ff8a80', // Soft Coral Salmon
+            '#26a69a', // Deep Teal
+            '#b0bec5'  // Industrial Muted Slate
+        ];
+
+        // Helper to convert hex to RGB string for variable box-shadows dynamically
+        function hexToRgbStr(hex) {
+            let c = hex.substring(1);
+            let rgb = parseInt(c, 16);
+            let r = (rgb >> 16) & 255;
+            let g = (rgb >> 8) & 255;
+            let b = rgb & 255;
+            return `${r}, ${g}, ${b}`;
+        }
+
+        // ==========================================
+        // ADVANCED AUTO SPDF (WITH EXCEPTION HANDLING)
+        // ==========================================
+        function calculateElectronData(atomicNumber) {
+            const order = [
+                {n:1, l:'s', max:2}, {n:2, l:'s', max:2}, {n:2, l:'p', max:6},
+                {n:3, l:'s', max:2}, {n:3, l:'p', max:6}, {n:4, l:'s', max:2},
+                {n:3, l:'d', max:10}, {n:4, l:'p', max:6}, {n:5, l:'s', max:2},
+                {n:4, l:'d', max:10}, {n:5, l:'p', max:6}, {n:6, l:'s', max:2},
+                {n:4, l:'f', max:14}, {n:5, l:'d', max:10}, {n:6, l:'p', max:6},
+                {n:7, l:'s', max:2}, {n:5, l:'f', max:14}, {n:6, l:'d', max:10},
+                {n:7, l:'p', max:6}
+            ];
+
+            let config = {}; 
+            let remaining = atomicNumber;
+
+            for (let sub of order) {
+                if (remaining <= 0) break;
+                let count = Math.min(remaining, sub.max);
+                if (!config[sub.n]) config[sub.n] = {};
+                config[sub.n][sub.l] = count;
+                remaining -= count;
+            }
+
+            // EXCEPTION OVERRIDES
+            const exceptions = {
+                24: [{n:4, l:'s', v:1}, {n:3, l:'d', v:5}],   // Chromium
+                29: [{n:4, l:'s', v:1}, {n:3, l:'d', v:10}],  // Copper
+                41: [{n:5, l:'s', v:1}, {n:4, l:'d', v:4}],   // Niobium
+                42: [{n:5, l:'s', v:1}, {n:4, l:'d', v:5}],   // Molybdenum
+                44: [{n:5, l:'s', v:1}, {n:4, l:'d', v:7}],   // Ruthenium
+                45: [{n:5, l:'s', v:1}, {n:4, l:'d', v:8}],   // Rhodium
+                46: [{n:5, l:'s', v:0}, {n:4, l:'d', v:10}],  // Palladium
+                47: [{n:5, l:'s', v:1}, {n:4, l:'d', v:10}],  // Silver
+                57: [{n:6, l:'s', v:2}, {n:4, l:'f', v:0}, {n:5, l:'d', v:1}], // Lanthanum
+                78: [{n:6, l:'s', v:1}, {n:5, l:'d', v:9}],   // Platinum
+                79: [{n:6, l:'s', v:1}, {n:5, l:'d', v:10}]   // Gold
+            };
+
+            if (exceptions[atomicNumber]) {
+                exceptions[atomicNumber].forEach(change => {
+                    if (!config[change.n]) config[change.n] = {};
+                    config[change.n][change.l] = change.v;
+                    if(change.v === 0) delete config[change.n][change.l]; 
+                });
+            }
+
+            let spdfArray = [];
+            let shellsArray = [];
+            let maxN = Math.max(...Object.keys(config).map(Number));
+            
+            for (let n = 1; n <= maxN; n++) {
+                let shellTotal = 0;
+                if (config[n]) {
+                    ['s', 'p', 'd', 'f'].forEach(l => {
+                        if (config[n][l]) {
+                            spdfArray.push(`${n}${l}<sup>${config[n][l]}</sup>`);
+                            shellTotal += config[n][l];
+                        }
+                    });
+                }
+                if (n <= maxN) shellsArray.push(shellTotal);
+            }
+
+            return { spdf: spdfArray.join(' '), shells: shellsArray };
+        }
+
+        // ==========================================
+        // ATOM RENDERER
+        // ==========================================
+        function renderAtom(num, symbol, shells) {
+            const container = document.getElementById('atomContainer');
+            container.innerHTML = ''; 
+            
+            const nucleus = document.createElement('div');
+            nucleus.className = 'nucleus';
+            nucleus.innerText = symbol;
+            // 1st code jaisa robust bright visual impact देने के लिए solid glow shadow
+            nucleus.style.boxShadow = `0 0 15px ${neonColors[0]}, 0 0 30px ${neonColors[0]}`;
+            container.appendChild(nucleus);
+
+            const baseRadius = 35; 
+            const gap = 25; 
+
+            shells.forEach((electronCount, index) => {
+                const orbit = document.createElement('div');
+                orbit.className = 'orbit';
+                const currentRadius = baseRadius + (index * gap);
+                orbit.style.width = (currentRadius * 2) + 'px';
+                orbit.style.height = (currentRadius * 2) + 'px';
+                
+                const duration = (index + 2) * 4; 
+                orbit.style.animationDuration = duration + 's';
+                
+                const color = neonColors[index % neonColors.length];
+                // Transparencies (rgba) को हटाकर 1st code की तरह vibrant solid borders और high contrast glow लगाया गया है
+                orbit.style.borderColor = color;
+                orbit.style.boxShadow = `0 0 6px ${color} inset, 0 0 6px ${color}`;
+
+                for (let i = 0; i < electronCount; i++) {
+                    const electron = document.createElement('div');
+                    electron.className = 'electron';
+                    
+                    const angle = (360 / electronCount) * i;
+                    electron.style.transform = `rotate(${angle}deg) translate(${currentRadius}px)`;
+                    
+                    electron.style.backgroundColor = '#fff';
+                    // Electrons के लिए शानदार solid colorful neon glow
+                    electron.style.boxShadow = `0 0 8px ${color}, 0 0 15px ${color}`;
+                    
+                    orbit.appendChild(electron);
+                }
+                container.appendChild(orbit);
+            });
+        }
+
+        // ==========================================
+        // UI GENERATOR
+        // ==========================================
+        function initializeElement(data) {
+            document.getElementById('mainHeading').innerText = `${data.name} (${data.symbol}) Data & Visualization`;
+            
+            const atomData = calculateElectronData(data.atomicNumber);
+            
+            // Cleaned up balanced theme values mapping nicely across the dashboard blocks
+            const cardsInfo = [
+                { title: "Atomic Number", hindi: "(परमाणु संख्या)", val: data.atomicNumber, color: "#4fc3f7" },
+                { title: "Symbol & Name", hindi: "(प्रतीक और नाम)", val: `<span class="main-symbol">${data.symbol}</span><br><span style="font-size: 16px; font-weight: 700; letter-spacing:0.5px;">${data.name}</span>`, color: "#ba68c8" },
+                { title: "Atomic Weight", hindi: "(परमाणु भार)", val: data.atomicWeight, color: "#00e676" },
+                { title: "Valency", hindi: "(संयोजकता)", val: data.valency, color: "#ffb74d" },
+                { title: "Density", hindi: "(घनत्व (g/ml))", val: data.density, color: "#26a69a" },
+                { title: "Atomic Radius", hindi: "(परमाणु त्रिज्या)", val: data.atomicRadius, color: "#ff8a80" },
+                { title: "Melting Point", hindi: "(गलनांक)", val: data.meltingPoint, color: "#ffd54f" },
+                { title: "Boiling Point", hindi: "(क्वथनांक)", val: data.boilingPoint, color: "#29b6f6" },
+                { title: "Electronic Configuration", hindi: "(इलेक्ट्रॉनिक विन्यास)", val: atomData.spdf, color: "#ff80ab" },
+                { title: "Electronegativity", hindi: "(विद्युतीय ऋणात्मकता)", val: data.electronegativity, color: "#66bb6a" },
+                { title: "1st Ionisation Energy", hindi: "(प्रथम आयनीकरण ऊर्जा)", val: data.ionisationEnergy, color: "#ff7043" },
+                { title: "Oxidation State", hindi: "(ऑक्सीकरण अवस्था)", val: data.oxidationState, color: "#ab47bc" },
+                { title: "Year of Discovery", hindi: "(खोज का वर्ष)", val: data.discoveryYear, color: "#b0bec5" }
+            ];
+
+            const panel = document.getElementById('dataPanel');
+            panel.innerHTML = ''; 
+
+            cardsInfo.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.setProperty('--clr', item.color);
+                card.style.setProperty('--clr-rgb', hexToRgbStr(item.color));
+                
+                card.innerHTML = `
+                    <div class="card-title">
+                        ${item.title}
+                        <span>${item.hindi}</span>
+                    </div>
+                    <div class="card-value">${item.val}</div>
+                `;
+                panel.appendChild(card);
+            });
+
+            renderAtom(data.atomicNumber, data.symbol, atomData.shells);
+        }
+
+        // ==========================================
+        // DATA ENTRY BLOCK
+        // Verified and matched properties for Chromium (Cr)
+        // ==========================================
+        const elementData = {
+            atomicNumber: 66,           
+            symbol: 'Dy',
+            name: 'Dysprosium',
+            atomicWeight: '162.5',
+            valency: '+3',
+            density: '8.536',
+            atomicRadius: '178 pm',
+            meltingPoint: '1412.0',
+            boilingPoint: '2562.0',
+            electronegativity: '1.2',
+            ionisationEnergy: '571.9 kJ/mol',
+            oxidationState: '+3',
+            discoveryYear: '1886'
+        };
+
+        // Initialize UI with the final clean styling
+        initializeElement(elementData);
+
+    </script>
+</body>
+</html>
